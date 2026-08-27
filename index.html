@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simpleno — Historias sin dueño</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --crema: #f7f4ef;
+      --tierra: #8b6f5c;
+      --carbon: #1e1e1e;
+      --gris: #6b6b6b;
+      --gris-claro: #d4cfc9;
+      --acento: #c17f5a;
+    }
+
+    html { font-size: 18px; scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--crema);
+      color: var(--carbon);
+      font-family: 'Georgia', 'Times New Roman', serif;
+      line-height: 1.8;
+      padding: 0 1.5rem;
+    }
+
+    .contenedor {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 5rem 0 8rem;
+    }
+
+    /* PORTADA */
+    .portada {
+      padding: 4rem 0 5rem;
+      border-bottom: 1px solid var(--gris-claro);
+      margin-bottom: 4rem;
+    }
+
+    .portada .etiqueta {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--acento);
+      margin-bottom: 1.5rem;
+    }
+
+    .portada h1 {
+      font-size: 3rem;
+      font-weight: normal;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      color: var(--carbon);
+    }
+
+    .portada .bajada {
+      font-size: 1.15rem;
+      color: var(--gris);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* SECCIONES */
+    section {
+      margin-bottom: 4.5rem;
+    }
+
+    .seccion-titulo {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--acento);
+      margin-bottom: 1.2rem;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      font-weight: normal;
+      line-height: 1.3;
+      margin-bottom: 1.2rem;
+      color: var(--carbon);
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: var(--carbon);
+    }
+
+    p + p { margin-top: 0.2rem; }
+
+    /* CITA */
+    blockquote {
+      border-left: 3px solid var(--acento);
+      padding: 1rem 1.5rem;
+      margin: 2rem 0;
+      background: rgba(193, 127, 90, 0.06);
+      border-radius: 0 4px 4px 0;
+    }
+
+    blockquote p {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--carbon);
+      margin: 0;
+    }
+
+    blockquote .autor {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.75rem;
+      font-style: normal;
+      color: var(--gris);
+      margin-top: 0.6rem;
+      display: block;
+    }
+
+    /* TABLA */
+    .tabla-wrapper {
+      overflow-x: auto;
+      margin: 2rem 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.85rem;
+    }
+
+    th {
+      text-align: left;
+      padding: 0.6rem 1rem;
+      font-weight: 600;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gris);
+      border-bottom: 2px solid var(--gris-claro);
+    }
+
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--gris-claro);
+      color: var(--carbon);
+      line-height: 1.5;
+      vertical-align: top;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    /* GRID DE TARJETAS */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin: 2rem 0;
+    }
+
+    @media (max-width: 560px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    .tarjeta {
+      background: white;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      padding: 1.4rem;
+    }
+
+    .tarjeta .titulo {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--acento);
+      margin-bottom: 0.6rem;
+    }
+
+    .tarjeta p {
+      font-size: 0.9rem;
+      color: var(--gris);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* COMPARACION */
+    .comparacion {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin: 2rem 0;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    @media (max-width: 560px) {
+      .comparacion { grid-template-columns: 1fr; }
+    }
+
+    .col-rota {
+      padding: 1.5rem;
+      background: #f0ede8;
+    }
+
+    .col-nueva {
+      padding: 1.5rem;
+      background: white;
+    }
+
+    .col-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .col-rota .col-label { color: #b07070; }
+    .col-nueva .col-label { color: var(--acento); }
+
+    .col-rota ul, .col-nueva ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .col-rota li, .col-nueva li {
+      font-size: 0.9rem;
+      color: var(--carbon);
+      padding: 0.3rem 0;
+      border-bottom: 1px solid var(--gris-claro);
+      line-height: 1.5;
+    }
+
+    .col-rota li:last-child, .col-nueva li:last-child { border-bottom: none; }
+
+    /* INSIGHT BOX */
+    .insight {
+      background: var(--carbon);
+      color: var(--crema);
+      border-radius: 6px;
+      padding: 2rem 2.2rem;
+      margin: 2.5rem 0;
+    }
+
+    .insight p {
+      color: var(--crema);
+      font-size: 1.05rem;
+      margin: 0;
+    }
+
+    .insight strong {
+      color: #e8c4a0;
+    }
+
+    /* PRINCIPIOS */
+    .principios {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 2rem 0;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .principio {
+      display: grid;
+      grid-template-columns: 2rem 1fr;
+      gap: 1rem;
+      padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid var(--gris-claro);
+      align-items: start;
+    }
+
+    .principio:last-child { border-bottom: none; }
+
+    .principio .num {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--acento);
+      padding-top: 0.15rem;
+    }
+
+    .principio .texto {
+      font-size: 0.9rem;
+      color: var(--carbon);
+      line-height: 1.6;
+    }
+
+    .principio .texto strong {
+      display: block;
+      margin-bottom: 0.2rem;
+      font-size: 0.85rem;
+    }
+
+    /* REFERENTES */
+    .referentes {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .referente {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 0;
+      border-bottom: 1px solid var(--gris-claro);
+    }
+
+    .referente:last-child { border-bottom: none; }
+
+    .referente .nombre {
+      padding: 1.1rem 1.2rem;
+      background: #f0ede8;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--carbon);
+      border-right: 1px solid var(--gris-claro);
+    }
+
+    .referente .desc {
+      padding: 1.1rem 1.4rem;
+      font-size: 0.85rem;
+      color: var(--gris);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 560px) {
+      .referente { grid-template-columns: 1fr; }
+      .referente .nombre { border-right: none; border-bottom: 1px solid var(--gris-claro); }
+    }
+
+    /* PREGUNTA FINAL */
+    .pregunta-final {
+      text-align: center;
+      padding: 3rem 2rem;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      margin-top: 3rem;
+    }
+
+    .pregunta-final p {
+      font-size: 1.2rem;
+      color: var(--gris);
+      font-style: italic;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* DIVISOR */
+    .divisor {
+      width: 3rem;
+      height: 2px;
+      background: var(--acento);
+      margin: 3rem 0;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--gris-claro);
+      padding-top: 2rem;
+      margin-top: 5rem;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.72rem;
+      color: var(--gris);
+      letter-spacing: 0.05em;
+    }
+
+    .highlight {
+      background: rgba(193, 127, 90, 0.12);
+      padding: 0.1em 0.3em;
+      border-radius: 2px;
+    }
+
+    /* CAPÍTULO */
+    .capitulo {
+      border-top: 2px solid var(--acento);
+      padding-top: 3rem;
+      margin: 2rem 0 4rem;
+    }
+
+    .capitulo-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--acento);
+      margin-bottom: 1rem;
+    }
+
+    .capitulo-intro {
+      font-size: 1rem;
+      color: var(--gris);
+      line-height: 1.7;
+      margin-bottom: 0;
+      max-width: 560px;
+    }
+
+    .esferas-interactivas {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin: 2rem 0;
+    }
+
+    @media (max-width: 560px) {
+      .esferas-interactivas { grid-template-columns: 1fr; }
+    }
+
+    .esfera-item {
+      border: 1px solid var(--gris-claro);
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      background: white;
+      transition: border-color 0.3s;
+    }
+
+    .esfera-item.activo {
+      border-color: var(--acento);
+    }
+
+    .esfera-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+      transition: background 0.2s;
+      user-select: none;
+    }
+
+    .esfera-header:hover { background: #f7f4ef; }
+
+    .esfera-dot {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1.5px solid var(--acento);
+      background: #faf8f5;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 7.5px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--carbon);
+      text-align: center;
+      line-height: 1.3;
+      transition: background 0.3s, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .esfera-item.activo .esfera-dot {
+      background: #e8d5c4;
+      transform: scale(0.72);
+    }
+
+    .esfera-info { flex: 1; }
+
+    .esfera-titulo {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--carbon);
+      margin-bottom: 0.2rem;
+    }
+
+    .esfera-autores-mini {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.68rem;
+      color: var(--gris);
+      font-style: italic;
+    }
+
+    .esfera-flecha {
+      font-size: 1.3rem;
+      color: var(--acento);
+      transition: transform 0.35s ease;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .esfera-item.activo .esfera-flecha { transform: rotate(45deg); }
+
+    .esfera-contenido {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, opacity 0.4s ease;
+      opacity: 0;
+    }
+
+    .esfera-contenido.visible {
+      opacity: 1;
+    }
+
+    .esfera-contenido-inner {
+      padding: 0 1.4rem 1.4rem;
+      border-top: 1px solid var(--gris-claro);
+    }
+
+    .esfera-contenido-inner p {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: var(--carbon);
+      margin: 1rem 0 0.6rem;
+    }
+
+    .esfera-contenido-inner .autores-full {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.7rem;
+      color: var(--gris);
+      font-style: italic;
+    }
+
+    /* PORQUE LISTA */
+    .porque-lista {
+      margin: 2rem 0;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .porque-item {
+      padding: 1.3rem 1.5rem;
+      border-bottom: 1px solid var(--gris-claro);
+    }
+
+    .porque-item:last-child { border-bottom: none; }
+
+    .porque-titulo {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: var(--carbon);
+      margin-bottom: 0.4rem;
+    }
+
+    .porque-desc {
+      font-size: 0.88rem;
+      color: var(--gris);
+      line-height: 1.65;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .portada h1 { font-size: 2rem; }
+      h2 { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<style>
+  #pin-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background: #f7f4ef;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 2rem;
+    transition: opacity 0.5s ease;
+  }
+  #pin-overlay.saliendo { opacity: 0; pointer-events: none; }
+  #pin-logo {
+    font-family: 'Georgia', serif;
+    font-size: 2.2rem;
+    font-weight: normal;
+    color: #1e1e1e;
+    letter-spacing: -0.01em;
+  }
+  #pin-label {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #6b6b6b;
+  }
+  #pin-input {
+    font-family: 'Georgia', serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.5em;
+    text-align: center;
+    width: 180px;
+    border: none;
+    border-bottom: 2px solid #d4cfc9;
+    background: transparent;
+    color: #1e1e1e;
+    outline: none;
+    padding: 0.4rem 0;
+    transition: border-color 0.3s;
+    -webkit-text-security: disc;
+  }
+  #pin-input:focus { border-color: #c17f5a; }
+  #pin-input.error { border-color: #c0705a; animation: shake 0.4s ease; }
+  #pin-error {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.72rem;
+    color: #c0705a;
+    letter-spacing: 0.05em;
+    height: 1rem;
+    transition: opacity 0.3s;
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+  }
+</style>
+
+<div id="pin-overlay">
+  <div id="pin-logo">Simpleno</div>
+  <div id="pin-label">Ingresá el código de acceso</div>
+  <input id="pin-input" type="password" inputmode="numeric" maxlength="4" autofocus autocomplete="off" />
+  <div id="pin-error"></div>
+</div>
+
+<script>
+  (function() {
+    if (sessionStorage.getItem('simpleno-access') === 'ok') {
+      document.getElementById('pin-overlay').style.display = 'none';
+      return;
+    }
+    var input = document.getElementById('pin-input');
+    var error = document.getElementById('pin-error');
+    input.addEventListener('input', function() {
+      error.textContent = '';
+      input.classList.remove('error');
+      if (input.value.length === 4) {
+        if (input.value === '2607') {
+          sessionStorage.setItem('simpleno-access', 'ok');
+          var overlay = document.getElementById('pin-overlay');
+          overlay.classList.add('saliendo');
+          setTimeout(function() { overlay.style.display = 'none'; }, 500);
+        } else {
+          input.classList.add('error');
+          error.textContent = 'Código incorrecto';
+          setTimeout(function() {
+            input.value = '';
+            input.classList.remove('error');
+          }, 600);
+        }
+      }
+    });
+  })();
+</script>
+
+<body>
+<div class="contenedor">
+
+  <!-- PORTADA -->
+  <div class="portada">
+    <div class="etiqueta">Concepto — Agosto 2026</div>
+    <h1>Simpleno</h1>
+    <p class="bajada">Donde las historias valen por sí mismas y no por quien las cuenta.</p>
+  </div>
+
+  <!-- ROMPEHIELO -->
+  <div style="padding: 2rem 0 3.5rem; border-bottom: 1px solid var(--gris-claro); margin-bottom: 4rem;">
+    <p style="font-size:1.15rem; line-height:1.9; color:var(--gris); font-style:italic;">¿Cuándo fue la última vez que le contaste algo real a alguien? No un resumen. No la versión prolija. Algo que de verdad te pesaba.</p>
+    <p style="font-size:1.15rem; line-height:1.9; color:var(--gris); font-style:italic;">Nunca estuvimos tan desconectados estando conectados.</p>
+    <p style="font-size:1.15rem; line-height:1.9; color:var(--gris); font-style:italic;">Y ahí estás, buscando llenarte de distracciones, actividades y estímulos — o scrolleando el feed. Todo el mundo al palo y disfrutando, pareciendo estar todos bien. El viaje, el ascenso, la foto perfecta. Cerrás la app con una sensación difusa porque te distrajiste, llenaste el tiempo pero lo que tenés adentro no se vació.</p>
+
+    <p style="font-size:1.15rem; line-height:1.9; color:var(--carbon); font-style:italic;">Porque al final de cuentas, escribir, crear y descargar nuestros pensamientos es terapéutico. No tiene que ver con llenar el tiempo de estímulos — ni de redes ni de actividades. Sino con encontrar un espacio donde poder expresarnos sin limitaciones.</p>
+  </div>
+
+  <!-- 1. EL PROBLEMA -->
+  <section>
+    <div class="seccion-titulo">01 — El diagnóstico</div>
+
+    <h2>Lo que Instagram prometió y nunca entregó</h2>
+
+    <p>Las redes sociales prometieron conexión. Entregaron comparación. Prometieron comunidad. Entregaron audiencia. Prometieron expresión. Entregaron performance.</p>
+
+    <p>El resultado es una cultura exitista donde cada publicación es una versión curada, aspiracional y hasta podría decirse que un poco falsa de la propia vida. El plato de comida no es el plato — es <em>"mirá qué bien como vivo"</em>.</p>
+
+    <div class="comparacion">
+      <div class="col-rota">
+        <div class="col-label">Lo que se muestra</div>
+        <ul>
+          <li>El viaje, no la deuda que lo financió</li>
+          <li>La pareja, los amigos, la compañía</li>
+          <li>El logro, no los años de fracasos</li>
+          <li>El lunes, no el lunes después</li>
+        </ul>
+      </div>
+      <div class="col-nueva">
+        <div class="col-label">Lo que genera</div>
+        <ul>
+          <li>Envidia mutua y circular</li>
+          <li>FOMO (Fear of Missing Out)</li>
+          <li>Sensación de lo que me falta</li>
+          <li>Comparación constante</li>
+          <li>Miedo a mostrar lo real</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>Y sin embargo, cuando alguien cuenta algo real — una pérdida, un fracaso, una verdad incómoda — el contenido explota. Porque toca en nuestras fibras algo real. Porque todos lo vivimos y nadie lo dice.</p>
+
+    <div class="insight">
+      <p>Hay una enorme necesidad de expresar lo que no sabemos cómo expresar. Nadie cuenta las historias reales por <strong>miedo a ser rotulado</strong>. El silencio no es comodidad — es costo social.</p>
+    </div>
+
+    <p>El like, en el fondo, no dice "me gustás". Dice <em>"sí, eso existe, yo también lo vi"</em>. Es una forma de hacer real la experiencia. De sacarla del interior y anclarla en el mundo. Pero social media contaminó esa necesidad profunda mezclándola con ego, identidad y reconocimiento personal. Y al hacerlo, la rompió. Para ser testificado hoy necesitás exponerte. Al exponerte, te juzgan. Al ser juzgado, te cuidás. Al cuidarte, dejás de contar lo real.</p>
+
+    <div class="divisor"></div>
+
+    <p>Pero el problema es más profundo que la vanidad. Vivimos bombardeados: por el consumo — <em>"comprá esto", "necesitás aquello"</em> —, por la pertenencia — <em>"sé parte de esto", "seguí a aquellos"</em> —, por la productividad, por la validación constante. Tanta señal afuera que aprendimos a ignorar lo de adentro. Ya no sabemos qué sentimos si no hay alguien mirando.</p>
+
+    <p>Ya no nos conectamos de verdad. Cuando conocemos a alguien, ya estamos posicionándonos. Calculando. Performando. La pregunta <em>"¿cómo estás de verdad?"</em> casi no existe. Nos volvimos expertos en mostrarnos y analfabetos en sentir.</p>
+
+    <p>Nos olvidamos de nosotros mismos. Y con eso, perdimos algo más profundo: la capacidad de conectar humanamente — no como roles ni como marcas personales, sino como personas con miedo, con dudas, con historias que nadie más conoce. Simpleno propone exactamente eso: volver a ese lugar.</p>
+  </section>
+
+
+  <!-- 5. MOTIVACIÓN HUMANA -->
+  <section>
+    <div class="seccion-titulo">05 — La motivación humana</div>
+    <h2>La necesidad de expresar existe. Lo que falta es el medio.</h2>
+
+    <p>La pregunta no es si el ser humano quiere contar lo que le pasa. Quiere. La pregunta es por qué no lo hace — y dónde termina haciéndolo cuando no encuentra el lugar correcto.</p>
+
+    <p>La motivación más profunda no es obtener algo externo. Es soltar algo. Escribir una historia, aunque nadie sepa que es tuya, ya es en sí mismo un acto de libertad.</p>
+
+    <div class="porque-lista">
+      <div class="porque-item">
+        <div class="porque-titulo">Porque tenemos miedos que no podemos decir en voz alta</div>
+        <div class="porque-desc">Escribirlos los hace menos grandes. Los saca de la mente y ese mero acto de ponerlos afuera, donde ya no los cargamos solos en silencio, es liberador.</div>
+      </div>
+      <div class="porque-item">
+        <div class="porque-titulo">Porque necesitamos ser entendidos, no resueltos</div>
+        <div class="porque-desc">No buscamos consejo. Buscamos que alguien diga "yo también". Eso es completamente distinto a que alguien nos arregle o nos explique qué hacer.</div>
+      </div>
+      <div class="porque-item">
+        <div class="porque-titulo">Porque escribir hace consciente lo inconsciente</div>
+        <div class="porque-desc">Muchas veces no sabemos lo que sentimos hasta que lo escribimos. Lo que no nombramos no lo podemos procesar. La escritura es el primer paso para entender qué nos pasa de verdad.</div>
+      </div>
+      <div class="porque-item">
+        <div class="porque-titulo">Porque sacar algo a la luz es terapéutico</div>
+        <div class="porque-desc">Lo que guardamos pesa. Nombrarlo es el primer acto de aceptación. No desaparece, pero deja de vivir encerrado en nuestro cuerpo. <em>A veces, cuando creemos que guardamos vivencias, en realidad esas vivencias nos guardan a nosotros.</em></div>
+      </div>
+      <div class="porque-item">
+        <div class="porque-titulo">Porque nos reconecta con lo que sentimos</div>
+        <div class="porque-desc">En el día a día actuamos, producimos, respondemos. Escribir nos para y nos pregunta cómo estamos de verdad. Es un acto de presencia con uno mismo.</div>
+      </div>
+      <div class="porque-item">
+        <div class="porque-titulo">Porque ser leído sin saber quién sos te devuelve lo humano</div>
+        <div class="porque-desc">Sin etiqueta, sin rol, sin historia previa. Solo una experiencia y otra persona que la reconoce. No conectan las identidades — conectan las experiencias. Eso es conexión real.</div>
+      </div>
+    </div>
+
+    <p>Viktor Frankl sobrevivió campos de concentración y dedicó su vida a una sola pregunta: ¿qué hace que el ser humano aguante? Su respuesta no fue el placer ni el reconocimiento. Fue <strong>el sentido</strong>. La motivación más profunda no es obtener. Es que algo importe.</p>
+
+    <blockquote>
+      <p>"La amistad nace en el momento en que una persona le dice a otra: ¿Cómo? ¿A vos también? Creía que era el único."</p>
+      <span class="autor">— C.S. Lewis</span>
+    </blockquote>
+
+    <p>Ese momento no necesita nombre. No necesita like. Es anterior a todo eso. Es el instante en que algo que creías tuyo y vergonzoso se vuelve humano y compartido.</p>
+
+    <div class="insight">
+      <p>Los psicólogos llaman a esto <strong>el efecto de sobrejustificación</strong>: cuando agregás recompensa externa a algo que alguien hacía por placer, dejan de hacerlo por placer. Instagram no agregó conexión — agregó un premio que destruyó la conexión que siempre estuvo. Esta plataforma no inventa una motivación nueva. <strong>Saca el veneno que mató la que siempre existió.</strong></p>
+    </div>
+
+    <div class="divisor"></div>
+
+    <h2 style="font-size:1.2rem; margin-bottom:1rem;">Lo que nos detiene no es la motivación. Es el medio.</h2>
+
+    <p>Las redes sociales fallaron porque mezclan expresión con identidad. Pero hay barreras más profundas que operan incluso con personas cercanas — las que hacen que ni siquiera entre amigos se diga todo:</p>
+
+    <div class="porque-lista">
+      <div class="porque-item">
+        <div class="porque-titulo">El miedo a convertirte en el que necesita</div>
+        <div class="porque-desc">Hay un rol social que evitamos ocupar: el frágil, el que necesita apoyo, el que hay que cuidar. Compartir algo vulnerable puede ubicarte ahí — y desde ese lugar la relación cambia para siempre.</div>
+      </div>
+      <div class="porque-item">
+        <div class="porque-titulo">La vergüenza de sentir</div>
+        <div class="porque-desc">A veces no nos animamos no porque la historia sea grave, sino porque sentimos que nuestra reacción a algo pequeño es desproporcionada. La vergüenza secundaria — avergonzarse de haber sentido — es muchas veces más paralizante que el miedo al juicio.</div>
+      </div>
+      <div class="porque-item">
+        <div class="porque-titulo">Que la experiencia nos defina</div>
+        <div class="porque-desc">Lo más profundo de todo. Queremos que lo que vivimos exista en el mundo sin que eso nos reduzca a esa experiencia. Queremos decir algo sin <em>ser</em> ese algo. Y eso ninguna red social puede dártelo — porque publicar <em>es</em> construir identidad.</div>
+      </div>
+    </div>
+
+    <p>Hay una señal que no podemos ignorar: millones de personas — especialmente jóvenes — usan chatbots de IA como apoyo emocional. Los estudios muestran resultados mixtos: algunos reducen síntomas de ansiedad, ofrecen disponibilidad 24/7 y eliminan barreras de acceso. Pero los psicólogos advierten riesgos reales: respuestas complacientes, fallas en crisis severas, ausencia de ética clínica.</p>
+
+    <p>La pregunta que importa no es si el chatbot es bueno o malo. Es <em>¿por qué alguien elige contarle algo a una IA antes que a una persona?</em> Porque no hay juicio. Porque el solo acto de exteriorizar calma la ansiedad. El ser humano no busca una solución — busca ser entendido. Y si no encuentra ese espacio entre personas reales, lo busca donde puede.</p>
+
+    <div class="divisor"></div>
+
+    <h2 style="font-size:1.2rem; margin-bottom:1rem;">Cómo Simpleno elimina cada barrera</h2>
+
+    <div class="tabla-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Lo que evitamos</th>
+            <th>Cómo Simpleno lo elimina</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ser rotulado</td>
+            <td>Sin nombre, no hay etiqueta posible</td>
+          </tr>
+          <tr>
+            <td>Perder el control de la narrativa</td>
+            <td>La historia no te pertenece — no hay nada que perder</td>
+          </tr>
+          <tr>
+            <td>Una reacción que no calza</td>
+            <td>La única respuesta posible es "resuena conmigo" — no hay consejo, no hay lástima, no hay drama</td>
+          </tr>
+          <tr>
+            <td>Convertirte en el que necesita</td>
+            <td>No hay "vos" en el sistema. No hay rol que ocupar</td>
+          </tr>
+          <tr>
+            <td>La vergüenza de sentir</td>
+            <td>Si resuena con cientos de personas, la vergüenza se disuelve en lo universal</td>
+          </tr>
+          <tr>
+            <td>Que la experiencia te defina</td>
+            <td>La historia existe. Vos no estás ahí</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="margin-top:2rem;">Contar una historia empodera a quien la escribe e inspira a quien la lee. Escribir tiene poderes curativos para quien la exterioriza — y da esperanza a quienes se identifican con la vivencia de un desconocido. En conjunto, se construye una comunidad anónima de aceptación.</p>
+
+  </section>
+
+
+  <!-- CAPÍTULO: FUNDAMENTOS -->
+  <div class="capitulo">
+    <div class="capitulo-label">Fundamentos e hipótesis</div>
+    <p class="capitulo-intro">El concepto no nace de la nada. Se sustenta en distintas tradiciones del pensamiento humano que, desde ángulos diferentes, llegan al mismo lugar. <span style="font-size:0.85rem; color:var(--gris);">— Hacé clic en cada esfera para expandirla.</span></p>
+
+    <div class="esferas-interactivas">
+
+      <div class="esfera-item" id="esfera-filosofico" onclick="toggleEsfera('filosofico')">
+        <div class="esfera-header">
+          <div class="esfera-dot">FILOS-<br>ÓFICO</div>
+          <div class="esfera-info">
+            <div class="esfera-titulo">Filosófico</div>
+            <div class="esfera-autores-mini">Krishnamurti · Jaynes</div>
+          </div>
+          <div class="esfera-flecha">+</div>
+        </div>
+        <div class="esfera-contenido" id="contenido-filosofico">
+          <div class="esfera-contenido-inner">
+            <p>Krishnamurti sostenía que el pensamiento es una herencia colectiva, no una creación individual. Lo que percibimos como una idea propia es casi siempre una variación de algo que ya circula en el campo compartido de la experiencia humana. El yo que piensa podría ser más un canal que un autor. Julian Jaynes va más lejos: propone que hasta hace relativamente poco los humanos no experimentaban sus pensamientos como propios — los escuchaban como voces externas, de dioses o ancestros. La conciencia individual tal como la conocemos es una construcción histórica reciente.</p>
+            <div class="autores-full">Jiddu Krishnamurti · Julian Jaynes</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="esfera-item" id="esfera-transcendental" onclick="toggleEsfera('transcendental')">
+        <div class="esfera-header">
+          <div class="esfera-dot">TRANS-<br>CEND.</div>
+          <div class="esfera-info">
+            <div class="esfera-titulo">Transcendental</div>
+            <div class="esfera-autores-mini">Sheldrake · Bohm</div>
+          </div>
+          <div class="esfera-flecha">+</div>
+        </div>
+        <div class="esfera-contenido" id="contenido-transcendental">
+          <div class="esfera-contenido-inner">
+            <p>Rupert Sheldrake propone que la información no vive solo en los cerebros individuales sino en campos mórficos que los trascienden, accesibles para todos los miembros de una especie. El cerebro no almacena: sintoniza. Como una antena que recibe una señal que ya existe en el campo. David Bohm, desde la física cuántica, habla del orden implicado: una dimensión donde todo está interconectado antes de desplegarse en lo visible. La separación entre mi experiencia y la del otro sería una ilusión de superficie.</p>
+            <div class="autores-full">Rupert Sheldrake · David Bohm</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="esfera-item" id="esfera-antropologico" onclick="toggleEsfera('antropologico')">
+        <div class="esfera-header">
+          <div class="esfera-dot">ANTRO-<br>POL.</div>
+          <div class="esfera-info">
+            <div class="esfera-titulo">Antropológico</div>
+            <div class="esfera-autores-mini">Jung · Tradición oral</div>
+          </div>
+          <div class="esfera-flecha">+</div>
+        </div>
+        <div class="esfera-contenido" id="contenido-antropologico">
+          <div class="esfera-contenido-inner">
+            <p>Carl Jung nombró el inconsciente colectivo: capas de la psiquis que no son individuales sino de toda la especie. Los arquetipos no los inventamos — los heredamos. La tradición oral lleva milenios demostrando lo mismo: Caperucita no es de nadie. El mito de Orfeo no tiene copyright. Las canciones de cuna no tienen firma. Las historias que más duran son las que no tienen dueño. El tejido colectivo es lo original — la propiedad individual del relato es el accidente histórico.</p>
+            <div class="autores-full">Carl Jung · Tradición oral universal</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="esfera-item" id="esfera-psicologico" onclick="toggleEsfera('psicologico')">
+        <div class="esfera-header">
+          <div class="esfera-dot">PSICO-<br>LÓG.</div>
+          <div class="esfera-info">
+            <div class="esfera-titulo">Psicológico</div>
+            <div class="esfera-autores-mini">Frankl · Catarsis</div>
+          </div>
+          <div class="esfera-flecha">+</div>
+        </div>
+        <div class="esfera-contenido" id="contenido-psicologico">
+          <div class="esfera-contenido-inner">
+            <p>Viktor Frankl encontró que la motivación más profunda no es el placer ni el reconocimiento sino el sentido — que algo importe más allá de uno mismo. C.S. Lewis describió el momento humano más fundamental: ¿A vos también? Creía que era el único. La catarsis — la liberación emocional a través del relato — opera sin necesitar un autor identificable. Nombrar algo que pesa es el primer acto de aceptación. No desaparece, pero deja de vivir encerrado en el cuerpo.</p>
+            <div class="autores-full">Viktor Frankl · C.S. Lewis · Aristóteles</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <!-- 6. ESTO NO ES NUEVO -->
+  <section>
+    <div class="seccion-titulo">06 — Esto es muy antiguo</div>
+    <h2>El tejido existió siempre. Lo perdimos.</h2>
+
+    <p>Caperucita no es de nadie. Es de todos. El mito de Orfeo no tiene copyright. Las canciones de cuna no tienen firma. Los dichos populares no tienen autor.</p>
+
+    <p>Lo que esta plataforma propone es recuperar ese modo de circulación del relato — oral, colectivo, sin dueño — en un mundo digital que siempre quiere poner etiquetas a todo.</p>
+
+    <p>Jung llamaría a esto el <em>inconsciente colectivo</em> hecho plataforma: las historias que todos vivimos pero nadie contó porque le daba vergüenza ser el primero.</p>
+
+    <div class="divisor"></div>
+
+    <p>Y no es una idea sin antecedentes en el mundo digital:</p>
+
+    <div class="referentes">
+      <div class="referente">
+        <div class="nombre">PostSecret</div>
+        <div class="desc">Frank Warren lleva 20 años recibiendo postales anónimas con secretos. Vendió millones de libros. Sin perfil, sin like, sin reconocimiento. La gente las manda igual. Prueba empírica de que la motivación existe.</div>
+      </div>
+      <div class="referente">
+        <div class="nombre">Whisper</div>
+        <div class="desc">Levantó 60 millones de dólares. 30 millones de usuarios. Cayó en dinámica de red y toxicidad. El concepto estaba bien — la ejecución no.</div>
+      </div>
+      <div class="referente">
+        <div class="nombre">Secret</div>
+        <div class="desc">Startup que levantó 35 millones de dólares. Misma caída: intentaron el anonimato pero sin desactivar el ego estructuralmente.</div>
+      </div>
+      <div class="referente">
+        <div class="nombre">FMyLife</div>
+        <div class="desc">Startup francesa internacionalizada. Historias cortas anónimas votadas por la comunidad. Funciona aún hoy.</div>
+      </div>
+    </div>
+
+    <p style="margin-top: 1.5rem;">El espacio está probado. La ejecución justa no existe todavía. Nadie llegó al tejido real — todos cayeron en lógica de red.</p>
+  </section>
+
+
+  <!-- 7. FUNDAMENTO FILOSÓFICO -->
+  <section>
+    <div class="seccion-titulo">07 — El pensamiento que no nos pertenece</div>
+    <h2>¿Y si la historia que escribís ya era, en algún sentido, de todos?</h2>
+
+    <p>Hay algo que la filosofía, la psicología profunda y hasta la física cuántica vienen señalando desde ángulos distintos: que los pensamientos, en un sentido profundo, no nos pertenecen individualmente. Que somos menos el origen de lo que pensamos y sentimos, y más un canal por donde algo pasa.</p>
+
+    <p>Krishnamurti lo dijo con claridad: el pensamiento es una herencia colectiva. Somos receptáculos, no creadores. Lo que percibimos como una idea propia es casi siempre una variación de algo que ya circula en el campo compartido de la experiencia humana. El "yo" que piensa podría ser más un conductor que un autor.</p>
+
+    <p>Rupert Sheldrake llega al mismo lugar desde la biología. Su teoría de la resonancia mórfica propone que la información no vive solo en los cerebros individuales sino en campos que los trascienden, accesibles para todos los miembros de una especie. El cerebro no almacena — sintoniza. La metáfora que usa el propio Sheldrake es esa: somos antenas que reciben una señal que ya existe.</p>
+
+    <p>David Bohm, desde la física cuántica, habla del orden implicado: una dimensión de la realidad donde todo está interconectado antes de desplegarse en lo visible. En ese orden profundo, la separación entre "mi experiencia" y "la experiencia del otro" es una ilusión de superficie. En el fondo, hay un solo movimiento.</p>
+
+    <p>Y Julian Jaynes —el más perturbador— propone que hasta hace relativamente poco los humanos no experimentaban sus propios pensamientos como suyos. Los escuchaban como voces externas, de dioses o ancestros. La conciencia individual tal como la conocemos es una construcción histórica reciente. Antes éramos, literalmente, antenas.</p>
+
+    <div class="insight">
+      <p>Si esto tiene algo de verdad, entonces una historia sin dueño no es una rareza ni una utopía. Es un retorno. <strong>La propiedad individual del pensamiento y la experiencia es el accidente histórico. El tejido colectivo es lo original.</strong></p>
+    </div>
+  </section>
+
+
+  <!-- 8. EL MOMENTO -->
+  <section>
+    <div class="seccion-titulo">08 — Por qué ahora</div>
+    <h2>El momento cultural está dado</h2>
+
+    <div class="principios">
+      <div class="principio">
+        <div class="num">→</div>
+        <div class="texto">Hay hartazgo documentado y masivo con la cultura de Instagram y la performance exitista. Ese hartazgo generó un contramovimiento: el <strong>JOMO</strong> (Joy of Missing Out). No propone desconectarse del mundo sino reconectarse con lo que realmente importa. En un mundo que no para de pedirte atención, elegir a qué se la das puede ser el acto más radical y genuino que existe.</div>
+      </div>
+      <div class="principio">
+        <div class="num">→</div>
+        <div class="texto">La conversación sobre salud mental y redes sociales es mainstream — ya no es nicho.</div>
+      </div>
+      <div class="principio">
+        <div class="num">→</div>
+        <div class="texto">Gen Z busca activamente alternativas. Muchos volvieron al papel, a los diarios físicos, a lo analógico.</div>
+      </div>
+      <div class="principio">
+        <div class="num">→</div>
+        <div class="texto">América Latina no tiene nada en este espacio con identidad cultural propia — el nicho regional está vacío.</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 9. PRÓXIMO PASO -->
+  <section>
+    <div class="seccion-titulo">09 — El primer paso</div>
+    <h2>No una plataforma. Un experimento.</h2>
+
+    <p>Antes de construir algo, hay que comprobar qué ocurre realmente en la psiquis humana cuando el autor desaparece. No hay respuesta teórica para esto. Solo hay experimento.</p>
+
+    <blockquote>
+      <p>¿La gente necesita saber que <strong>SU</strong> historia fue leída, o alcanza con saber que <strong>LA</strong> historia fue leída?</p>
+    </blockquote>
+
+    <p>Esa distinción es la más importante del concepto. Y abre otras preguntas igual de urgentes:</p>
+
+    <div class="principios">
+      <div class="principio">
+        <div class="num">?</div>
+        <div class="texto">¿Qué ocurre en la psiquis de quien escribe algo y lo suelta sin saber qué pasará con eso?</div>
+      </div>
+      <div class="principio">
+        <div class="num">?</div>
+        <div class="texto">¿El ego termina ganando igual, aunque sea anónimo? ¿O sin nombre el ego no tiene dónde pararse?</div>
+      </div>
+      <div class="principio">
+        <div class="num">?</div>
+        <div class="texto">¿Hay reparación en el acto de escribir y ser reconocido sin ser identificado?</div>
+      </div>
+      <div class="principio">
+        <div class="num">?</div>
+        <div class="texto">¿La empatía social ocurre igual — o más — cuando no sabés nada del otro?</div>
+      </div>
+    </div>
+
+    <p>La versión mínima para empezar a responder esto no es una app. Es un grupo cerrado de 50 personas, historias anónimas recolectadas a mano, y una sola acción disponible: <em>"esto resuena conmigo"</em>.</p>
+
+    <p>Si eso genera algo, la idea vive. Si no genera nada, aprendiste algo real sin haber construido nada.</p>
+
+    <div class="pregunta-final">
+      <p>¿Qué pasaría si durante un mes, alguien publica historias anónimas y la única acción posible es decir "esto también me pasó"?</p>
+    </div>
+  </section>
+
+
+  <!-- 2. LA IDEA -->
+  <section>
+    <div class="seccion-titulo">02 — La idea central</div>
+    <h2>Una historia que no le pertenece a nadie</h2>
+
+    <p>La estructura de toda red social es la misma:</p>
+
+    <blockquote>
+      <p>Yo → Historia → Audiencia</p>
+      <span class="autor">El autor es el centro. La historia lo sirve a él.</span>
+    </blockquote>
+
+    <p>La propuesta es invertir eso:</p>
+
+    <blockquote>
+      <p>Historia ↔ Comunidad</p>
+      <span class="autor">La historia es el centro. El autor no existe.</span>
+    </blockquote>
+
+    <p>No es una red. No es un diario. Es un <span class="highlight">Simpleno de experiencias humanas reales</span> donde la historia importa y el autor desaparece.</p>
+
+    <p>Cuando una historia no tiene dueño, deja de hablar de alguien. Habla de todos. La diferencia entre las dos es enorme emocionalmente.</p>
+
+    <p><em>"Le tengo miedo a que me conozcan de verdad. No al qué dirán — a mostrarme como soy y que eso no sea suficiente."</em> Es una anécdota si la firma alguien. Sin firma, es una experiencia humana universal.</p>
+  </section>
+
+
+  <!-- 3. PRINCIPIOS DE DISEÑO -->
+  <section>
+    <div class="seccion-titulo">03 — Principios de diseño</div>
+    <h2>Lo que hace que esto funcione (o no)</h2>
+
+    <div class="principios">
+      <div class="principio">
+        <div class="num">01</div>
+        <div class="texto">
+          <strong>Sin primer publicador</strong>
+          No existe timestamp visible ni "subido por". La historia aparece y ya está. Nadie puede decir "yo la puse primero".
+        </div>
+      </div>
+      <div class="principio">
+        <div class="num">02</div>
+        <div class="texto">
+          <strong>Sin perfil, sin historial</strong>
+          Publicar no construye identidad dentro del sistema. El ego no tiene dónde aterrizar.
+        </div>
+      </div>
+      <div class="principio">
+        <div class="num">03</div>
+        <div class="texto">
+          <strong>El éxito no fluye de vuelta a nadie</strong>
+          Si una historia resuena masivamente, nadie gana followers. La historia crece. Ninguna cuenta se infla.
+        </div>
+      </div>
+      <div class="principio">
+        <div class="num">04</div>
+        <div class="texto">
+          <strong>El formato es el moderador</strong>
+          Las historias se escriben en primera persona vivencial — "sentí", "me pasó", "estuve ahí". No "él hizo", "ella es". El formato previene el bullying y la acusación sin necesitar moderación humana.
+        </div>
+      </div>
+      <div class="principio">
+        <div class="num">05</div>
+        <div class="texto">
+          <strong>Sin identificadores específicos</strong>
+          Sin nombre de lugar, empresa, persona. Lo suficientemente universal para que no haya un "pool de sospechosos" — eso mata el chisme.
+        </div>
+      </div>
+      <div class="principio">
+        <div class="num">06</div>
+        <div class="texto">
+          <strong>La acción central es reconocer, no publicar</strong>
+          No "yo pongo algo". Sino "encuentro esta historia y digo: esto también me pasó". Ahí la historia deja de ser de quien la escribió y pasa a ser de todos los que la reconocen.
+        </div>
+      </div>
+      <div class="principio">
+        <div class="num">07</div>
+        <div class="texto">
+          <strong>El anonimato es estructural, no prometido</strong>
+          En la fase de implementación, el anonimato no dependerá de la buena voluntad de nadie. Una arquitectura basada en blockchain garantizará que ningún operador, ningún servidor y ningún requerimiento legal pueda vincular una historia con su autor. No como marketing — como garantía técnica. <em style="color:var(--gris); font-size:0.85em;">El mensaje no es "confiá en nosotros". Es "el sistema hace imposible saberlo".</em>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 4. INTERACCIÓN -->
+  <section>
+    <div class="seccion-titulo">04 — La interacción</div>
+    <h2>En lugar de un like, un reconocimiento</h2>
+
+    <p>La única acción disponible no es un like. No es un share. No es un comentario. Es una sola cosa:</p>
+
+    <blockquote>
+      <p>"Esto resuena conmigo" — "También me pasó" — "Yo también estuve ahí"</p>
+    </blockquote>
+
+    <p>Esa distinción cambia todo el sistema de incentivos. La métrica de éxito no es cuántas personas me dieron like o me siguieron. Es cuántas personas resonaron y empatizaron conmigo.</p>
+
+    <div class="grid">
+      <div class="tarjeta">
+        <div class="titulo">Lo que gana quien publica</div>
+        <p>Soltar algo que pesa. Sin costo social. Sin etiqueta. Sin juicio. Que algo que vivió exista fuera de su cabeza.</p>
+      </div>
+      <div class="tarjeta">
+        <div class="titulo">Lo que gana quien lee</div>
+        <p>Reconocerse en algo que no sabía cómo nombrar. Dejar de sentir que lo suyo es raro o único.</p>
+      </div>
+      <div class="tarjeta">
+        <div class="titulo">La única métrica</div>
+        <p>No es quiénes ni cuántos le dieron like. Sino cuántas personas resonaron con la historia.</p>
+      </div>
+      <div class="tarjeta">
+        <div class="titulo">Lo que comparten los dos</div>
+        <p>Empatizo con la historia sin saber quién es el otro, sin conocerlo.</p>
+      </div>
+    </div>
+  </section>
+
+
+

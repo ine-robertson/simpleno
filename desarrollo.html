@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simpleno — Desarrollo de la idea</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --crema: #f7f4ef;
+      --tierra: #8b6f5c;
+      --carbon: #1e1e1e;
+      --gris: #6b6b6b;
+      --gris-claro: #d4cfc9;
+      --acento: #c17f5a;
+    }
+
+    html { font-size: 18px; scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--crema);
+      color: var(--carbon);
+      font-family: 'Georgia', 'Times New Roman', serif;
+      line-height: 1.8;
+      padding: 0 1.5rem;
+    }
+
+    .contenedor {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 5rem 0 8rem;
+    }
+
+    /* PORTADA */
+    .portada {
+      padding: 4rem 0 5rem;
+      border-bottom: 1px solid var(--gris-claro);
+      margin-bottom: 4rem;
+    }
+
+    .portada .etiqueta {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--acento);
+      margin-bottom: 1.5rem;
+    }
+
+    .portada h1 {
+      font-size: 3rem;
+      font-weight: normal;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      color: var(--carbon);
+    }
+
+    .portada .bajada {
+      font-size: 1.15rem;
+      color: var(--gris);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* SECCIONES */
+    section {
+      margin-bottom: 4.5rem;
+    }
+
+    .seccion-titulo {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--acento);
+      margin-bottom: 1.2rem;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      font-weight: normal;
+      line-height: 1.3;
+      margin-bottom: 1.2rem;
+      color: var(--carbon);
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: var(--carbon);
+    }
+
+    p + p { margin-top: 0.2rem; }
+
+    /* CITA */
+    blockquote {
+      border-left: 3px solid var(--acento);
+      padding: 1rem 1.5rem;
+      margin: 2rem 0;
+      background: rgba(193, 127, 90, 0.06);
+      border-radius: 0 4px 4px 0;
+    }
+
+    blockquote p {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--carbon);
+      margin: 0;
+    }
+
+    blockquote .autor {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.75rem;
+      font-style: normal;
+      color: var(--gris);
+      margin-top: 0.6rem;
+      display: block;
+    }
+
+    /* TABLA */
+    .tabla-wrapper {
+      overflow-x: auto;
+      margin: 2rem 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.85rem;
+    }
+
+    th {
+      text-align: left;
+      padding: 0.6rem 1rem;
+      font-weight: 600;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gris);
+      border-bottom: 2px solid var(--gris-claro);
+    }
+
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--gris-claro);
+      color: var(--carbon);
+      line-height: 1.5;
+      vertical-align: top;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    /* GRID DE TARJETAS */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin: 2rem 0;
+    }
+
+    @media (max-width: 560px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    .tarjeta {
+      background: white;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      padding: 1.4rem;
+    }
+
+    .tarjeta .titulo {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--acento);
+      margin-bottom: 0.6rem;
+    }
+
+    .tarjeta p {
+      font-size: 0.9rem;
+      color: var(--gris);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* COMPARACION */
+    .comparacion {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin: 2rem 0;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    @media (max-width: 560px) {
+      .comparacion { grid-template-columns: 1fr; }
+    }
+
+    .col-rota {
+      padding: 1.5rem;
+      background: #f0ede8;
+    }
+
+    .col-nueva {
+      padding: 1.5rem;
+      background: white;
+    }
+
+    .col-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .col-rota .col-label { color: #b07070; }
+    .col-nueva .col-label { color: var(--acento); }
+
+    .col-rota ul, .col-nueva ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .col-rota li, .col-nueva li {
+      font-size: 0.9rem;
+      color: var(--carbon);
+      padding: 0.3rem 0;
+      border-bottom: 1px solid var(--gris-claro);
+      line-height: 1.5;
+    }
+
+    .col-rota li:last-child, .col-nueva li:last-child { border-bottom: none; }
+
+    /* INSIGHT BOX */
+    .insight {
+      background: var(--carbon);
+      color: var(--crema);
+      border-radius: 6px;
+      padding: 2rem 2.2rem;
+      margin: 2.5rem 0;
+    }
+
+    .insight p {
+      color: var(--crema);
+      font-size: 1.05rem;
+      margin: 0;
+    }
+
+    .insight strong {
+      color: #e8c4a0;
+    }
+
+    /* PRINCIPIOS */
+    .principios {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 2rem 0;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .principio {
+      display: grid;
+      grid-template-columns: 2rem 1fr;
+      gap: 1rem;
+      padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid var(--gris-claro);
+      align-items: start;
+    }
+
+    .principio:last-child { border-bottom: none; }
+
+    .principio .num {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--acento);
+      padding-top: 0.15rem;
+    }
+
+    .principio .texto {
+      font-size: 0.9rem;
+      color: var(--carbon);
+      line-height: 1.6;
+    }
+
+    .principio .texto strong {
+      display: block;
+      margin-bottom: 0.2rem;
+      font-size: 0.85rem;
+    }
+
+    /* REFERENTES */
+    .referentes {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .referente {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 0;
+      border-bottom: 1px solid var(--gris-claro);
+    }
+
+    .referente:last-child { border-bottom: none; }
+
+    .referente .nombre {
+      padding: 1.1rem 1.2rem;
+      background: #f0ede8;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--carbon);
+      border-right: 1px solid var(--gris-claro);
+    }
+
+    .referente .desc {
+      padding: 1.1rem 1.4rem;
+      font-size: 0.85rem;
+      color: var(--gris);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 560px) {
+      .referente { grid-template-columns: 1fr; }
+      .referente .nombre { border-right: none; border-bottom: 1px solid var(--gris-claro); }
+    }
+
+    /* PREGUNTA FINAL */
+    .pregunta-final {
+      text-align: center;
+      padding: 3rem 2rem;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      margin-top: 3rem;
+    }
+
+    .pregunta-final p {
+      font-size: 1.2rem;
+      color: var(--gris);
+      font-style: italic;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* DIVISOR */
+    .divisor {
+      width: 3rem;
+      height: 2px;
+      background: var(--acento);
+      margin: 3rem 0;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--gris-claro);
+      padding-top: 2rem;
+      margin-top: 5rem;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.72rem;
+      color: var(--gris);
+      letter-spacing: 0.05em;
+    }
+
+    .highlight {
+      background: rgba(193, 127, 90, 0.12);
+      padding: 0.1em 0.3em;
+      border-radius: 2px;
+    }
+
+    /* CAPÍTULO */
+    .capitulo {
+      border-top: 2px solid var(--acento);
+      padding-top: 3rem;
+      margin: 2rem 0 4rem;
+    }
+
+    .capitulo-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--acento);
+      margin-bottom: 1rem;
+    }
+
+    .capitulo-intro {
+      font-size: 1rem;
+      color: var(--gris);
+      line-height: 1.7;
+      margin-bottom: 0;
+      max-width: 560px;
+    }
+
+    .esferas-interactivas {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin: 2rem 0;
+    }
+
+    @media (max-width: 560px) {
+      .esferas-interactivas { grid-template-columns: 1fr; }
+    }
+
+    .esfera-item {
+      border: 1px solid var(--gris-claro);
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      background: white;
+      transition: border-color 0.3s;
+    }
+
+    .esfera-item.activo {
+      border-color: var(--acento);
+    }
+
+    .esfera-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+      transition: background 0.2s;
+      user-select: none;
+    }
+
+    .esfera-header:hover { background: #f7f4ef; }
+
+    .esfera-dot {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1.5px solid var(--acento);
+      background: #faf8f5;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 7.5px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--carbon);
+      text-align: center;
+      line-height: 1.3;
+      transition: background 0.3s, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .esfera-item.activo .esfera-dot {
+      background: #e8d5c4;
+      transform: scale(0.72);
+    }
+
+    .esfera-info { flex: 1; }
+
+    .esfera-titulo {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--carbon);
+      margin-bottom: 0.2rem;
+    }
+
+    .esfera-autores-mini {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.68rem;
+      color: var(--gris);
+      font-style: italic;
+    }
+
+    .esfera-flecha {
+      font-size: 1.3rem;
+      color: var(--acento);
+      transition: transform 0.35s ease;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .esfera-item.activo .esfera-flecha { transform: rotate(45deg); }
+
+    .esfera-contenido {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, opacity 0.4s ease;
+      opacity: 0;
+    }
+
+    .esfera-contenido.visible {
+      opacity: 1;
+    }
+
+    .esfera-contenido-inner {
+      padding: 0 1.4rem 1.4rem;
+      border-top: 1px solid var(--gris-claro);
+    }
+
+    .esfera-contenido-inner p {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: var(--carbon);
+      margin: 1rem 0 0.6rem;
+    }
+
+    .esfera-contenido-inner .autores-full {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.7rem;
+      color: var(--gris);
+      font-style: italic;
+    }
+
+    /* PORQUE LISTA */
+    .porque-lista {
+      margin: 2rem 0;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .porque-item {
+      padding: 1.3rem 1.5rem;
+      border-bottom: 1px solid var(--gris-claro);
+    }
+
+    .porque-item:last-child { border-bottom: none; }
+
+    .porque-titulo {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: var(--carbon);
+      margin-bottom: 0.4rem;
+    }
+
+    .porque-desc {
+      font-size: 0.88rem;
+      color: var(--gris);
+      line-height: 1.65;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .portada h1 { font-size: 2rem; }
+      h2 { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="contenedor">
+
+  <!-- PORTADA -->
+  <div class="portada">
+    <div class="etiqueta">Concepto — Agosto 2026</div>
+    <h1>Simpleno</h1>
+    <p class="bajada">Desarrollo de la idea</p>
+  </div>
+
+  <!-- ROMPEHIELO -->
+  <div style="padding: 2rem 0 3.5rem; border-bottom: 1px solid var(--gris-claro); margin-bottom: 4rem;">
+    <p style="font-size:1.15rem; line-height:1.9; color:var(--gris); font-style:italic;">¿Cuándo fue la última vez que le contaste algo real a alguien? No un resumen. No la versión prolija. Algo que de verdad te pesaba.</p>
+    <p style="font-size:1.15rem; line-height:1.9; color:var(--gris); font-style:italic;">Nunca estuvimos tan desconectados estando conectados.</p>
+    <p style="font-size:1.15rem; line-height:1.9; color:var(--gris); font-style:italic;">Y ahí estás, buscando llenarte scrolleando el feed. Todo el mundo parece estar bien. Mejor que vos. El viaje, el ascenso, la foto perfecta. Cerrás la app con una sensación difusa porque te distrajiste, llenaste el tiempo pero lo que tenés adentro no se vació.</p>
+  </div>
+
+  <!-- 10. MODELO DE NEGOCIO -->
+  <section>
+    <div class="seccion-titulo">10 — El modelo de negocio</div>
+    <h2>Primero la prueba. Después el dinero.</h2>
+
+    <p>La pregunta obvia es: ¿cómo se sostiene esto sin caer en el modelo de Instagram — sin publicidad, sin perfiles, sin venta de datos?</p>
+
+    <p>Es la pregunta correcta. Pero está siendo hecha demasiado pronto.</p>
+
+    <div class="insight">
+      <p>Wikipedia no arrancó con donaciones. Ese modelo surgió años después, cuando ya había algo que la gente sentía que valía la pena sostener. Primero validó que las personas construyen conocimiento colectivo de forma genuina y gratuita. El modelo de financiamiento emergió de lo que la comunidad ya valoraba — no al revés.</p>
+    </div>
+
+    <p>PostSecret empezó con un buzón de correo y un blog. Frank Warren no tenía modelo de negocio. Los libros, las exposiciones y las charlas vinieron cuando ya había millones de personas que necesitaban que eso existiera.</p>
+
+    <p>El error es intentar resolver el modelo antes de saber si hay algo real. Porque el modelo tiene que nacer de <strong>lo que la gente siente que vale</strong> — y eso no se puede saber antes de que lo sientan.</p>
+
+    <div class="comparacion">
+      <div class="col-rota">
+        <div class="col-label">La pregunta prematura</div>
+        <ul>
+          <li>¿Cómo se financia?</li>
+          <li>¿Cuál es el modelo?</li>
+          <li>¿Cómo escala?</li>
+          <li>¿Quién invierte?</li>
+        </ul>
+      </div>
+      <div class="col-nueva">
+        <div class="col-label">La pregunta que toca ahora</div>
+        <ul>
+          <li>¿Resuena con alguien?</li>
+          <li>¿El ego se queda afuera?</li>
+          <li>¿Es la empatía una necesidad social tan fuerte que puede traccionar esto?</li>
+          <li>¿Hay algo que valga sostener?</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>Si el experimento funciona — si cincuenta personas leen historias anónimas y algo genuino ocurre — el modelo se va a ver solo. Va a emerger de lo que esas personas sintieron que valió. Puede ser una membresía voluntaria, puede ser una edición física, puede ser algo que todavía no existe.</p>
+
+    <p>Si no funciona, ahorraste meses de construir un modelo de negocio para algo que no tenía demanda real.</p>
+
+    <p>La secuencia correcta es siempre la misma: primero comprobá que algo importa. Después pensá cómo sostenés lo que importa.</p>
+
+    <div class="divisor"></div>
+
+    <p style="color:var(--gris); font-size:0.9rem;">Algunas ideas para explorar en su momento — sin que ninguna comprometa la esencia del concepto:</p>
+
+    <div class="principios">
+      <div class="principio">
+        <div class="num">→</div>
+        <div class="texto"><strong>Membresía voluntaria</strong> — Quien quiere sostener Simpleno contribuye una cuota mínima, como Wikipedia. Sin acceso diferenciado, sin ventajas. Solo el acto de sostener algo que considera valioso.</div>
+      </div>
+      <div class="principio">
+        <div class="num">→</div>
+        <div class="texto"><strong>Ediciones físicas</strong> — Las historias más resonantes, curadas y publicadas en formato libro sin autor. Como PostSecret. El objeto existe, no tiene dueño, la venta sostiene la plataforma.</div>
+      </div>
+      <div class="principio">
+        <div class="num">→</div>
+        <div class="texto"><strong>Experiencias presenciales</strong> — Eventos donde las historias de Simpleno se leen en voz alta, sin saber de quién son. La entrada financia lo digital. El vivo amplifica lo colectivo.</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 11. BLOCKCHAIN -->
+  <section>
+    <div class="seccion-titulo">11 — La garantía técnica</div>
+    <h2>Cómo el anonimato deja de ser una promesa y se convierte en una propiedad del sistema</h2>
+
+    <p>Cualquier app normal tiene un servidor. Ese servidor es una computadora que alguien controla — la empresa, el dueño, quien sea. En ese servidor vive todo: las historias, y quién las publicó. Aunque prometan no mirarlo, pueden mirarlo. Y si un juez lo ordena, tienen que abrirlo.</p>
+
+    <blockquote>
+      <p>Es como escribir tu secreto en un papel y dárselo a un amigo para que lo guarde. Tu amigo puede prometer que no lo lee. Pero puede leerlo. Y si alguien lo presiona, lo abre.</p>
+    </blockquote>
+
+    <p>Blockchain resuelve esto de raíz. En lugar de un servidor central, el sistema se distribuye en miles de computadoras alrededor del mundo — ninguna controlada por la misma persona. No hay un dueño. No hay un servidor al que alguien pueda acceder. No hay una empresa a la que un juez pueda pedirle los datos. Para apagar el sistema, tendrías que apagar miles de computadoras en decenas de países al mismo tiempo.</p>
+
+    <div class="seccion-titulo" style="margin-top:2rem;">Cómo funcionaría para Simpleno</div>
+
+    <div class="principios">
+      <div class="principio">
+        <div class="num">01</div>
+        <div class="texto">
+          <strong>La historia sale de tu dispositivo sin tu nombre</strong>
+          Antes de que salga, pasa por una capa que separa el texto de tu identidad. Como echar una carta al correo desde un buzón al azar — llega, pero no tiene remitente.
+        </div>
+      </div>
+      <div class="principio">
+        <div class="num">02</div>
+        <div class="texto">
+          <strong>La historia se publica sin campo "autor"</strong>
+          Queda registrada públicamente — cualquiera puede leerla — pero el campo autor no está vacío. Directamente no existe como concepto en el sistema.
+        </div>
+      </div>
+      <div class="principio">
+        <div class="num">03</div>
+        <div class="texto">
+          <strong>Una huella digital garantiza que es única</strong>
+          Al publicarse, el sistema genera un código matemático del texto. Si alguien intenta publicar la misma historia de nuevo, el sistema detecta que esa huella ya existe y la rechaza automáticamente. Sin que nadie la revise.
+        </div>
+      </div>
+      <div class="principio">
+        <div class="num">04</div>
+        <div class="texto">
+          <strong>El "resuena conmigo" también es anónimo</strong>
+          Cada resonancia queda registrada como un número — sin saber quién la hizo. La historia acumula resonancias visibles. Los resonantes son invisibles.
+        </div>
+      </div>
+    </div>
+
+    <div class="comparacion" style="margin-top:2rem;">
+      <div class="col-rota">
+        <div class="col-label">App tradicional</div>
+        <ul>
+          <li>"Prometemos no mirar quién publicó"</li>
+          <li>Un servidor que alguien controla</li>
+          <li>Un juez puede pedir los datos</li>
+          <li>El anonimato depende de la confianza</li>
+        </ul>
+      </div>
+      <div class="col-nueva">
+        <div class="col-label">Simpleno con blockchain</div>
+        <ul>
+          <li>Matemáticamente imposible saberlo</li>
+          <li>Miles de computadoras sin dueño</li>
+          <li>No hay datos que pedir</li>
+          <li>El anonimato es una propiedad del sistema</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="insight" style="margin-top:2.5rem;">
+      <p>No es <em style="color:#e8c4a0;">"confiá en nosotros"</em>.<br><br>
+      Es <strong>"aunque quisiéramos saber quién sos, no podemos. Nadie puede. No porque prometamos — sino porque esa información nunca existió en ningún lugar."</strong></p>
+    </div>
+  </section>
+
+
+
+  <!-- 12. VALIDACIÓN -->
+  <!-- 12. VALIDACIÓN -->
+  <section>
+    <div class="seccion-titulo">12 — Validación</div>
+    <h2>Preguntas para una audiencia pequeña</h2>
+
+    <p>Antes de construir cualquier cosa, hay que escuchar. Estas preguntas están diseñadas para una audiencia reducida y diversa — periodistas, gestoras de contenido, psicólogos, neurocientíficos — con el objetivo de validar si las motivaciones centrales del concepto son reales.</p>
+
+    <div class="divisor"></div>
+
+    <div class="porque-lista">
+
+      <div class="porque-item">
+        <div class="porque-titulo">Bloque 1 — Lo personal</div>
+        <div class="porque-desc" style="margin-top:0.8rem;">
+          <p style="margin-bottom:0.6rem;">1. ¿Qué tipo de historias o anécdotas de tu vida sentís que no tienen lugar en las redes tal como son hoy?</p>
+          <p style="margin:0;">2. ¿Recordás haber leído algo personal de alguien que te llegó más que cualquier contenido producido? ¿Qué tenía?</p>
+        </div>
+      </div>
+
+      <div class="porque-item">
+        <div class="porque-titulo">Bloque 2 — El anonimato como mecanismo</div>
+        <div class="porque-desc" style="margin-top:0.8rem;">
+          <p style="margin-bottom:0.6rem;">3. ¿Qué creés que cambia en una historia de vida cuando no sabés quién la vivió?</p>
+          <p style="margin:0;">4. ¿Hay anécdotas o momentos tuyos que contarías si nadie supiera que sos vos — no por vergüenza, sino porque el contexto social lo hace difícil?</p>
+        </div>
+      </div>
+
+      <div class="porque-item">
+        <div class="porque-titulo">Bloque 3 — La empatía como motor</div>
+        <div class="porque-desc" style="margin-top:0.8rem;">
+          <p style="margin-bottom:0.6rem;">5. ¿Creés que la empatía funciona igual — o diferente — cuando no sabés nada de quien habla?</p>
+          <p style="margin:0;">6. ¿Qué tendría que tener una historia cotidiana para que digas "esto también me pasó" aunque no conozcas a quien la vivió?</p>
+        </div>
+      </div>
+
+      <div class="porque-item">
+        <div class="porque-titulo">Bloque 4 — El concepto</div>
+        <div class="porque-desc" style="margin-top:0.8rem;">
+          <p style="margin-bottom:0.6rem;">7. ¿Qué te generaría encontrar una plataforma donde las historias de vida no tienen autor y la única acción posible es "esto resuena conmigo"?</p>
+          <p style="margin:0;">8. ¿Qué te frenaría de compartir una anécdota ahí? ¿Y qué te lo permitiría?</p>
+        </div>
+      </div>
+
+      <div class="porque-item">
+        <div class="porque-titulo">La pregunta más importante — va al final</div>
+        <div class="porque-desc" style="margin-top:0.8rem;">
+          <p style="margin:0;">9. Si contás una historia de tu vida y nunca sabés si alguien la leyó, si resonó, si llegó a alguien — ¿lo harías igual? ¿Por qué sí o por qué no?</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="divisor"></div>
+
+    <p style="font-size:0.9rem; color:var(--gris);">Preguntas complementarias según perfil:</p>
+
+    <div class="referentes">
+      <div class="referente">
+        <div class="nombre">Psicólogos · Neurocientíficos</div>
+        <div class="desc">¿Qué ocurre en la psiquis de alguien que narra una experiencia personal sin identificarse? ¿La empatía se activa diferente cuando no hay información sobre quien habla?</div>
+      </div>
+      <div class="referente">
+        <div class="nombre">Periodistas</div>
+        <div class="desc">¿Qué historias cotidianas merecen ser contadas y no tienen el formato ni el espacio para serlo hoy? ¿Qué cambiaría en una historia si no tuviera firma?</div>
+      </div>
+      <div class="referente">
+        <div class="nombre">Gestoras de contenido</div>
+        <div class="desc">¿Cuál es la diferencia entre el contenido que conecta de verdad y el que conecta performativamente? ¿Podría funcionar una plataforma donde el éxito de una historia no le suma nada a nadie en particular?</div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <footer>
+    Simpleno — Concepto en desarrollo — Agosto 2026
+  </footer>
+
+</div>
+
+<script>
+  var activo = null;
+
+  function toggleEsfera(id) {
+    var item = document.getElementById('esfera-' + id);
+    var contenido = document.getElementById('contenido-' + id);
+    var eraActivo = activo === id;
+
+    if (activo) {
+      var prevContenido = document.getElementById('contenido-' + activo);
+      document.getElementById('esfera-' + activo).classList.remove('activo');
+      prevContenido.classList.remove('visible');
+      prevContenido.style.maxHeight = '0';
+    }
+
+    if (!eraActivo) {
+      item.classList.add('activo');
+      contenido.classList.add('visible');
+      contenido.style.maxHeight = contenido.scrollHeight + 'px';
+      activo = id;
+    } else {
+      activo = null;
+    }
+  }
+</script>
+</body>
+</html>
