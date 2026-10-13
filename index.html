@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simpleno — Historias sin dueño</title>
+  <title>Tellme — Historias sin dueño</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -623,7 +623,7 @@
 </style>
 
 <div id="pin-overlay">
-  <div id="pin-logo">Simpleno</div>
+  <div id="pin-logo">Tellme</div>
   <div id="pin-label">Ingresá el código de acceso</div>
   <input id="pin-input" type="password" inputmode="numeric" maxlength="4" autofocus autocomplete="off" />
   <div id="pin-error"></div>
@@ -631,7 +631,7 @@
 
 <script>
   (function() {
-    if (sessionStorage.getItem('simpleno-access') === 'ok') {
+    if (sessionStorage.getItem('tellme-access') === 'ok') {
       document.getElementById('pin-overlay').style.display = 'none';
       return;
     }
@@ -642,7 +642,7 @@
       input.classList.remove('error');
       if (input.value.length === 4) {
         if (input.value === '2607') {
-          sessionStorage.setItem('simpleno-access', 'ok');
+          sessionStorage.setItem('tellme-access', 'ok');
           var overlay = document.getElementById('pin-overlay');
           overlay.classList.add('saliendo');
           setTimeout(function() { overlay.style.display = 'none'; }, 500);
@@ -665,7 +665,7 @@
   <!-- PORTADA -->
   <div class="portada">
     <div class="etiqueta">Concepto — Agosto 2026</div>
-    <h1>Simpleno</h1>
+    <h1>Tellme</h1>
     <p class="bajada">Donde las historias valen por sí mismas y no por quien las cuenta.</p>
   </div>
 
@@ -724,7 +724,7 @@
 
     <p>Ya no nos conectamos de verdad. Cuando conocemos a alguien, ya estamos posicionándonos. Calculando. Performando. La pregunta <em>"¿cómo estás de verdad?"</em> casi no existe. Nos volvimos expertos en mostrarnos y analfabetos en sentir.</p>
 
-    <p>Nos olvidamos de nosotros mismos. Y con eso, perdimos algo más profundo: la capacidad de conectar humanamente — no como roles ni como marcas personales, sino como personas con miedo, con dudas, con historias que nadie más conoce. Simpleno propone exactamente eso: volver a ese lugar.</p>
+    <p>Nos olvidamos de nosotros mismos. Y con eso, perdimos algo más profundo: la capacidad de conectar humanamente — no como roles ni como marcas personales, sino como personas con miedo, con dudas, con historias que nadie más conoce. Tellme propone exactamente eso: volver a ese lugar.</p>
   </section>
 
 
@@ -766,7 +766,7 @@
 
     <p>Viktor Frankl sobrevivió campos de concentración y dedicó su vida a una sola pregunta: ¿qué hace que el ser humano aguante? Su respuesta no fue el placer ni el reconocimiento. Fue <strong>el sentido</strong>. No el propósito — que tiene connotación de meta y logro. El sentido es algo que se <em>encuentra</em>, no que se construye. Puede estar en el sufrimiento, en el amor, en el acto de crear. La motivación más profunda no es obtener. Es que algo importe más allá de uno mismo.</p>
 
-    <p>Para Simpleno, la conexión es directa: Frankl identifica que una de las vías para encontrar sentido es <em>a través del sufrimiento</em> — nombrarlo, transformarlo en algo que trascienda al individuo. Que una historia de dolor se vuelva universal es exactamente eso.</p>
+    <p>Para Tellme, la conexión es directa: Frankl identifica que una de las vías para encontrar sentido es <em>a través del sufrimiento</em> — nombrarlo, transformarlo en algo que trascienda al individuo. Que una historia de dolor se vuelva universal es exactamente eso.</p>
 
     <blockquote>
       <p>"La amistad nace en el momento en que una persona le dice a otra: ¿Cómo? ¿A vos también? Creía que era el único."</p>
@@ -806,14 +806,14 @@
 
     <div class="divisor"></div>
 
-    <h2 style="font-size:1.2rem; margin-bottom:1rem;">Cómo Simpleno elimina cada barrera</h2>
+    <h2 style="font-size:1.2rem; margin-bottom:1rem;">Cómo Tellme elimina cada barrera</h2>
 
     <div class="tabla-wrapper">
       <table>
         <thead>
           <tr>
             <th>Lo que evitamos</th>
-            <th>Cómo Simpleno lo elimina</th>
+            <th>Cómo Tellme lo elimina</th>
           </tr>
         </thead>
         <tbody>
@@ -996,7 +996,7 @@
       <span class="autor">La historia es el centro. El autor no existe.</span>
     </blockquote>
 
-    <p>No es una red. No es un diario. Es un <span class="highlight">Simpleno de experiencias humanas reales</span> donde la historia importa y el autor desaparece.</p>
+    <p>No es una red. No es un diario. Es un <span class="highlight">Tellme de experiencias humanas reales</span> donde la historia importa y el autor desaparece.</p>
 
     <p>Cuando una historia no tiene dueño, deja de hablar de alguien. Habla de todos. La diferencia entre las dos es enorme emocionalmente.</p>
 
@@ -1017,7 +1017,7 @@
       <p>En un retiro de veinte personas, puede haber veinte vivencias profundas. <strong>Y en el cierre del domingo, solo dos o tres se animan a contarlas.</strong> Las otras diecisiete se van a casa en silencio. No porque no importaran — sino porque no había el lugar correcto para decirlas.</p>
     </div>
 
-    <p>Simpleno propone algo distinto: que el evento sea el contenedor. No la historia de alguien que estuvo ahí. El momento mismo — hecho de fragmentos de todos los que lo vivieron — sin que ninguno sea el autor.</p>
+    <p>Tellme propone algo distinto: que el evento sea el contenedor. No la historia de alguien que estuvo ahí. El momento mismo — hecho de fragmentos de todos los que lo vivieron — sin que ninguno sea el autor.</p>
 
     <p>Cada persona contribuye su vivencia. No importa si fue un momento de quiebre, una revelación pequeña o algo que todavía no sabe cómo nombrar. Entra sin nombre. Se suma. Y lo que queda no es la historia de nadie en particular — es el retrato vivo de lo que ese momento fue para todos.</p>
 
