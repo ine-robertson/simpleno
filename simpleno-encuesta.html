@@ -721,8 +721,9 @@
     }).catch(function() {});
 
     document.getElementById('encuesta').style.display = 'none';
-    document.getElementById('gracias').style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    var gracias = document.getElementById('gracias');
+    gracias.style.display = 'block';
+    gracias.scrollIntoView({ behavior: 'smooth' });
   });
 </script>
 
