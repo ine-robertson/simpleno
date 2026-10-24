@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tellme — Historias sin dueño</title>
+  <title>Simpleno — Historias sin dueño</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -34,9 +34,9 @@
 
     /* PORTADA */
     .portada {
-      padding: 4rem 0 5rem;
+      padding: 3rem 0 2rem;
       border-bottom: 1px solid var(--gris-claro);
-      margin-bottom: 4rem;
+      margin-bottom: 2rem;
     }
 
     .portada .etiqueta {
@@ -46,19 +46,21 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--acento);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
     }
 
     .portada h1 {
-      font-size: 3rem;
-      font-weight: normal;
-      line-height: 1.15;
-      margin-bottom: 1.5rem;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 3.4rem;
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.2rem;
       color: var(--carbon);
     }
 
     .portada .bajada {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       color: var(--gris);
       max-width: 560px;
       line-height: 1.7;
@@ -623,7 +625,7 @@
 </style>
 
 <div id="pin-overlay">
-  <div id="pin-logo">Tellme</div>
+  <div id="pin-logo">Simpleno</div>
   <div id="pin-label">Ingresá el código de acceso</div>
   <input id="pin-input" type="password" inputmode="numeric" maxlength="4" autofocus autocomplete="off" />
   <div id="pin-error"></div>
@@ -631,7 +633,7 @@
 
 <script>
   (function() {
-    if (sessionStorage.getItem('tellme-access') === 'ok') {
+    if (sessionStorage.getItem('simpleno-access') === 'ok') {
       document.getElementById('pin-overlay').style.display = 'none';
       return;
     }
@@ -642,7 +644,7 @@
       input.classList.remove('error');
       if (input.value.length === 4) {
         if (input.value === '2607') {
-          sessionStorage.setItem('tellme-access', 'ok');
+          sessionStorage.setItem('simpleno-access', 'ok');
           var overlay = document.getElementById('pin-overlay');
           overlay.classList.add('saliendo');
           setTimeout(function() { overlay.style.display = 'none'; }, 500);
@@ -665,22 +667,16 @@
   <!-- PORTADA -->
   <div class="portada">
     <div class="etiqueta">Concepto — Agosto 2026</div>
-    <h1>Tellme</h1>
+    <h1>Simpleno</h1>
     <p class="bajada">Donde las historias valen por sí mismas y no por quien las cuenta.</p>
-    <div style="display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:1.8rem;">
-      <span style="font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.68rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--acento); border:1px solid var(--acento); border-radius:2px; padding:0.3rem 0.7rem;">Anónimo</span>
-      <span style="font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.68rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--acento); border:1px solid var(--acento); border-radius:2px; padding:0.3rem 0.7rem;">Permanente</span>
-      <span style="font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.68rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--acento); border:1px solid var(--acento); border-radius:2px; padding:0.3rem 0.7rem;">Sin dueño</span>
-      <span style="font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.68rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--acento); border:1px solid var(--acento); border-radius:2px; padding:0.3rem 0.7rem;">Colectivo</span>
-    </div>
   </div>
 
   <!-- ROMPEHIELO -->
-  <div style="padding: 2rem 0 3.5rem; border-bottom: 1px solid var(--gris-claro); margin-bottom: 4rem;">
-    <p style="font-size:1.15rem; line-height:1.9; color:var(--gris); font-style:italic;">¿Cuándo fue la última vez que tuviste un testimonio propio que simplemente no querías publicar? No porque fuera difícil. No porque diera vergüenza. Simplemente porque era tuyo — y no necesitaba llevarte el nombre pegado.</p>
-    <p style="font-size:1.15rem; line-height:1.9; color:var(--gris); font-style:italic;">Y sin embargo ahí estás, scrolleando el feed. Conectados a todo — y a casi nada que importe. Las vivencias genuinas de las personas, lo que de verdad sintieron, lo que de verdad les pasó, no tienen lugar ahí.</p>
-    <p style="font-size:1.15rem; line-height:1.9; color:var(--gris); font-style:italic;">Vos tenés testimonios propios — cosas que viviste, que aprendiste, que sentiste — que no encontraron el lugar justo. Compartir siempre viene con condiciones: nombre, perfil, audiencia. Y a veces lo que querés es simplemente que exista. Sin autor.</p>
-    <p style="font-size:1.15rem; line-height:1.9; color:var(--gris); font-style:italic;">Y otras veces no querés expresar — querés entender. Ver cómo alguien más salió de ese lugar, de esa empresa, de ese evento o accidente que te marcó. Sin que nadie lo explique bajo su nombre, ni lo resuelva tampoco. La motivación es otra: reconstruir una historia desde cada observador.</p>
+  <div style="padding: 1.5rem 0 2rem; border-bottom: 1px solid var(--gris-claro); margin-bottom: 3rem;">
+    <p style="font-size:1.15rem; line-height:1.9; color:var(--gris); font-style:italic;">¿Cuándo fue la última vez que le contaste algo real a alguien? No un resumen. No la versión prolija. Algo que de verdad te pesaba.</p>
+    <p style="font-size:1.15rem; line-height:1.9; color:var(--gris); font-style:italic;">Nunca estuvimos tan desconectados estando conectados.</p>
+    <p style="font-size:1.15rem; line-height:1.9; color:var(--gris); font-style:italic;">Y ahí estás, "conectado", buscando llenarte de distracciones, actividades y estímulos — o scrolleando el feed. Todo el mundo al palo y disfrutando, pareciendo estar todos bien. El viaje, el ascenso, la foto perfecta. Cerrás la app con una sensación difusa porque te distrajiste, llenaste el tiempo pero lo que tenés adentro no se vació.</p>
+    <p style="font-size:1.15rem; line-height:1.9; color:var(--carbon); font-style:italic; margin-top:0.8rem;">¿Qué pasó? No conectaste de verdad.</p>
 
   </div>
 
@@ -716,32 +712,30 @@
       </div>
     </div>
 
-    <p>Y sin embargo, cuando alguien cuenta algo real — una pérdida, un fracaso, una verdad incómoda — el contenido explota. Porque toca en nuestras fibras algo real. Porque todos lo vivimos y nadie lo dice.</p>
+    <p>Y sin embargo, cuando alguien cuenta algo real — una pérdida, un fracaso, un testimonio, una verdad incómoda — el contenido explota y conecta. ¿Por qué? Porque toca en nuestras fibras algo real. Porque muchas veces todos lo vivimos y nadie lo dice. O porque lo que escuchamos del otro de manera tan genuina nos hace admirarlo por el coraje de ser auténtico y puro.</p>
 
     <div class="insight">
-      <p>Hay una enorme necesidad de expresar lo que no sabemos cómo expresar. Nadie cuenta las historias reales por <strong>miedo a ser rotulado</strong>. El silencio no es comodidad — es costo social.</p>
+      <p>Hay una enorme necesidad de expresar lo que no sabemos cómo expresar. Pero a veces no nos sale, no tenemos el coraje, no encontramos las palabras o nos bloqueamos por <strong>miedo a ser rotulados</strong>. El silencio se siente como comodidad — sin darnos cuenta de que poner en palabras lo que nos sucede es aliviador. Y no tiene que ser algo malo ni doloroso. A veces nos limitamos hasta para testimoniar algo emocionante, algo que nos conmovió. ¿Por qué? Porque abrirse emocionalmente requiere coraje también.</p>
     </div>
 
-    <p>Cuando exponemos algo, lo que hacemos es sacarlo del interior y anclarlo en el mundo. Está bien eso. Pero social media contaminó esa necesidad profunda mezclándola con ego, identidad y reconocimiento personal. Y al hacerlo, la rompió. Para ser testificado hoy necesitás exponerte. Al exponerte, te juzgan. Al ser juzgado, te cuidás. Al cuidarte, dejás de contar lo real. ¿Y entonces, exponerlo sirvió?</p>
-
-    <p>En el fondo, el like no es un simple "me gusta". Fue diseñado como el destello de placer capaz de dar esa "mágica" recompensa adictiva que tanto daño causa. Y no es solo Instagram. Las grandes corporaciones tienen el macabro objetivo — y hasta el KPI — de "Engagement": tenerte enganchado mirando, comprando y pegado al teléfono.</p>
+    <p>Cuando exponemos algo, lo que hacemos es sacarlo del interior y anclarlo en el mundo. Está bien — y es muy saludable para nuestra salud mental. ¿Qué pasó entonces con todas las plataformas donde publicamos y "conectamos"? ¿No sirven? Sirven. Pero social media contaminó esa necesidad profunda de contar o publicar algo mezclándola con ego, identidad y reconocimiento personal. Y al querer cuidarte de ese juicio, dejás de contar lo real. ¿Y entonces, exponerlo sirvió?</p>
 
     <p>Incluso el problema es más profundo que el ego o la vanidad. Vivimos bombardeados: por el consumo — <em>"comprá esto", "necesitás aquello"</em> —, por la pertenencia — <em>"sé parte de esto", "seguí a aquellos"</em> —, por la productividad, por la validación constante. Tanta señal afuera que aprendimos a ignorar lo de adentro. Ya no sabemos qué sentimos si no hay alguien mirando.</p>
 
     <p>Ya no nos conectamos de verdad. Cuando conocemos a alguien, ya estamos posicionándonos. Calculando. Performando. La pregunta <em>"¿cómo estás de verdad?"</em> casi no existe. Nos volvimos expertos en mostrarnos y analfabetos en sentir.</p>
 
-    <p>Nos olvidamos de nosotros mismos. Y con eso, perdimos algo más profundo: la capacidad de conectar humanamente — no como roles ni como marcas personales, sino como personas con miedo, con dudas, con historias que nadie más conoce. Tellme propone exactamente eso: volver a ese lugar.</p>
+    <p>Nos olvidamos de nosotros mismos. Y con eso, perdimos algo más profundo: la capacidad de conectar humanamente — no como roles ni como marcas personales, sino como personas con miedo, con dudas, con historias que nadie más conoce. Simpleno propone exactamente eso: volver a ese lugar. Ser simples, genuinos y auténticos. ¿Y por qué no generosos? Sí, generosos — porque compartir testimonios e historias ayuda a muchas otras personas.</p>
   </section>
 
 
   <!-- 5. MOTIVACIÓN HUMANA -->
   <section>
-    <div class="seccion-titulo">05 — La motivación humana</div>
+    <div class="seccion-titulo">05 — Las motivaciones</div>
     <h2>La necesidad de expresar existe. Lo que falta es el medio.</h2>
 
-    <p>La pregunta no es si el ser humano quiere contar lo que le pasa. Quiere. La pregunta es por qué no lo hace — y dónde termina haciéndolo cuando no encuentra el lugar correcto.</p>
+    <p>Simpleno no busca que queramos obtener algo externo, tampoco busca reconocimiento. Se trata más de soltar algo. Y escribir una historia es terapéutico — aunque nadie sepa que es tuya, ya es en sí misma un acto de libertad y generosidad.</p>
 
-    <p>La motivación más profunda no es obtener algo externo. Es soltar algo. Y escribir una historia, aunque nadie sepa que es tuya, ya es en sí misma un acto de libertad.</p>
+    <p>La pregunta no es si el ser humano quiere contar lo que le pasa. Quiere. La pregunta es por qué no lo hace — y dónde termina haciéndolo cuando no encuentra el lugar correcto.</p>
 
     <div class="porque-lista">
       <div class="porque-item">
@@ -757,7 +751,7 @@
         <div class="porque-desc">Muchas veces no sabemos lo que sentimos hasta que lo escribimos. Lo que no nombramos no lo podemos procesar. La escritura es el primer paso para entender qué nos pasa de verdad.</div>
       </div>
       <div class="porque-item">
-        <div class="porque-titulo">Porque sacar algo a la luz es terapéutico</div>
+        <div class="porque-titulo">Lo que guardamos pesa. Nombrarlo es el primer acto de aceptación</div>
         <div class="porque-desc">Lo que guardamos pesa. Nombrarlo es el primer acto de aceptación. No desaparece, pero deja de vivir encerrado en nuestro cuerpo. <em>A veces, cuando creemos que guardamos vivencias, en realidad esas vivencias nos guardan a nosotros.</em></div>
       </div>
       <div class="porque-item">
@@ -770,9 +764,15 @@
       </div>
     </div>
 
-    <p>Viktor Frankl sobrevivió campos de concentración y dedicó su vida a una sola pregunta: ¿qué hace que el ser humano aguante? Su respuesta no fue el placer ni el reconocimiento. Fue <strong>el sentido</strong>. No el propósito — que tiene connotación de meta y logro. El sentido es algo que se <em>encuentra</em>, no que se construye. Puede estar en el sufrimiento, en el amor, en el acto de crear. La motivación más profunda no es obtener. Es que algo importe más allá de uno mismo.</p>
+    <p>Viktor Frankl sobrevivió campos de concentración y dedicó su vida a una sola pregunta: ¿qué hace que el ser humano aguante? Su respuesta no fue el placer ni el reconocimiento. Fue <strong>el sentido</strong>. No el propósito — que tiene connotación de meta y logro. El sentido es algo que se <em>encuentra</em>, no que se construye. Y puede aparecer en el lugar más inesperado: en el sufrimiento mismo, en el amor, en el acto de crear.</p>
 
-    <p>Para Tellme, la conexión es directa: Frankl identifica que una de las vías para encontrar sentido es <em>a través del sufrimiento</em> — nombrarlo, transformarlo en algo que trascienda al individuo. Que una historia de dolor se vuelva universal es exactamente eso.</p>
+    <p>Pero Frankl va más lejos que el simple alivio. Distingue entre <em>catarsis</em> — liberar una emoción por el solo hecho de liberarla — y <em>trascendencia</em>: transformar lo que vivimos en algo que importe más allá de uno mismo. La catarsis sin trascendencia puede convertirse en victimismo: dar vueltas sobre el dolor sin salir de él.</p>
+
+    <p>Simpleno no busca que hagas catarsis. Busca que seas genuino, que conectes con lo que sentís, y que desde ahí trasciendas. Que lo que viviste — lo doloroso y también lo emocionante, lo que te conmovió — se vuelva algo que le sirva a otro. Porque no vinimos a este mundo solo a consumir y disfrutar. Vinimos a trascender.</p>
+
+    <p>La Biblia lo dice con una economía de palabras que pocas filosofías alcanzan: <em>"Bendito sea el Dios y Padre de nuestro Señor Jesucristo, Padre de misericordias y Dios de toda consolación, el cual nos consuela en todas nuestras tribulaciones, para que podamos también nosotros consolar a los que están en cualquier tribulación, por medio de la consolación con que nosotros somos consolados por Dios."</em> (2 Corintios 1:3-4) Lo que recibiste — la comprensión, el alivio, la perspectiva — no es solo tuyo. Es para darlo.</p>
+
+    <p>Eso es exactamente lo que ocurre cuando alguien publica una historia en Simpleno y otra persona dice <em>"esto también me pasó"</em>. No es solo conexión emocional. Es un acto de trascendencia. Tu historia dejó de ser tuya y se convirtió en algo que sostiene a otro.</p>
 
     <blockquote>
       <p>"La amistad nace en el momento en que una persona le dice a otra: ¿Cómo? ¿A vos también? Creía que era el único."</p>
@@ -781,36 +781,24 @@
 
     <p>Ese momento no necesita nombre. No necesita like. Es anterior a todo eso. Es el instante en que algo que creías tuyo y vergonzoso se vuelve humano y compartido.</p>
 
-    <div class="insight">
-      <p>Los psicólogos llaman a esto <strong>el efecto de sobrejustificación</strong>: cuando agregás recompensa externa a algo que alguien hacía por placer, dejan de hacerlo por placer. Instagram no agregó conexión — agregó un premio que destruyó la conexión que siempre estuvo. Esta plataforma no inventa una motivación nueva. <strong>Saca el veneno que mató la que siempre existió.</strong></p>
-    </div>
-
     <div class="divisor"></div>
 
     <h2 style="font-size:1.2rem; margin-bottom:1rem;">Lo que nos detiene no es la motivación. Es el medio.</h2>
 
-    <p>Las redes sociales fallaron porque mezclan expresión con identidad. Pero el problema es más amplio: hay vivencias que no son difíciles ni vergonzosas — simplemente no encontraron el lugar justo. El evento que te marcó, el testimonio que querés que exista, la mirada que querés complementar con la de otros. Ninguna plataforma está hecha para eso.</p>
+    <p>Las redes sociales fallaron porque mezclan expresión con identidad. Pero hay barreras más profundas que operan incluso con personas cercanas — las que hacen que ni siquiera entre amigos se diga todo:</p>
 
     <div class="porque-lista">
       <div class="porque-item">
-        <div class="porque-titulo">No encontrar el contexto correcto</div>
-        <div class="porque-desc">Algunas vivencias son demasiado específicas para las redes, demasiado personales para el grupo, demasiado difíciles de explicar en una conversación. No es que no queramos contarlas — es que no hay dónde.</div>
-      </div>
-      <div class="porque-item">
-        <div class="porque-titulo">No querer ser el portavoz</div>
-        <div class="porque-desc">Queremos que la experiencia exista, pero sin tener que ser su cara. Sin que nos pregunten, sin que nos definan por eso, sin que se convierta en nuestra historia pública. Queremos soltar, no construir identidad.</div>
-      </div>
-      <div class="porque-item">
-        <div class="porque-titulo">Querer reconstruir desde muchas miradas</div>
-        <div class="porque-desc">A veces no alcanza con la propia versión. Queremos ver cómo otros vivieron el mismo evento, el mismo lugar, la misma situación. No para comparar — para entender algo que desde adentro no se puede ver entero.</div>
-      </div>
-      <div class="porque-item">
         <div class="porque-titulo">El miedo a convertirte en el que necesita</div>
-        <div class="porque-desc">Hay un rol social que evitamos ocupar: el frágil, el que necesita apoyo. Compartir algo vulnerable puede ubicarte ahí — y desde ese lugar la relación cambia para siempre.</div>
+        <div class="porque-desc">Hay un rol social que evitamos ocupar: el frágil, el que necesita apoyo, el que hay que cuidar. Compartir algo vulnerable puede ubicarte ahí — y desde ese lugar la relación cambia para siempre.</div>
+      </div>
+      <div class="porque-item">
+        <div class="porque-titulo">La vergüenza de sentir</div>
+        <div class="porque-desc">A veces no nos animamos no porque la historia sea grave, sino porque sentimos que nuestra reacción a algo pequeño es desproporcionada. La vergüenza secundaria — avergonzarse de haber sentido — es muchas veces más paralizante que el miedo al juicio.</div>
       </div>
       <div class="porque-item">
         <div class="porque-titulo">Que la experiencia nos defina</div>
-        <div class="porque-desc">Queremos que lo que vivimos exista en el mundo sin que eso nos reduzca a esa experiencia. Queremos decir algo sin <em>ser</em> ese algo. Publicar <em>es</em> construir identidad — y a veces no queremos eso.</div>
+        <div class="porque-desc">Lo más profundo de todo. Queremos que lo que vivimos exista en el mundo sin que eso nos reduzca a esa experiencia. Queremos decir algo sin <em>ser</em> ese algo. Y eso ninguna red social puede dártelo — porque publicar <em>es</em> construir identidad.</div>
       </div>
     </div>
 
@@ -820,32 +808,24 @@
 
     <div class="divisor"></div>
 
-    <h2 style="font-size:1.2rem; margin-bottom:1rem;">Cómo Tellme elimina cada barrera</h2>
+    <h2 style="font-size:1.2rem; margin-bottom:1rem;">Cómo Simpleno elimina cada barrera</h2>
 
     <div class="tabla-wrapper">
       <table>
         <thead>
           <tr>
             <th>Lo que evitamos</th>
-            <th>Cómo Tellme lo elimina</th>
+            <th>Cómo Simpleno lo elimina</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>No encontrar el lugar justo</td>
-            <td>Tellme es el espacio para lo que no cabe en ningún otro lado</td>
+            <td>Ser rotulado</td>
+            <td>Sin nombre, no hay etiqueta posible</td>
           </tr>
           <tr>
-            <td>No querer ser el portavoz</td>
-            <td>La historia existe sin vos. No hay cara, no hay preguntas, no hay rol</td>
-          </tr>
-          <tr>
-            <td>Ver solo tu propia versión</td>
-            <td>Otros que vivieron lo mismo suman su fragmento — reconstruís desde muchas miradas</td>
-          </tr>
-          <tr>
-            <td>Ser rotulado o definido</td>
-            <td>Sin nombre, no hay etiqueta posible. La historia existe. Vos no estás ahí</td>
+            <td>Perder el control de la narrativa</td>
+            <td>La historia no te pertenece — no hay nada que perder</td>
           </tr>
           <tr>
             <td>Una reacción que no calza</td>
@@ -855,11 +835,19 @@
             <td>Convertirte en el que necesita</td>
             <td>No hay "vos" en el sistema. No hay rol que ocupar</td>
           </tr>
+          <tr>
+            <td>La vergüenza de sentir</td>
+            <td>Si resuena con cientos de personas, la vergüenza no solo se disuelve en lo universal sino que trascendés</td>
+          </tr>
+          <tr>
+            <td>Que la experiencia te defina</td>
+            <td>La historia existe. Vos no estás ahí</td>
+          </tr>
         </tbody>
       </table>
     </div>
 
-    <p style="margin-top:2rem;">Contar una historia empodera a quien la escribe e inspira a quien la lee. Escribir tiene poderes curativos para quien la exterioriza — y da esperanza a quienes se identifican con la vivencia de un desconocido. En conjunto, se construye una comunidad anónima de aceptación.</p>
+    <p style="margin-top:2rem;">Contar una historia empodera a quien la escribe e inspira a quien la lee. Y ser una sociedad altruista requiere primero construir una comunidad de aceptación y empática — así sea anónima.</p>
 
   </section>
 
@@ -868,12 +856,6 @@
   <section>
     <div class="seccion-titulo">06 — Esto es muy antiguo</div>
     <h2>El tejido existió siempre. Lo perdimos.</h2>
-
-    <p>Los cuentos populares no tienen autor. Las canciones de cuna no tienen firma. Los dichos populares no tienen dueño.</p>
-
-    <p>Lo que esta plataforma propone es recuperar ese modo de circulación del relato — oral, colectivo, sin dueño — en un mundo digital que siempre quiere poner etiquetas a todo.</p>
-
-    <p>Jung llamaría a esto el <em>inconsciente colectivo</em> hecho plataforma: las historias que todos vivimos pero nadie contó porque le daba vergüenza ser el primero.</p>
 
     <div class="divisor"></div>
 
@@ -895,10 +877,6 @@
       <div class="referente">
         <div class="nombre">FMyLife</div>
         <div class="desc">Startup francesa internacionalizada. Historias cortas anónimas votadas por la comunidad. Funciona aún hoy.</div>
-      </div>
-      <div class="referente">
-        <div class="nombre">Mila Stories</div>
-        <div class="desc">Plataforma que permite a múltiples personas construir juntas un libro de memorias sobre un evento compartido. Prueba que la motivación de reconstruir una experiencia colectiva existe — aunque su enfoque es identificado, privado y como regalo.</div>
       </div>
     </div>
 
@@ -922,77 +900,13 @@
     <p>Y Julian Jaynes —el más perturbador— propone que hasta hace relativamente poco los humanos no experimentaban sus propios pensamientos como suyos. Los escuchaban como voces externas, de dioses o ancestros. La conciencia individual tal como la conocemos es una construcción histórica reciente. Antes éramos, literalmente, antenas.</p>
 
     <div class="insight">
-      <p>Si esto tiene algo de verdad, entonces una historia sin dueño no es una rareza ni una utopía. Es un retorno. <strong>La propiedad individual del pensamiento y la experiencia es el accidente histórico. El tejido colectivo es lo original.</strong></p>
+      <p>Puede sonar bastante loco y místico — pero si esto tiene <strong>algo</strong> de verdad, entonces una historia sin dueño no es una rareza ni una utopía. Es un retorno. <strong>La propiedad individual del pensamiento y la experiencia es el accidente histórico. El tejido colectivo es lo original y la verdadera red de nuestra humanidad.</strong></p>
     </div>
   </section>
 
 
-  <!-- 8. EL MOMENTO -->
-  <section>
-    <div class="seccion-titulo">08 — Por qué ahora</div>
-    <h2>El momento cultural está dado</h2>
-
-    <div class="principios">
-      <div class="principio">
-        <div class="num">→</div>
-        <div class="texto">Hay hartazgo documentado y masivo con la cultura de Instagram y la performance exitista. Ese hartazgo generó un contramovimiento: el <strong>JOMO</strong> (Joy of Missing Out). No propone desconectarse del mundo sino reconectarse con lo que realmente importa. En un mundo que no para de pedirte atención, elegir a qué se la das puede ser el acto más radical y genuino que existe.</div>
-      </div>
-      <div class="principio">
-        <div class="num">→</div>
-        <div class="texto">La conversación sobre salud mental y redes sociales es mainstream — ya no es nicho.</div>
-      </div>
-      <div class="principio">
-        <div class="num">→</div>
-        <div class="texto">Gen Z busca activamente alternativas. Muchos volvieron al papel, a los diarios físicos, a lo analógico.</div>
-      </div>
-      <div class="principio">
-        <div class="num">→</div>
-        <div class="texto">América Latina no tiene nada en este espacio con identidad cultural propia — el nicho regional está vacío.</div>
-      </div>
-    </div>
-  </section>
 
 
-  <!-- 9. PRÓXIMO PASO -->
-  <section>
-    <div class="seccion-titulo">09 — El primer paso</div>
-    <h2>No una plataforma. Un experimento.</h2>
-
-    <p>Antes de construir algo, hay que comprobar qué ocurre realmente en la psiquis humana cuando el autor desaparece. No hay respuesta teórica para esto. Solo hay experimento.</p>
-
-    <blockquote>
-      <p>¿La gente necesita saber que <strong>SU</strong> historia fue leída, o alcanza con saber que <strong>LA</strong> historia fue leída?</p>
-    </blockquote>
-
-    <p>Esa distinción es la más importante del concepto. Y abre otras preguntas igual de urgentes:</p>
-
-    <div class="principios">
-      <div class="principio">
-        <div class="num">?</div>
-        <div class="texto">¿Qué ocurre en la psiquis de quien escribe algo y lo suelta sin saber qué pasará con eso?</div>
-      </div>
-      <div class="principio">
-        <div class="num">?</div>
-        <div class="texto">¿El ego termina ganando igual, aunque sea anónimo? ¿O sin nombre el ego no tiene dónde pararse?</div>
-      </div>
-      <div class="principio">
-        <div class="num">?</div>
-        <div class="texto">¿Hay reparación en el acto de escribir y ser reconocido sin ser identificado?</div>
-      </div>
-      <div class="principio">
-        <div class="num">?</div>
-        <div class="texto">¿La empatía social ocurre igual — o más — cuando no sabés nada del otro?</div>
-      </div>
-    </div>
-
-    <p>La versión mínima para empezar a responder esto no es una app. Es un grupo cerrado de 50 personas, historias anónimas recolectadas a mano, y una sola acción disponible: <em>"esto resuena conmigo"</em>.</p>
-
-    <p>Si eso genera algo, la idea vive. Si no genera nada, aprendiste algo real sin haber construido nada.</p>
-
-    <div class="pregunta-final">
-      <p>¿Qué pasaría si durante un mes, alguien publica historias anónimas y la única acción posible es decir "esto también me pasó"?</p>
-    </div>
-  </section>
 
 
   <!-- 2. LA IDEA -->
@@ -1013,160 +927,16 @@
       <p>Historia ↔ Comunidad</p>
       <span class="autor">La historia es el centro. El autor no existe.</span>
     </blockquote>
-
-    <p>No es una red. No es un diario. Es un <span class="highlight">Tellme de experiencias humanas reales</span> donde la historia importa y el autor desaparece.</p>
-
-    <p>Cuando una historia no tiene dueño, deja de hablar de alguien. Habla de todos. La diferencia entre las dos es enorme emocionalmente.</p>
-
-    <p><em>"Le tengo miedo a que me conozcan de verdad. No al qué dirán — a mostrarme como soy y que eso no sea suficiente."</em> Es una anécdota si la firma alguien. Sin firma, es una experiencia humana universal.</p>
   </section>
 
 
-  <!-- 2B. TESTIMONIOS COLECTIVOS -->
-  <section>
-    <div class="seccion-titulo">02b — El evento como autor</div>
-    <h2>Cuando muchas personas vivieron lo mismo</h2>
-
-    <p>Hay experiencias que se viven en colectivo pero se procesan en soledad. Una familia despidiendo a alguien. Un grupo de amigos que compartió un viaje. Un retiro espiritual de veinte personas. Cientos que estuvieron en el mismo lugar el mismo día. Momentos donde muchas personas vivieron algo juntas — y cada una salió con algo completamente distinto adentro.</p>
-
-    <p>Casi nadie lo cuenta. No porque no quiera. Porque no encuentra el lugar justo: demasiado íntimo para las redes, demasiado personal para compartirlo con el grupo, demasiado difícil de explicar en una conversación. Y así esas vivencias se quedan sin existir en ningún lado — guardadas en cada persona por separado, como si no hubieran ocurrido.</p>
-
-    <div class="insight">
-      <p>En un retiro de veinte personas, puede haber veinte vivencias profundas. <strong>Y en el cierre del domingo, solo dos o tres se animan a contarlas.</strong> Las otras diecisiete se van a casa en silencio. No porque no importaran — sino porque no había el lugar correcto para decirlas.</p>
-    </div>
-
-    <p>Tellme propone algo distinto: que el evento sea el contenedor. No la historia de alguien que estuvo ahí. El momento mismo — hecho de fragmentos de todos los que lo vivieron — sin que ninguno sea el autor.</p>
-
-    <p>Cada persona contribuye su vivencia. No importa si fue un momento de quiebre, una revelación pequeña o algo que todavía no sabe cómo nombrar. Entra sin nombre. Se suma. Y lo que queda no es la historia de nadie en particular — es el retrato vivo de lo que ese momento fue para todos.</p>
-
-    <div class="porque-lista">
-      <div class="porque-item">
-        <div class="porque-titulo">Una familia</div>
-        <div class="porque-desc">El cumpleaños de los ochenta años. El diagnóstico que cambió todo. El verano que todos recuerdan distinto. Cada uno tiene su versión — ninguna es la oficial.</div>
-      </div>
-      <div class="porque-item">
-        <div class="porque-titulo">Un grupo de amigos</div>
-        <div class="porque-desc">El viaje del que todos hablan igual en la superficie y nadie cuenta lo de adentro. La noche que marcó un antes y un después. Lo que cada uno se llevó sin decirlo.</div>
-      </div>
-      <div class="porque-item">
-        <div class="porque-titulo">Un retiro, un encuentro</div>
-        <div class="porque-desc">Veinte personas que compartieron algo intenso. En el cierre hablan dos o tres. Las diecisiete vivencias que no se dijeron también importan — y merecen existir en algún lado.</div>
-      </div>
-      <div class="porque-item">
-        <div class="porque-titulo">Cientos o miles</div>
-        <div class="porque-desc">Un recital que duró tres horas y cada uno vivió distinto. Un accidente que marcó a todos los que lo vieron. Una inundación que arrasó un barrio entero. La historia oficial la cuentan los medios. La historia real la tienen los que estuvieron — y casi ninguno la escribe.</div>
-      </div>
-    </div>
-
-    <p>Quien estuvo puede leerlo y reconocerse en lo que escribió otro. Nadie juzga — no hay a quién juzgar. Y si algo resuena, resuena con la experiencia, no con la persona.</p>
-
-    <blockquote>
-      <p>El evento no tiene dueño. Las vivencias tampoco. Lo que queda es más verdadero que cualquier crónica firmada.</p>
-      <p style="margin-top:1rem;">Un blockchain de historias.</p>
-    </blockquote>
-
-  </section>
 
 
-  <!-- 3. PRINCIPIOS DE DISEÑO -->
-  <section>
-    <div class="seccion-titulo">03 — Principios de diseño</div>
-    <h2>Lo que hace que esto funcione (o no)</h2>
 
-    <div class="principios">
-      <div class="principio">
-        <div class="num">01</div>
-        <div class="texto">
-          <strong>Sin primer publicador</strong>
-          No existe timestamp visible ni "subido por". La historia aparece y ya está. Nadie puede decir "yo la puse primero".
-        </div>
-      </div>
-      <div class="principio">
-        <div class="num">02</div>
-        <div class="texto">
-          <strong>Sin perfil, sin historial</strong>
-          Publicar no construye identidad dentro del sistema. El ego no tiene dónde aterrizar.
-        </div>
-      </div>
-      <div class="principio">
-        <div class="num">03</div>
-        <div class="texto">
-          <strong>El éxito no fluye de vuelta a nadie</strong>
-          Si una historia resuena masivamente, nadie gana followers. La historia crece. Ninguna cuenta se infla.
-        </div>
-      </div>
-      <div class="principio">
-        <div class="num">04</div>
-        <div class="texto">
-          <strong>El formato es el moderador</strong>
-          Las historias se escriben en primera persona vivencial — "sentí", "me pasó", "estuve ahí". No "él hizo", "ella es". El formato previene el bullying y la acusación sin necesitar moderación humana.
-        </div>
-      </div>
-      <div class="principio">
-        <div class="num">05</div>
-        <div class="texto">
-          <strong>Sin identificadores específicos</strong>
-          Sin nombre de lugar, empresa, persona. Lo suficientemente universal para que no haya un "pool de sospechosos" — eso mata el chisme.
-        </div>
-      </div>
-      <div class="principio">
-        <div class="num">06</div>
-        <div class="texto">
-          <strong>La acción central es reconocer, no publicar</strong>
-          No "yo pongo algo". Sino "encuentro esta historia y digo: esto también me pasó". Ahí la historia deja de ser de quien la escribió y pasa a ser de todos los que la reconocen.
-        </div>
-      </div>
-      <div class="principio">
-        <div class="num">07</div>
-        <div class="texto">
-          <strong>El anonimato es estructural, no prometido</strong>
-          En la fase de implementación, el anonimato no dependerá de la buena voluntad de nadie. Una arquitectura basada en blockchain garantizará que ningún operador, ningún servidor y ningún requerimiento legal pueda vincular una historia con su autor. No como marketing — como garantía técnica. <em style="color:var(--gris); font-size:0.85em;">El mensaje no es "confiá en nosotros". Es "el sistema hace imposible saberlo".</em>
-        </div>
-      </div>
-      <div class="principio">
-        <div class="num">08</div>
-        <div class="texto">
-          <strong>Cuando el autor son muchos</strong>
-          Hay un caso distinto al de la historia individual: cuando varias personas vivieron el mismo evento y cada una aporta su fragmento. Ahí no hay un autor — hay múltiples observadores. La salida no es una historia con firma colectiva sino una historia que se reconstruye sola, desde adentro, con todas las miradas juntas. El evento pasa a ser el autor. Las personas que estuvieron, sus testigos anónimos.
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- 4. INTERACCIÓN -->
-  <section>
-    <div class="seccion-titulo">04 — La interacción</div>
-    <h2>En lugar de un like, un reconocimiento</h2>
-
-    <p>La única acción disponible no es un like. No es un share. No es un comentario. Es una sola cosa:</p>
-
-    <blockquote>
-      <p>"Esto resuena conmigo" — "También me pasó" — "Yo también estuve ahí"</p>
-    </blockquote>
-
-    <p>Esa distinción cambia todo el sistema de incentivos. La métrica de éxito no es cuántas personas me dieron like o me siguieron. Es cuántas personas resonaron y empatizaron conmigo.</p>
-
-    <div class="grid">
-      <div class="tarjeta">
-        <div class="titulo">Lo que gana quien publica</div>
-        <p>Soltar algo que pesa. Sin costo social. Sin etiqueta. Sin juicio. Que algo que vivió exista fuera de su cabeza.</p>
-      </div>
-      <div class="tarjeta">
-        <div class="titulo">Lo que gana quien lee</div>
-        <p>Reconocerse en algo que no sabía cómo nombrar. Dejar de sentir que lo suyo es raro o único.</p>
-      </div>
-      <div class="tarjeta">
-        <div class="titulo">La única métrica</div>
-        <p>No es quiénes ni cuántos le dieron like. Sino cuántas personas resonaron con la historia.</p>
-      </div>
-      <div class="tarjeta">
-        <div class="titulo">Lo que comparten los dos</div>
-        <p>Empatizo con la historia sin saber quién es el otro, sin conocerlo.</p>
-      </div>
-    </div>
-  </section>
-
+  <div style="border-top: 1px solid var(--gris-claro); margin-top: 4rem; padding: 3rem 0; text-align: center;">
+    <p style="font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--acento); margin-bottom:1rem;">Continuá leyendo</p>
+    <a href="desarrollo.html" style="font-family:'Georgia',serif; font-size:1.1rem; color:var(--carbon); text-decoration:none; border-bottom:1px solid var(--gris-claro); padding-bottom:0.2rem;">Desarrollo de la idea →</a>
+  </div>
 
 
 

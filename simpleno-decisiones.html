@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simpleno — Conceptos y decisiones de diseño</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --crema: #f7f4ef;
+      --tierra: #8b6f5c;
+      --carbon: #1e1e1e;
+      --gris: #6b6b6b;
+      --gris-claro: #d4cfc9;
+      --acento: #c17f5a;
+      --verde: #5a8c6e;
+      --rojo: #8c5a5a;
+    }
+
+    html { font-size: 18px; scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--crema);
+      color: var(--carbon);
+      font-family: 'Georgia', 'Times New Roman', serif;
+      line-height: 1.8;
+      padding: 0 1.5rem;
+    }
+
+    .contenedor {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 5rem 0 8rem;
+    }
+
+    .portada {
+      padding: 4rem 0 5rem;
+      border-bottom: 1px solid var(--gris-claro);
+      margin-bottom: 4rem;
+    }
+
+    .portada .etiqueta {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--acento);
+      margin-bottom: 1.5rem;
+    }
+
+    .portada h1 {
+      font-size: 2.6rem;
+      font-weight: normal;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      color: var(--carbon);
+    }
+
+    .portada .bajada {
+      font-size: 1rem;
+      color: var(--gris);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    section {
+      margin-bottom: 4rem;
+    }
+
+    .seccion-titulo {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--acento);
+      margin-bottom: 1.2rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: normal;
+      line-height: 1.3;
+      margin-bottom: 1.5rem;
+      color: var(--carbon);
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: var(--carbon);
+      font-size: 0.95rem;
+    }
+
+    .insight {
+      background: var(--carbon);
+      color: var(--crema);
+      border-radius: 6px;
+      padding: 1.6rem 2rem;
+      margin: 2rem 0;
+    }
+
+    .insight p {
+      color: var(--crema);
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    .insight strong { color: #e8c4a0; }
+
+    .divisor {
+      width: 3rem;
+      height: 2px;
+      background: var(--acento);
+      margin: 2.5rem 0;
+    }
+
+    /* DECISIONES */
+    .decisiones {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 1.5rem 0;
+    }
+
+    .decision {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0;
+      border-bottom: 1px solid var(--gris-claro);
+    }
+
+    .decision:last-child { border-bottom: none; }
+
+    .decision-estado {
+      width: 4px;
+      background: var(--acento);
+      flex-shrink: 0;
+    }
+
+    .decision-estado.si { background: var(--verde); }
+    .decision-estado.no { background: var(--rojo); }
+    .decision-estado.pendiente { background: var(--gris-claro); }
+
+    .decision-contenido {
+      padding: 1.1rem 1.4rem;
+    }
+
+    .decision-titulo {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--carbon);
+      margin-bottom: 0.3rem;
+    }
+
+    .decision-desc {
+      font-size: 0.85rem;
+      color: var(--gris);
+      line-height: 1.6;
+    }
+
+    .decision-tag {
+      display: inline-block;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.5rem;
+      border-radius: 2px;
+      margin-bottom: 0.4rem;
+    }
+
+    .tag-si { background: rgba(90, 140, 110, 0.12); color: var(--verde); }
+    .tag-no { background: rgba(140, 90, 90, 0.12); color: var(--rojo); }
+    .tag-pendiente { background: rgba(180, 170, 160, 0.15); color: var(--gris); }
+
+    /* REGLA */
+    .regla {
+      border: 2px solid var(--carbon);
+      border-radius: 6px;
+      padding: 1.6rem 2rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .regla-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--acento);
+      margin-bottom: 0.6rem;
+    }
+
+    .regla p {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--carbon);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* STACK TÉCNICO */
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 1.5rem 0;
+    }
+
+    .stack-item {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 0;
+      border-bottom: 1px solid var(--gris-claro);
+    }
+
+    .stack-item:last-child { border-bottom: none; }
+
+    .stack-nombre {
+      padding: 1rem 1.2rem;
+      background: #f0ede8;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--carbon);
+      border-right: 1px solid var(--gris-claro);
+      display: flex;
+      align-items: center;
+    }
+
+    .stack-desc {
+      padding: 1rem 1.4rem;
+      font-size: 0.85rem;
+      color: var(--gris);
+      line-height: 1.6;
+    }
+
+    /* FLUJO */
+    .flujo {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 1.5rem 0;
+    }
+
+    .flujo-paso {
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--gris-claro);
+    }
+
+    .flujo-paso:last-child { border-bottom: none; }
+
+    .flujo-num {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--acento);
+      min-width: 1.5rem;
+      padding-top: 0.1rem;
+    }
+
+    .flujo-texto {
+      font-size: 0.88rem;
+      color: var(--carbon);
+      line-height: 1.65;
+    }
+
+    .flujo-texto strong { color: var(--carbon); }
+    .flujo-texto em { color: var(--gris); font-size: 0.82rem; }
+
+    @media (max-width: 560px) {
+      .stack-item { grid-template-columns: 1fr; }
+      .stack-nombre { border-right: none; border-bottom: 1px solid var(--gris-claro); }
+    }
+
+    footer {
+      border-top: 1px solid var(--gris-claro);
+      padding-top: 2rem;
+      margin-top: 5rem;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.72rem;
+      color: var(--gris);
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+
+<style>
+  #pin-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background: #f7f4ef;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 2rem;
+    transition: opacity 0.5s ease;
+  }
+  #pin-overlay.saliendo { opacity: 0; pointer-events: none; }
+  #pin-logo { font-family: 'Georgia', serif; font-size: 2.2rem; font-weight: normal; color: #1e1e1e; }
+  #pin-label { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #6b6b6b; }
+  #pin-input { font-family: 'Georgia', serif; font-size: 1.8rem; letter-spacing: 0.5em; text-align: center; width: 180px; border: none; border-bottom: 2px solid #d4cfc9; background: transparent; color: #1e1e1e; outline: none; padding: 0.4rem 0; transition: border-color 0.3s; -webkit-text-security: disc; }
+  #pin-input:focus { border-color: #c17f5a; }
+  #pin-input.error { border-color: #c0705a; animation: shake 0.4s ease; }
+  #pin-error { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.72rem; color: #c0705a; letter-spacing: 0.05em; height: 1rem; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+</style>
+
+<div id="pin-overlay">
+  <div id="pin-logo">Simpleno</div>
+  <div id="pin-label">Ingresá el código de acceso</div>
+  <input id="pin-input" type="password" inputmode="numeric" maxlength="4" autofocus autocomplete="off" />
+  <div id="pin-error"></div>
+</div>
+
+<script>
+  (function() {
+    if (sessionStorage.getItem('simpleno-access') === 'ok') {
+      document.getElementById('pin-overlay').style.display = 'none';
+      return;
+    }
+    var input = document.getElementById('pin-input');
+    var error = document.getElementById('pin-error');
+    input.addEventListener('input', function() {
+      error.textContent = '';
+      input.classList.remove('error');
+      if (input.value.length === 4) {
+        if (input.value === '2607') {
+          sessionStorage.setItem('simpleno-access', 'ok');
+          var overlay = document.getElementById('pin-overlay');
+          overlay.classList.add('saliendo');
+          setTimeout(function() { overlay.style.display = 'none'; }, 500);
+        } else {
+          input.classList.add('error');
+          error.textContent = 'Código incorrecto';
+          setTimeout(function() { input.value = ''; input.classList.remove('error'); }, 600);
+        }
+      }
+    });
+  })();
+</script>
+
+<body>
+<div class="contenedor">
+
+  <div class="portada">
+    <div class="etiqueta">Referencia interna — Octubre 2026</div>
+    <h1>Conceptos y decisiones de diseño</h1>
+    <p class="bajada">Todo lo que está decidido, todo lo que está descartado, y todo lo que sigue abierto. Documento vivo — se actualiza a medida que el proyecto avanza.</p>
+  </div>
+
+
+  <!-- 1. PRODUCTO -->
+  <section>
+    <div class="seccion-titulo">01 — Producto y experiencia</div>
+    <h2>Cómo se vive Simpleno</h2>
+
+    <p>Al entrar, el usuario elige un estado emocional. Eso define qué historias ve. No hay feed, no hay inicio genérico, no hay home de tendencias.</p>
+
+    <div class="decisiones">
+      <div class="decision">
+        <div class="decision-estado si"></div>
+        <div class="decision-contenido">
+          <div class="decision-tag tag-si">Decidido</div>
+          <div class="decision-titulo">Entrada contextual</div>
+          <div class="decision-desc">Al entrar, el usuario elige desde dónde llega: <em>"algo que me pesa"</em>, <em>"algo que perdí"</em>, <em>"algo que me alegra"</em>, <em>"sorprendeme"</em>. Sin cuenta, sin tracking. Cada visita empieza de cero.</div>
+        </div>
+      </div>
+      <div class="decision">
+        <div class="decision-estado si"></div>
+        <div class="decision-contenido">
+          <div class="decision-tag tag-si">Decidido</div>
+          <div class="decision-titulo">Una sola interacción posible</div>
+          <div class="decision-desc">"Resuena conmigo." No hay like, no hay comentario, no hay share, no hay guardar. Solo reconocimiento. No se puede responder a una historia — solo resonar con ella.</div>
+        </div>
+      </div>
+      <div class="decision">
+        <div class="decision-estado si"></div>
+        <div class="decision-contenido">
+          <div class="decision-tag tag-si">Decidido</div>
+          <div class="decision-titulo">Sin perfil, sin historial persistente</div>
+          <div class="decision-desc">No hay cuenta. No hay login. No hay cookie que persista entre sesiones. Cada visita es anónima y nueva. El sistema no sabe que volviste.</div>
+        </div>
+      </div>
+      <div class="decision">
+        <div class="decision-estado si"></div>
+        <div class="decision-contenido">
+          <div class="decision-tag tag-si">Decidido</div>
+          <div class="decision-titulo">Formato de escritura: primera persona vivencial</div>
+          <div class="decision-desc">Las historias se escriben desde el "sentí", "me pasó", "estuve ahí". No "él hizo", no "ella es". El formato previene el bullying y la acusación — es una barrera de diseño, no de moderación.</div>
+        </div>
+      </div>
+      <div class="decision">
+        <div class="decision-estado si"></div>
+        <div class="decision-contenido">
+          <div class="decision-tag tag-si">Decidido</div>
+          <div class="decision-titulo">Sin identificadores específicos</div>
+          <div class="decision-desc">Sin nombres de personas, empresas ni lugares. Las historias deben ser lo suficientemente universales para que no exista un "pool de sospechosos". Eso mata el chisme y protege al autor.</div>
+        </div>
+      </div>
+      <div class="decision">
+        <div class="decision-estado si"></div>
+        <div class="decision-contenido">
+          <div class="decision-tag tag-si">Decidido</div>
+          <div class="decision-titulo">Moderación antes de publicar</div>
+          <div class="decision-desc">Una historia no va directo al blockchain. Pasa primero por moderación — IA preventiva de cuidado (no censura) y revisión manual si hace falta. Una vez aprobada, se graba en Arweave y ya no se puede borrar.</div>
+        </div>
+      </div>
+      <div class="decision">
+        <div class="decision-estado si"></div>
+        <div class="decision-contenido">
+          <div class="decision-tag tag-si">Decidido</div>
+          <div class="decision-titulo">Sin primer publicador</div>
+          <div class="decision-desc">No existe timestamp visible ni "subido por". La historia aparece y ya está. Nadie puede decir "yo la puse primero" — elimina el ego de la autoría incluso dentro del anonimato.</div>
+        </div>
+      </div>
+      <div class="decision">
+        <div class="decision-estado si"></div>
+        <div class="decision-contenido">
+          <div class="decision-tag tag-si">Decidido</div>
+          <div class="decision-titulo">El éxito no fluye de vuelta a nadie</div>
+          <div class="decision-desc">Si una historia resuena masivamente, nadie gana seguidores ni visibilidad. La historia crece. Ninguna cuenta se infla — porque no hay cuentas.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 2. ALGORITMO -->
+  <section>
+    <div class="seccion-titulo">02 — Algoritmo de recomendación</div>
+    <h2>El sistema conoce las historias, no a los usuarios</h2>
+
+    <div class="insight">
+      <p>La inversión clave: en lugar de "sé quién sos, te muestro lo que te gusta", el modelo es <strong>"sé qué historias conectan entre sí — y según cómo entrás y qué resonó hoy, te llevo por ese camino."</strong> Las historias tienen perfil. Los usuarios no.</p>
+    </div>
+
+    <p>Tres capas de señal, todas anónimas:</p>
+
+    <div class="decisiones">
+      <div class="decision">
+        <div class="decision-estado si"></div>
+        <div class="decision-contenido">
+          <div class="decision-tag tag-si">Capa 1</div>
+          <div class="decision-titulo">Entrada contextual</div>
+          <div class="decision-desc">El estado emocional elegido al entrar define el punto de partida del recorrido. Sin datos personales.</div>
+        </div>
+      </div>
+      <div class="decision">
+        <div class="decision-estado si"></div>
+        <div class="decision-contenido">
+          <div class="decision-tag tag-si">Capa 2</div>
+          <div class="decision-titulo">Resonancias de sesión efímera</div>
+          <div class="decision-desc">Cada "resuena conmigo" durante la visita refina qué se muestra a continuación. Al cerrar el browser, esa información desaparece. No se guarda nada.</div>
+        </div>
+      </div>
+      <div class="decision">
+        <div class="decision-estado si"></div>
+        <div class="decision-contenido">
+          <div class="decision-tag tag-si">Capa 3</div>
+          <div class="decision-titulo">Grafo de resonancias global anónimo</div>
+          <div class="decision-desc">Con el tiempo el sistema aprende qué historias se encadenan: las personas que resonaron con A también resonaron con B. No sabe quiénes son — solo que esa cadena existe. Como Spotify, que sabe que X e Y se escuchan juntas sin saber nada de las personas.</div>
+        </div>
+      </div>
+    </div>
+
+    <p>Cada historia tiene un <strong>embedding semántico</strong> — una representación matemática de su contenido emocional. Historias sobre pérdida están cerca entre sí. Historias sobre miedo al juicio también. El algoritmo navega ese mapa usando las señales en tiempo real, sin seguirte a vos.</p>
+
+    <p>Si el usuario escribe un testimonio, los temas que aparecen en su texto son señal adicional para la sesión — sin guardar nada una vez que se va.</p>
+  </section>
+
+
+  <!-- 3. TECNOLOGÍA -->
+  <section>
+    <div class="seccion-titulo">03 — Arquitectura técnica</div>
+    <h2>Blockchain es el corazón, no una feature</h2>
+
+    <p>Sin blockchain, Simpleno es PostSecret con mejor diseño. La promesa <em>"esta historia existe aunque yo desaparezca"</em> solo es verdad si está estructuralmente garantizada — no por buena voluntad.</p>
+
+    <div class="stack">
+      <div class="stack-item">
+        <div class="stack-nombre">Arweave</div>
+        <div class="stack-desc">Almacenamiento permanente descentralizado. Una historia se escribe una vez y existe para siempre. Costo: ~$0.001 USD por testimonio. Ningún servidor, ninguna empresa, ningún gobierno puede borrarlo.</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-nombre">Irys (ex-Bundlr)</div>
+        <div class="stack-desc">Capa sobre Arweave que simplifica la escritura. Permite que Simpleno pague el costo del storage sin que el usuario necesite una wallet de crypto.</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-nombre">Firebase</div>
+        <div class="stack-desc">Índice liviano para buscar y filtrar historias por categoría y resonancias. Firebase puede ser presionado para borrar del índice — pero la historia sigue en Arweave. El índice es la ventana, no el depósito.</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-nombre">Embeddings</div>
+        <div class="stack-desc">Modelo semántico para representar el contenido emocional de cada historia como un vector. Permite recomendación por similitud sin perfiles de usuario.</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-nombre">IA de moderación</div>
+        <div class="stack-desc">Revisión preventiva antes de publicar. Detecta crisis, contenido dañino, identificadores específicos. No censura — cuida. Opera antes de que la historia llegue al blockchain.</div>
+      </div>
+    </div>
+
+    <div class="divisor"></div>
+
+    <p style="font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.78rem; font-weight:600; color:var(--carbon); margin-bottom:0.8rem;">Flujo de publicación</p>
+
+    <div class="flujo">
+      <div class="flujo-paso">
+        <div class="flujo-num">01</div>
+        <div class="flujo-texto"><strong>Usuario escribe</strong> un testimonio en el browser. <em>Elige una categoría. Sin cuenta, sin nombre.</em></div>
+      </div>
+      <div class="flujo-paso">
+        <div class="flujo-num">02</div>
+        <div class="flujo-texto"><strong>IA revisa</strong> antes de publicar. Detecta si hay riesgo de daño, identificadores, o crisis. <em>No filtra el dolor — filtra el peligro.</em></div>
+      </div>
+      <div class="flujo-paso">
+        <div class="flujo-num">03</div>
+        <div class="flujo-texto"><strong>Simpleno firma</strong> la transacción con su wallet y paga el costo de Arweave. <em>El usuario no necesita crypto ni wallet.</em></div>
+      </div>
+      <div class="flujo-paso">
+        <div class="flujo-num">04</div>
+        <div class="flujo-texto"><strong>Historia grabada</strong> en Arweave con un ID único permanente. Nadie la puede borrar — ni Simpleno. <em>La clave efímera del usuario se descarta.</em></div>
+      </div>
+      <div class="flujo-paso">
+        <div class="flujo-num">05</div>
+        <div class="flujo-texto"><strong>Firebase indexa</strong> el ID, la categoría y el embedding. Permite que aparezca en búsquedas y recomendaciones.</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 4. MONETIZACIÓN -->
+  <section>
+    <div class="seccion-titulo">04 — Monetización</div>
+    <h2>Lo que está prohibido y lo que está abierto</h2>
+
+    <div class="regla">
+      <div class="regla-label">Regla fundacional</div>
+      <p>"Nada que toque la visibilidad puede estar a la venta."</p>
+    </div>
+
+    <p>El "resuena conmigo" solo vale algo si es completamente orgánico. En el momento en que alguien puede pagar para aparecer más, esa métrica deja de medir resonancia real y empieza a medir presupuesto. Es la condición de que el espacio sea genuino.</p>
+
+    <div class="decisiones">
+      <div class="decision">
+        <div class="decision-estado no"></div>
+        <div class="decision-contenido">
+          <div class="decision-tag tag-no">Descartado</div>
+          <div class="decision-titulo">Historias promocionadas o pagadas</div>
+          <div class="decision-desc">Cualquier mecanismo que permita pagar por más visibilidad destruye la métrica de resonancia y la autenticidad del espacio.</div>
+        </div>
+      </div>
+      <div class="decision">
+        <div class="decision-estado no"></div>
+        <div class="decision-contenido">
+          <div class="decision-tag tag-no">Descartado</div>
+          <div class="decision-titulo">Publicidad dentro del flujo de historias</div>
+          <div class="decision-desc">Toca directamente la visibilidad. Incompatible con el principio.</div>
+        </div>
+      </div>
+      <div class="decision">
+        <div class="decision-estado si"></div>
+        <div class="decision-contenido">
+          <div class="decision-tag tag-si">Posible</div>
+          <div class="decision-titulo">Libro de testimonios</div>
+          <div class="decision-desc">Las historias con más resonancias orgánicas se compilan periódicamente en una colección editorial. Simpleno firma como entidad/curador. El modelo no toca la visibilidad dentro de la plataforma — las historias que entran al libro son las que más resonaron sin pago. Al publicar, el usuario acepta términos que licencian el uso anónimo a Simpleno.</div>
+        </div>
+      </div>
+      <div class="decision">
+        <div class="decision-estado pendiente"></div>
+        <div class="decision-contenido">
+          <div class="decision-tag tag-pendiente">Abierto</div>
+          <div class="decision-titulo">Modelo de sostenibilidad</div>
+          <div class="decision-desc">No definido. Se decide cuando el concepto esté validado con usuarios reales. Opciones a explorar: donaciones, grants culturales, datos agregados anónimos para investigación, acceso institucional.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 5. NOMBRE -->
+  <section>
+    <div class="seccion-titulo">05 — El nombre</div>
+    <h2>Por qué Simpleno</h2>
+    <p>El nombre tiene una historia que va más allá de la marca. Está en otro documento.</p>
+    <div style="margin-top: 1.5rem;">
+      <a href="simpleno-origen.html" style="font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.78rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--acento); text-decoration:none; border-bottom: 1px solid var(--acento); padding-bottom:0.15rem;">Leer el origen del nombre →</a>
+    </div>
+  </section>
+
+
+  <!-- 6. PRIMER PASO -->
+  <section>
+    <div class="seccion-titulo">06 — El primer paso</div>
+    <h2>No una plataforma. Un experimento.</h2>
+
+    <p>Antes de construir algo, hay que comprobar qué ocurre realmente en la psiquis humana cuando el autor desaparece. No hay respuesta teórica para esto. Solo hay experimento.</p>
+
+    <blockquote>
+      <p>¿La gente necesita saber que <strong>SU</strong> historia fue leída, o alcanza con saber que <strong>LA</strong> historia fue leída?</p>
+    </blockquote>
+
+    <p>Esa distinción es la más importante del concepto. Y abre otras preguntas que solo el experimento puede responder:</p>
+
+    <div class="decisiones">
+      <div class="decision">
+        <div class="decision-estado pendiente"></div>
+        <div class="decision-contenido">
+          <div class="decision-tag tag-pendiente">A validar</div>
+          <div class="decision-titulo">¿Qué ocurre en la psiquis de quien escribe y suelta sin saber qué pasará?</div>
+        </div>
+      </div>
+      <div class="decision">
+        <div class="decision-estado pendiente"></div>
+        <div class="decision-contenido">
+          <div class="decision-tag tag-pendiente">A validar</div>
+          <div class="decision-titulo">¿El ego termina ganando igual aunque sea anónimo?</div>
+        </div>
+      </div>
+      <div class="decision">
+        <div class="decision-estado pendiente"></div>
+        <div class="decision-contenido">
+          <div class="decision-tag tag-pendiente">A validar</div>
+          <div class="decision-titulo">¿Hay reparación en escribir y ser reconocido sin ser identificado?</div>
+        </div>
+      </div>
+      <div class="decision">
+        <div class="decision-estado pendiente"></div>
+        <div class="decision-contenido">
+          <div class="decision-tag tag-pendiente">A validar</div>
+          <div class="decision-titulo">¿La empatía social ocurre igual — o más — cuando no sabés nada del otro?</div>
+        </div>
+      </div>
+    </div>
+
+    <p>La versión mínima para empezar a responder esto no es una app. Es un grupo cerrado de 50 personas, historias anónimas recolectadas a mano, y una sola acción disponible: <em>"esto resuena conmigo"</em>.</p>
+
+    <p>Si eso genera algo, la idea vive. Si no genera nada, aprendiste algo real sin haber construido nada.</p>
+  </section>
+
+
+  <div style="border-top: 1px solid var(--gris-claro); margin-top: 3rem; padding: 2.5rem 0; display:flex; gap:2rem; flex-wrap:wrap;">
+    <a href="simpleno.html" style="font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--acento); text-decoration:none;">← Concepto</a>
+    <a href="simpleno-origen.html" style="font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--acento); text-decoration:none;">← Origen</a>
+    <a href="simpleno-desarrollo.html" style="font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:var(--acento); text-decoration:none;">← Desarrollo</a>
+  </div>
+
+  <footer>
+    Simpleno — Documento interno · Octubre 2026
+  </footer>
+
+</div>
+</body>
+</html>

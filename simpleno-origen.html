@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simpleno — El nombre y el origen</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --crema: #f7f4ef;
+      --tierra: #8b6f5c;
+      --carbon: #1e1e1e;
+      --gris: #6b6b6b;
+      --gris-claro: #d4cfc9;
+      --acento: #c17f5a;
+    }
+
+    html { font-size: 18px; scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--crema);
+      color: var(--carbon);
+      font-family: 'Georgia', 'Times New Roman', serif;
+      line-height: 1.8;
+      padding: 0 1.5rem;
+    }
+
+    .contenedor {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 5rem 0 8rem;
+    }
+
+    .portada {
+      padding: 4rem 0 5rem;
+      border-bottom: 1px solid var(--gris-claro);
+      margin-bottom: 4rem;
+    }
+
+    .portada .etiqueta {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--acento);
+      margin-bottom: 1.5rem;
+    }
+
+    .portada h1 {
+      font-size: 3rem;
+      font-weight: normal;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      color: var(--carbon);
+    }
+
+    .portada .bajada {
+      font-size: 1.15rem;
+      color: var(--gris);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    section {
+      margin-bottom: 4.5rem;
+    }
+
+    .seccion-titulo {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--acento);
+      margin-bottom: 1.2rem;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      font-weight: normal;
+      line-height: 1.3;
+      margin-bottom: 1.2rem;
+      color: var(--carbon);
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: var(--carbon);
+    }
+
+    p + p { margin-top: 0.2rem; }
+
+    blockquote {
+      border-left: 3px solid var(--acento);
+      padding: 1rem 1.5rem;
+      margin: 2rem 0;
+      background: rgba(193, 127, 90, 0.06);
+      border-radius: 0 4px 4px 0;
+    }
+
+    blockquote p {
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--carbon);
+      margin: 0;
+    }
+
+    .insight {
+      background: var(--carbon);
+      color: var(--crema);
+      border-radius: 6px;
+      padding: 2rem 2.2rem;
+      margin: 2.5rem 0;
+    }
+
+    .insight p {
+      color: var(--crema);
+      font-size: 1.05rem;
+      margin: 0;
+    }
+
+    .insight strong {
+      color: #e8c4a0;
+    }
+
+    .divisor {
+      width: 3rem;
+      height: 2px;
+      background: var(--acento);
+      margin: 3rem 0;
+    }
+
+    .nombre-etymology {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0;
+      margin: 2.5rem 0;
+      align-items: center;
+      text-align: center;
+    }
+
+    .nombre-parte {
+      padding: 2rem 1.5rem;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      background: white;
+    }
+
+    .nombre-parte .palabra {
+      font-size: 2rem;
+      font-weight: normal;
+      color: var(--carbon);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .nombre-parte .definicion {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.72rem;
+      color: var(--gris);
+      line-height: 1.6;
+      letter-spacing: 0.03em;
+    }
+
+    .nombre-mas {
+      font-size: 1.8rem;
+      color: var(--acento);
+      padding: 0 1.2rem;
+      font-weight: 300;
+    }
+
+    .nombre-resultado {
+      text-align: center;
+      margin: 1.5rem 0 2.5rem;
+      padding: 1.5rem;
+      border-top: 2px solid var(--acento);
+    }
+
+    .nombre-resultado .resultado-palabra {
+      font-size: 2.8rem;
+      font-weight: normal;
+      color: var(--carbon);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+    }
+
+    .nombre-resultado .resultado-desc {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.75rem;
+      color: var(--gris);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 560px) {
+      .nombre-etymology {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+      .nombre-mas { padding: 0.5rem 0; }
+      .portada h1 { font-size: 2rem; }
+      h2 { font-size: 1.3rem; }
+    }
+
+    footer {
+      border-top: 1px solid var(--gris-claro);
+      padding-top: 2rem;
+      margin-top: 5rem;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.72rem;
+      color: var(--gris);
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+
+<style>
+  #pin-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background: #f7f4ef;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 2rem;
+    transition: opacity 0.5s ease;
+  }
+  #pin-overlay.saliendo { opacity: 0; pointer-events: none; }
+  #pin-logo {
+    font-family: 'Georgia', serif;
+    font-size: 2.2rem;
+    font-weight: normal;
+    color: #1e1e1e;
+    letter-spacing: -0.01em;
+  }
+  #pin-label {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #6b6b6b;
+  }
+  #pin-input {
+    font-family: 'Georgia', serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.5em;
+    text-align: center;
+    width: 180px;
+    border: none;
+    border-bottom: 2px solid #d4cfc9;
+    background: transparent;
+    color: #1e1e1e;
+    outline: none;
+    padding: 0.4rem 0;
+    transition: border-color 0.3s;
+    -webkit-text-security: disc;
+  }
+  #pin-input:focus { border-color: #c17f5a; }
+  #pin-input.error { border-color: #c0705a; animation: shake 0.4s ease; }
+  #pin-error {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.72rem;
+    color: #c0705a;
+    letter-spacing: 0.05em;
+    height: 1rem;
+    transition: opacity 0.3s;
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+  }
+</style>
+
+<div id="pin-overlay">
+  <div id="pin-logo">Simpleno</div>
+  <div id="pin-label">Ingresá el código de acceso</div>
+  <input id="pin-input" type="password" inputmode="numeric" maxlength="4" autofocus autocomplete="off" />
+  <div id="pin-error"></div>
+</div>
+
+<script>
+  (function() {
+    if (sessionStorage.getItem('simpleno-access') === 'ok') {
+      document.getElementById('pin-overlay').style.display = 'none';
+      return;
+    }
+    var input = document.getElementById('pin-input');
+    var error = document.getElementById('pin-error');
+    input.addEventListener('input', function() {
+      error.textContent = '';
+      input.classList.remove('error');
+      if (input.value.length === 4) {
+        if (input.value === '2607') {
+          sessionStorage.setItem('simpleno-access', 'ok');
+          var overlay = document.getElementById('pin-overlay');
+          overlay.classList.add('saliendo');
+          setTimeout(function() { overlay.style.display = 'none'; }, 500);
+        } else {
+          input.classList.add('error');
+          error.textContent = 'Código incorrecto';
+          setTimeout(function() {
+            input.value = '';
+            input.classList.remove('error');
+          }, 600);
+        }
+      }
+    });
+  })();
+</script>
+
+<body>
+<div class="contenedor">
+
+  <!-- PORTADA -->
+  <div class="portada">
+    <div class="etiqueta">El nombre — El origen</div>
+    <h1>Por qué Simpleno</h1>
+    <p class="bajada">El nombre no vino de un brief de marca. Vino de adentro. De un momento donde no había otra opción que ir para adentro.</p>
+  </div>
+
+
+  <!-- EL NOMBRE -->
+  <section>
+    <div class="seccion-titulo">01 — El nombre</div>
+    <h2>Simple + Pleno</h2>
+
+    <p>Mucha gente asume que Simpleno viene de "Simple" más "No". Una negación. Un rechazo.</p>
+
+    <p>No es eso.</p>
+
+    <p>Simpleno es la unión de dos palabras que describen lo que creo que es una buena vida:</p>
+
+    <div class="nombre-etymology">
+      <div class="nombre-parte">
+        <div class="palabra">Simple</div>
+        <div class="definicion">La mayor felicidad<br>está en los detalles.<br>En lo que no necesita explicación.</div>
+      </div>
+      <div class="nombre-mas">+</div>
+      <div class="nombre-parte">
+        <div class="palabra">Pleno</div>
+        <div class="definicion">El éxito es sentirse<br>completo, no llenarse<br>de cosas.</div>
+      </div>
+    </div>
+
+    <div class="nombre-resultado">
+      <div class="resultado-palabra">Simpleno</div>
+      <div class="resultado-desc">Una vida más simple y más plena</div>
+    </div>
+
+    <p>No es un nombre de plataforma. Es una filosofía. Y la plataforma es la consecuencia natural de esa filosofía.</p>
+
+  </section>
+
+
+  <!-- EL ORIGEN -->
+  <section>
+    <div class="seccion-titulo">02 — El origen</div>
+    <h2>Lo que me obligó a parar</h2>
+
+    <p>Hay momentos en la vida donde el cuerpo dice lo que la mente no quiere escuchar. Para mí ese momento llegó en forma de enfermedad. Una debilidad en el tejido conectivo — el tejido que sostiene, que mantiene la estructura, que hace posible que todo funcione — que me obligó a detenerme.</p>
+
+    <p>No fue gradual. Fue un freno de mano.</p>
+
+    <p>Y en ese silencio que no elegí, en esa quietud forzada, algo empezó a aparecer. No grandes revelaciones. Cosas simples. La luz de la mañana. Una conversación sin apuro. El peso de lo que cargaba innecesariamente. La distancia entre lo que mostraba y lo que sentía.</p>
+
+    <div class="insight">
+      <p>Cuando no podés hacer, empezás a ver. Y lo primero que vi fue cuánto ruido había dentro que yo misma había generado creyendo que era el camino.</p>
+    </div>
+
+    <p>La era digital nos vendió una promesa: conectate, mostrá, crecé, llegá. Y yo, como casi todos, la compré. Perfil prolijo, logros visibles, éxito medible. Sin darme cuenta fui construyendo una versión de mí para afuera que cada vez tenía menos que ver con lo que sentía adentro.</p>
+
+    <p>La enfermedad rompió eso. No suavemente.</p>
+
+  </section>
+
+
+  <!-- LO QUE ENCONTRÉ -->
+  <section>
+    <div class="seccion-titulo">03 — Lo que encontré</div>
+    <h2>La felicidad estaba donde no había estado mirando</h2>
+
+    <p>Adentro no encontré respuestas grandes. Encontré preguntas simples que nunca me había hecho:</p>
+
+    <blockquote>
+      <p>¿Qué me hace bien de verdad?<br>
+      ¿Cuándo fue la última vez que me sentí plena — no exitosa, plena?<br>
+      ¿Qué cargaría si no me estuviera mirando nadie?</p>
+    </blockquote>
+
+    <p>Y fui encontrando, de a poco, que la mayor felicidad no estaba en los logros que acumulaba. Estaba en los detalles que ignoraba. En las conversaciones reales. En el silencio elegido. En hacer algo que importa, no algo que impresiona.</p>
+
+    <p>Que el éxito — el que vale — no es llenarse de cosas. Es sentirse pleno. Completo. En paz con lo que sos y con lo que hacés.</p>
+
+    <p>Que el exitismo de las redes sociales no es el camino — es el problema. No porque la ambición sea mala, sino porque desconecta a las personas de lo que realmente las mueve. Las pone a actuar para una audiencia en lugar de vivir para sí mismas.</p>
+
+    <div class="insight">
+      <p>Rechazar el exitismo no es resignación. Es <strong>elegir qué medir</strong>. Y lo que yo elegí medir cambió todo lo que vino después.</p>
+    </div>
+
+  </section>
+
+
+  <!-- DE ADENTRO HACIA AFUERA -->
+  <section>
+    <div class="seccion-titulo">04 — De adentro hacia afuera</div>
+    <h2>Un propósito que quiero darle al mundo</h2>
+
+    <p>Simpleno nació primero como propósito personal. La pregunta no era "qué plataforma construyo" sino "qué quiero darle al mundo" — o más honestamente, "qué me gustaría que hubiera existido cuando más lo necesité".</p>
+
+    <p>Un lugar donde contar algo real no cueste. Donde no haya etiqueta, ni juicio, ni la presión de construir una imagen. Donde la historia valga por sí misma y no por quien la cuenta.</p>
+
+    <p>Donde alguien pueda soltar algo que pesa y encontrar, del otro lado, que no está solo.</p>
+
+    <p>Eso es lo que encontré adentro. Y eso es lo que Simpleno intenta ser hacia afuera.</p>
+
+    <blockquote>
+      <p>No soy la fundadora de una startup que encontró un nicho de mercado. Soy alguien que encontró algo real y quiere que otros también puedan encontrarlo.</p>
+    </blockquote>
+
+    <p>El tejido conectivo que se debilitó en mi cuerpo se convirtió, de alguna manera que no termino de entender del todo, en la imagen exacta de lo que quiero construir: el tejido que conecta a las personas a través de lo que no se animan a decir. Lo que sostiene sin que nadie lo vea. Lo que hace posible que todo funcione.</p>
+
+    <div class="insight">
+      <p>Simpleno no es una red social. Es la propuesta de que <strong>una vida más simple y más plena es posible</strong> — y que las historias que compartimos, sin nombre y sin miedo, son el camino para llegar ahí.</p>
+    </div>
+
+  </section>
+
+
+  <div class="divisor"></div>
+
+  <div style="text-align: center; padding: 2rem 0;">
+    <a href="simpleno.html" style="font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--acento); text-decoration:none;">← Volver al concepto</a>
+  </div>
+
+  <footer>
+    Simpleno — Documento interno · Octubre 2026
+  </footer>
+
+</div>
+</body>
+</html>
