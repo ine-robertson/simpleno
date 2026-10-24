@@ -404,7 +404,7 @@
       <div class="bloque-titulo">Lo que no se cuenta</div>
 
       <div class="pregunta">
-        <div class="pregunta-texto">¿Hay historias/testimonios tuyos que no publicarías con tu nombre, pero sí contarías si nadie supiera que sos vos?</div>
+        <div class="pregunta-texto">¿Hay cosas que te pasaron que no contarías con tu nombre — pero sí de forma anónima?</div>
         <div class="semaforo semaforo-4">
           <button type="button" class="semaforo-btn" onclick="semaforo(this,'q1','nada')">Para nada</button>
           <button type="button" class="semaforo-btn" onclick="semaforo(this,'q1','puedeser')">Puede ser</button>
@@ -415,7 +415,7 @@
       </div>
 
       <div class="pregunta cond" id="cond-q2">
-        <div class="pregunta-texto">¿Por qué no las contarías con tu nombre? <span class="pregunta-nota">(podés elegir más de una)</span></div>
+        <div class="pregunta-texto">¿Por qué no con tu nombre? <span class="pregunta-nota">(podés elegir más de una)</span></div>
         <div class="opciones" id="ops-q2">
           <div class="opcion" onclick="check(this,'q2')"><div class="opcion-cuadro"></div>Miedo al juicio</div>
           <div class="opcion" onclick="check(this,'q2')"><div class="opcion-cuadro"></div>Timidez</div>
@@ -626,7 +626,7 @@
   // SEMÁFORO
   function semaforo(btn, campo, val) {
     var btns = btn.parentElement.querySelectorAll('.semaforo-btn');
-    btns.forEach(function(b) { b.classList.remove('sel-nada','sel-aveces','sel-total'); });
+    btns.forEach(function(b) { b.classList.remove('sel-nada','sel-puedeser','sel-aveces','sel-total'); });
     var clases = { nada: 'sel-nada', puedeser: 'sel-puedeser', aveces: 'sel-aveces', total: 'sel-total' };
     btn.classList.add(clases[val]);
     document.getElementById(campo).value = val;
