@@ -394,6 +394,16 @@
         <input type="hidden" id="q3" value="">
       </div>
 
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Sentís que el simple hecho de escribir algo que te pesa o te emociona — aunque no sepas quién lo va a leer — te ayuda a soltarlo?</div>
+        <div class="semaforo">
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'qsoltar','nada')">Para nada</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'qsoltar','aveces')">A veces</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'qsoltar','total')">Totalmente</button>
+        </div>
+        <input type="hidden" id="qsoltar" value="">
+      </div>
+
       <div class="pregunta cond" id="cond-q4">
         <div class="pregunta-texto">¿Por qué te las guardás? <span class="pregunta-nota">(podés elegir más de una)</span></div>
         <div class="opciones" id="ops-q4">
