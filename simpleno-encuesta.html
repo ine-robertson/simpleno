@@ -404,6 +404,16 @@
       <div class="bloque-titulo">Lo que no se cuenta</div>
 
       <div class="pregunta">
+        <div class="pregunta-texto">¿Tenés historias o experiencias que te guardás — que nunca contaste, o solo a 1 o 2 personas muy cercanas?</div>
+        <div class="semaforo">
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q3','nada')">Para nada</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q3','aveces')">A veces</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q3','total')">Sí, tengo</button>
+        </div>
+        <input type="hidden" id="q3" value="">
+      </div>
+
+      <div class="pregunta">
         <div class="pregunta-texto">¿Hay cosas que te pasaron que no contarías con tu nombre — pero sí de forma anónima?</div>
         <div class="semaforo semaforo-4">
           <button type="button" class="semaforo-btn" onclick="semaforo(this,'q1','nada')">No la contaría</button>
@@ -430,16 +440,6 @@
     <!-- BLOQUE 2: EL PESO DE LO NO DICHO -->
     <div class="bloque">
       <div class="bloque-titulo">El peso de lo no dicho</div>
-
-      <div class="pregunta">
-        <div class="pregunta-texto">¿Te guardás historias/testimonios que te pesan, te emocionan o te dejan en ridículo, que nunca le contaste a nadie — o solo a 1 o 2 personas muy cercanas?</div>
-        <div class="semaforo">
-          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q3','nada')">Para nada</button>
-          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q3','aveces')">A veces</button>
-          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q3','total')">Totalmente</button>
-        </div>
-        <input type="hidden" id="q3" value="">
-      </div>
 
       <div class="pregunta">
         <div class="pregunta-texto">¿Sentís que el simple hecho de escribir algo que te pesa o te emociona — aunque no sepas quién lo va a leer — te ayuda a soltarlo?</div>
