@@ -676,31 +676,50 @@
     }
   }
 
+  var GAS_URL = 'TU_URL_GAS_AQUI';
+
+  function sel(id) { return document.getElementById(id).value; }
+  function radio1(grupo) {
+    var el = document.querySelector('#ops-' + grupo + ' .opcion.sel');
+    return el ? el.textContent.trim() : '';
+  }
+  function checks(grupo) {
+    return Array.from(document.querySelectorAll('#ops-' + grupo + ' .opcion.sel'))
+      .map(function(o) { return o.textContent.trim(); }).join(' | ');
+  }
+
   // SUBMIT
   document.getElementById('encuesta').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    var respuesta = {
-      timestamp: new Date().toISOString(),
-      perfil: document.getElementById('perfil').value,
-      q1:  document.getElementById('q1').value,
-      q2:  Array.from(document.querySelectorAll('#ops-q2 .opcion.sel')).map(function(o){ return o.textContent.trim(); }),
-      q3:  document.getElementById('q3').value,
-      q4:  Array.from(document.querySelectorAll('#ops-q4 .opcion.sel')).map(function(o){ return o.textContent.trim(); }),
-      q5:  (document.querySelector('#ops-q5 .opcion.sel') || {}).textContent || '',
-      q6:  (document.querySelector('#ops-q6 .opcion.sel') || {}).textContent || '',
-      q7:  document.querySelector('[name="q7"]').value,
-      q8:  document.getElementById('q8').value,
-      q9:  document.querySelector('[name="q9"]').value,
-      q10: Array.from(document.querySelectorAll('#ops-q10 .opcion.sel')).map(function(o){ return o.textContent.trim(); }),
-      q11: document.getElementById('q11').value,
-      q11t: document.querySelector('[name="q11t"]').value,
-      perfilEspecifico: document.querySelector('[name="qpe"]').value,
-      cierre: document.querySelector('[name="qcierre"]').value
+    var params = {
+      perfil:        sel('perfil'),
+      edad:          radio1('edad'),
+      q9:            document.querySelector('[name="q9"]').value,
+      q1:            sel('q1'),
+      q2:            checks('q2'),
+      q3:            sel('q3'),
+      qsoltar:       sel('qsoltar'),
+      q4:            checks('q4'),
+      q5:            radio1('q5'),
+      q6:            radio1('q6'),
+      q10:           checks('q10'),
+      qlector:       sel('qlector'),
+      qlector2:      sel('qlector2'),
+      motivar:       checks('motivar'),
+      motivarOtro:   document.querySelector('[name="motivar-otro"]').value,
+      abandonar:     checks('abandonar'),
+      abandonarOtro: document.querySelector('[name="abandonar-otro"]').value,
+      q7:            document.querySelector('[name="q7"]').value,
+      q8:            sel('q8'),
+      q11:           radio1('q11'),
+      qpe:           document.querySelector('[name="qpe"]').value,
+      qcierre:       document.querySelector('[name="qcierre"]').value
     };
 
-    // TODO: conectar a Firebase Firestore
-    console.log('Respuesta:', respuesta);
+    fetch(GAS_URL + '?' + new URLSearchParams(params).toString(), {
+      method: 'GET', mode: 'no-cors'
+    }).catch(function() {});
 
     document.getElementById('encuesta').style.display = 'none';
     document.getElementById('gracias').style.display = 'block';
