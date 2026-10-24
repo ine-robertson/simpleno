@@ -123,9 +123,10 @@
     }
 
     .semaforo-btn:hover { border-color: var(--acento); color: var(--carbon); }
-    .semaforo-btn.sel-nada   { border-color: var(--rojo);  background: rgba(140,90,90,0.07);   color: var(--rojo); }
-    .semaforo-btn.sel-aveces { border-color: var(--ambar); background: rgba(139,123,74,0.07);  color: var(--ambar); }
-    .semaforo-btn.sel-total  { border-color: var(--verde); background: rgba(90,140,110,0.07);  color: var(--verde); }
+    .semaforo-btn.sel-nada     { border-color: var(--rojo);  background: rgba(140,90,90,0.07);   color: var(--rojo); }
+    .semaforo-btn.sel-puedeser { border-color: var(--gris);  background: rgba(107,107,107,0.07); color: var(--gris); }
+    .semaforo-btn.sel-aveces   { border-color: var(--ambar); background: rgba(139,123,74,0.07);  color: var(--ambar); }
+    .semaforo-btn.sel-total    { border-color: var(--verde); background: rgba(90,140,110,0.07);  color: var(--verde); }
 
     /* SELECT */
     .select-perfil {
@@ -357,8 +358,9 @@
 
       <div class="pregunta">
         <div class="pregunta-texto">¿Hay historias/testimonios tuyos que no publicarías con tu nombre, pero sí contarías si nadie supiera que sos vos?</div>
-        <div class="semaforo">
+        <div class="semaforo" style="grid-template-columns:1fr 1fr 1fr 1fr;">
           <button type="button" class="semaforo-btn" onclick="semaforo(this,'q1','nada')">Para nada</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q1','puedeser')">Puede ser</button>
           <button type="button" class="semaforo-btn" onclick="semaforo(this,'q1','aveces')">A veces</button>
           <button type="button" class="semaforo-btn" onclick="semaforo(this,'q1','total')">Totalmente</button>
         </div>
@@ -522,9 +524,10 @@
   function semaforo(btn, campo, val) {
     var btns = btn.parentElement.querySelectorAll('.semaforo-btn');
     btns.forEach(function(b) { b.classList.remove('sel-nada','sel-aveces','sel-total'); });
-    btn.classList.add(val === 'nada' ? 'sel-nada' : val === 'aveces' ? 'sel-aveces' : 'sel-total');
+    var clases = { nada: 'sel-nada', puedeser: 'sel-puedeser', aveces: 'sel-aveces', total: 'sel-total' };
+    btn.classList.add(clases[val]);
     document.getElementById(campo).value = val;
-    if (campo === 'q1') condicional('cond-q2', val === 'aveces' || val === 'total');
+    if (campo === 'q1') condicional('cond-q2', val !== 'nada' && val !== '');
     if (campo === 'q3') condicional('cond-q4', val === 'aveces' || val === 'total');
   }
 
