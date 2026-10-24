@@ -474,12 +474,48 @@
     </div>
 
 
-    <!-- BLOQUE 4: EL CONCEPTO -->
+    <!-- BLOQUE 4: EL LECTOR -->
+    <div class="bloque">
+      <div class="bloque-titulo">El lector</div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Leerías historias/testimonios de vida de personas que no conocés?</div>
+        <div class="semaforo">
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'qlector','nada')">Para nada</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'qlector','aveces')">A veces</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'qlector','total')">Totalmente</button>
+        </div>
+        <input type="hidden" id="qlector" value="">
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Alguna vez leíste algo personal de alguien que no conocías y cambió cómo te sentías?</div>
+        <div class="semaforo">
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'qlector2','nada')">Para nada</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'qlector2','aveces')">A veces</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'qlector2','total')">Totalmente</button>
+        </div>
+        <input type="hidden" id="qlector2" value="">
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Qué te haría detenerte a leer algo personal de alguien que no conocés?</div>
+        <textarea class="campo" name="qlector3" placeholder="Lo que se te venga..."></textarea>
+      </div>
+    </div>
+
+
+    <!-- BLOQUE 5: EL CONCEPTO -->
     <div class="bloque">
       <div class="bloque-titulo">El concepto</div>
 
+      <div style="background: white; border: 1px solid var(--gris-claro); border-radius: 6px; padding: 1.4rem 1.6rem; margin-bottom: 2rem; font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.85rem; color: var(--gris); line-height: 1.7;">
+        <div style="font-weight: 700; color: var(--carbon); margin-bottom: 0.5rem; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;">¿De qué se trata?</div>
+        Una plataforma donde las personas publican historias/testimonios de vida de forma completamente anónima. No hay autor visible, no hay comentarios, no hay likes. La única acción disponible es <em>"esto resuena conmigo"</em> — un contador que crece cada vez que alguien se identifica con lo que leyó. Entrás eligiendo desde dónde llegás: <em>algo que me pesa, algo que perdí, algo que me alegra,</em> o <em>sorprendeme.</em>
+      </div>
+
       <div class="pregunta">
-        <div class="pregunta-texto">¿Qué te generaría encontrar una plataforma donde las historias/testimonios no tienen autor y la única acción disponible es <em>"esto resuena conmigo"</em>?</div>
+        <div class="pregunta-texto">¿Qué te generaría encontrar una plataforma así?</div>
         <textarea class="campo" name="q9" placeholder="Primera reacción, sin filtro..."></textarea>
       </div>
 
