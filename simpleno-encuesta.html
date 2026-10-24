@@ -475,28 +475,7 @@
     </div>
 
 
-    <!-- BLOQUE 3: EL ANONIMATO -->
-    <div class="bloque">
-      <div class="bloque-titulo">El anonimato</div>
-
-      <div class="pregunta">
-        <div class="pregunta-texto">¿Qué creés que cambia en una historia/testimonio cuando no sabés quién la vivió?</div>
-        <textarea class="campo" name="q7" placeholder="Escribí lo que se te venga..."></textarea>
-      </div>
-
-      <div class="pregunta">
-        <div class="pregunta-texto">¿Cuánto te importa saber quién escribió algo para decidir si te llega?</div>
-        <div class="semaforo">
-          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q8','nada')">Para nada</button>
-          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q8','aveces')">A veces</button>
-          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q8','total')">Totalmente</button>
-        </div>
-        <input type="hidden" id="q8" value="">
-      </div>
-    </div>
-
-
-    <!-- BLOQUE 4: EL LECTOR -->
+    <!-- BLOQUE 3: EL LECTOR -->
     <div class="bloque">
       <div class="bloque-titulo">El lector</div>
 
@@ -544,6 +523,27 @@
           <div class="opcion" onclick="check(this,'abandonar')"><div class="opcion-cuadro"></div>No me genera ninguna emoción</div>
         </div>
         <input type="text" class="campo corto" name="abandonar-otro" placeholder="Otro..." style="margin-top:0.6rem; min-height:auto; padding:0.65rem 1rem;">
+      </div>
+    </div>
+
+
+    <!-- BLOQUE 4: EL ANONIMATO -->
+    <div class="bloque">
+      <div class="bloque-titulo">El anonimato</div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Qué creés que cambia en una historia/testimonio cuando no sabés quién la vivió?</div>
+        <textarea class="campo" name="q7" placeholder="Escribí lo que se te venga..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Cuánto te importa saber quién escribió algo para decidir si te llega?</div>
+        <div class="semaforo">
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q8','nada')">Para nada</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q8','aveces')">A veces</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q8','total')">Totalmente</button>
+        </div>
+        <input type="hidden" id="q8" value="">
       </div>
     </div>
 
