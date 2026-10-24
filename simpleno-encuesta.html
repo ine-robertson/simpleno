@@ -506,8 +506,28 @@
       </div>
 
       <div class="pregunta">
-        <div class="pregunta-texto">¿Qué te haría detenerte a leer algo personal de alguien que no conocés?</div>
-        <textarea class="campo" name="qlector3" placeholder="Lo que se te venga..."></textarea>
+        <div class="pregunta-texto">¿Qué te motivaría a empezar a leer algo personal de alguien que no conocés? <span class="pregunta-nota">(podés elegir más de una)</span></div>
+        <div class="opciones" id="ops-motivar">
+          <div class="opcion" onclick="check(this,'motivar')"><div class="opcion-cuadro"></div>El título o primer párrafo me generó curiosidad</div>
+          <div class="opcion" onclick="check(this,'motivar')"><div class="opcion-cuadro"></div>La temática me resuena</div>
+          <div class="opcion" onclick="check(this,'motivar')"><div class="opcion-cuadro"></div>La forma de escribir me enganchó</div>
+          <div class="opcion" onclick="check(this,'motivar')"><div class="opcion-cuadro"></div>Sentí que podría identificarme</div>
+          <div class="opcion" onclick="check(this,'motivar')"><div class="opcion-cuadro"></div>Me llegó el tono emocional</div>
+          <div class="opcion" onclick="check(this,'motivar')"><div class="opcion-cuadro"></div>Es breve y fácil de leer</div>
+        </div>
+        <input type="text" class="campo corto" name="motivar-otro" placeholder="Otro..." style="margin-top:0.6rem; min-height:auto; padding:0.65rem 1rem;">
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Qué te haría abandonar una historia/experiencia a la mitad? <span class="pregunta-nota">(podés elegir más de una)</span></div>
+        <div class="opciones" id="ops-abandonar">
+          <div class="opcion" onclick="check(this,'abandonar')"><div class="opcion-cuadro"></div>La temática no me interesa</div>
+          <div class="opcion" onclick="check(this,'abandonar')"><div class="opcion-cuadro"></div>El tono no me conecta</div>
+          <div class="opcion" onclick="check(this,'abandonar')"><div class="opcion-cuadro"></div>Se siente poco auténtica o forzada</div>
+          <div class="opcion" onclick="check(this,'abandonar')"><div class="opcion-cuadro"></div>Es demasiado larga</div>
+          <div class="opcion" onclick="check(this,'abandonar')"><div class="opcion-cuadro"></div>No me genera ninguna emoción</div>
+        </div>
+        <input type="text" class="campo corto" name="abandonar-otro" placeholder="Otro..." style="margin-top:0.6rem; min-height:auto; padding:0.65rem 1rem;">
       </div>
     </div>
 
