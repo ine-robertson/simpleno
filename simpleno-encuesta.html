@@ -404,13 +404,27 @@
       <div class="bloque-titulo">Lo que no se cuenta</div>
 
       <div class="pregunta">
-        <div class="pregunta-texto">¿Tenés historias o experiencias que te guardás — que nunca contaste, o solo a 1 o 2 personas muy cercanas?</div>
-        <div class="semaforo">
-          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q3','nada')">Para nada</button>
-          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q3','aveces')">A veces</button>
-          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q3','total')">Sí, tengo</button>
+        <div class="pregunta-texto">¿Tenés cosas que te pasaron y no contaste?</div>
+        <div class="opciones" id="ops-q3">
+          <div class="opcion" onclick="radio(this,'q3'); condicional('cond-q4', false)"><div class="opcion-dot"></div>No, cuento lo que me pasa</div>
+          <div class="opcion" onclick="radio(this,'q3'); condicional('cond-q4', true)"><div class="opcion-dot"></div>Sí, hay cosas que conté solo a 1 o 2 personas</div>
+          <div class="opcion" onclick="radio(this,'q3'); condicional('cond-q4', true)"><div class="opcion-dot"></div>Sí, hay cosas que nunca le conté a nadie</div>
         </div>
-        <input type="hidden" id="q3" value="">
+      </div>
+
+      <div class="pregunta cond" id="cond-q4">
+        <div class="pregunta-texto">¿Por qué te las guardás? <span class="pregunta-nota">(podés elegir más de una)</span></div>
+        <div class="opciones" id="ops-q4">
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>Miedo a ser juzgado/a</div>
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>Timidez</div>
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>No quiero preocupar a otros</div>
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>Me da vergüenza</div>
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>No encuentro el espacio ni la persona correcta</div>
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>No sé cómo contarlo</div>
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>Cuando lo cuento, la gente opina o da consejos — no me escucha</div>
+          <div class="opcion" data-q5 onclick="check(this,'q4'); revisarQ5()"><div class="opcion-cuadro"></div>Prefiero guardármelo — creo no necesitar contarlo</div>
+          <div class="opcion" data-q5 onclick="check(this,'q4'); revisarQ5()"><div class="opcion-cuadro"></div>Prefiero guardármelo — creo que hablar me hace más mal que bien</div>
+        </div>
       </div>
 
       <div class="pregunta">
@@ -449,20 +463,6 @@
           <button type="button" class="semaforo-btn" onclick="semaforo(this,'qsoltar','total')">Totalmente</button>
         </div>
         <input type="hidden" id="qsoltar" value="">
-      </div>
-
-      <div class="pregunta cond" id="cond-q4">
-        <div class="pregunta-texto">¿Por qué te las guardás? <span class="pregunta-nota">(podés elegir más de una)</span></div>
-        <div class="opciones" id="ops-q4">
-          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>Miedo a ser juzgado/a</div>
-          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>Timidez</div>
-          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>No quiero preocupar a otros</div>
-          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>Me da vergüenza</div>
-          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>No encuentro el espacio ni la persona correcta</div>
-          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>No sé cómo contarlo</div>
-          <div class="opcion" data-q5 onclick="check(this,'q4'); revisarQ5()"><div class="opcion-cuadro"></div>Prefiero guardármelo — creo no necesitar contarlo</div>
-          <div class="opcion" data-q5 onclick="check(this,'q4'); revisarQ5()"><div class="opcion-cuadro"></div>Prefiero guardármelo — creo que hablar me hace más mal que bien</div>
-        </div>
       </div>
 
       <div class="pregunta cond" id="cond-q5">
@@ -631,7 +631,6 @@
     btn.classList.add(clases[val]);
     document.getElementById(campo).value = val;
     if (campo === 'q1') condicional('cond-q2', val !== 'nada' && val !== '');
-    if (campo === 'q3') condicional('cond-q4', val === 'aveces' || val === 'total');
   }
 
   // CHECKBOX (multi)
@@ -698,7 +697,7 @@
       q9:            document.querySelector('[name="q9"]').value,
       q1:            sel('q1'),
       q2:            checks('q2'),
-      q3:            sel('q3'),
+      q3:            radio1('q3'),
       qsoltar:       sel('qsoltar'),
       q4:            checks('q4'),
       q5:            radio1('q5'),
