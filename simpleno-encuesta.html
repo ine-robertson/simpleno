@@ -307,9 +307,31 @@
       color: var(--gris);
     }
 
+    /* SEMÁFORO 4 opciones */
+    .semaforo-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
     @media (max-width: 560px) {
-      .portada h1 { font-size: 2rem; }
-      .semaforo { grid-template-columns: 1fr; gap: 0.5rem; }
+      html { font-size: 16px; }
+
+      body { padding: 0 1.1rem; }
+
+      .contenedor { padding: 2.5rem 0 5rem; }
+
+      .portada { padding: 2.5rem 0 2rem; }
+      .portada h1 { font-size: 1.85rem; }
+
+      .semaforo { grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; }
+      .semaforo-4 { grid-template-columns: 1fr 1fr; }
+
+      .semaforo-btn {
+        padding: 1rem 0.4rem;
+        font-size: 0.7rem;
+        min-height: 52px;
+      }
+
+      .opcion { padding: 0.9rem 0.85rem; min-height: 48px; }
+
+      .btn-enviar { width: 100%; text-align: center; padding: 1.1rem; }
     }
   </style>
 </head>
@@ -383,7 +405,7 @@
 
       <div class="pregunta">
         <div class="pregunta-texto">¿Hay historias/testimonios tuyos que no publicarías con tu nombre, pero sí contarías si nadie supiera que sos vos?</div>
-        <div class="semaforo" style="grid-template-columns:1fr 1fr 1fr 1fr;">
+        <div class="semaforo semaforo-4">
           <button type="button" class="semaforo-btn" onclick="semaforo(this,'q1','nada')">Para nada</button>
           <button type="button" class="semaforo-btn" onclick="semaforo(this,'q1','puedeser')">Puede ser</button>
           <button type="button" class="semaforo-btn" onclick="semaforo(this,'q1','aveces')">A veces</button>
@@ -482,7 +504,7 @@
 
       <div class="pregunta">
         <div class="pregunta-texto">¿Leerías historias/experiencias de personas que no conocés?</div>
-        <div class="semaforo" style="grid-template-columns:1fr 1fr 1fr 1fr;">
+        <div class="semaforo semaforo-4">
           <button type="button" class="semaforo-btn" onclick="semaforo(this,'qlector','nada')">Para nada</button>
           <button type="button" class="semaforo-btn" onclick="semaforo(this,'qlector','puedeser')">Puede ser</button>
           <button type="button" class="semaforo-btn" onclick="semaforo(this,'qlector','aveces')">A veces</button>
