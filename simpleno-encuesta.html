@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simpleno — Quiero tu opinión</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --crema: #f7f4ef;
+      --carbon: #1e1e1e;
+      --gris: #6b6b6b;
+      --gris-claro: #d4cfc9;
+      --acento: #c17f5a;
+      --verde: #5a8c6e;
+      --rojo: #8c5a5a;
+      --ambar: #8b7b4a;
+    }
+
+    html { font-size: 18px; scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--crema);
+      color: var(--carbon);
+      font-family: 'Georgia', 'Times New Roman', serif;
+      line-height: 1.8;
+      padding: 0 1.5rem;
+    }
+
+    .contenedor {
+      max-width: 660px;
+      margin: 0 auto;
+      padding: 5rem 0 8rem;
+    }
+
+    .portada {
+      padding: 4rem 0 3rem;
+      border-bottom: 1px solid var(--gris-claro);
+      margin-bottom: 3.5rem;
+    }
+
+    .portada .etiqueta {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--acento);
+      margin-bottom: 1.5rem;
+    }
+
+    .portada h1 {
+      font-size: 2.6rem;
+      font-weight: normal;
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+      color: var(--carbon);
+    }
+
+    .portada .bajada {
+      font-size: 1rem;
+      color: var(--gris);
+      max-width: 520px;
+      line-height: 1.75;
+    }
+
+    .bloque {
+      margin-bottom: 3.5rem;
+    }
+
+    .bloque-titulo {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--acento);
+      margin-bottom: 2rem;
+      padding-bottom: 0.7rem;
+      border-bottom: 1px solid var(--gris-claro);
+    }
+
+    .pregunta {
+      margin-bottom: 2.5rem;
+    }
+
+    .pregunta-texto {
+      font-size: 1rem;
+      color: var(--carbon);
+      line-height: 1.65;
+      margin-bottom: 1.2rem;
+    }
+
+    .pregunta-nota {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.78rem;
+      color: var(--gris);
+      font-style: italic;
+      margin-left: 0.3rem;
+    }
+
+    /* SEMÁFORO */
+    .semaforo {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.7rem;
+    }
+
+    .semaforo-btn {
+      padding: 0.85rem 0.5rem;
+      border: 1.5px solid var(--gris-claro);
+      border-radius: 6px;
+      background: white;
+      cursor: pointer;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-align: center;
+      transition: all 0.2s;
+      color: var(--gris);
+      letter-spacing: 0.03em;
+    }
+
+    .semaforo-btn:hover { border-color: var(--acento); color: var(--carbon); }
+    .semaforo-btn.sel-nada   { border-color: var(--rojo);  background: rgba(140,90,90,0.07);   color: var(--rojo); }
+    .semaforo-btn.sel-aveces { border-color: var(--ambar); background: rgba(139,123,74,0.07);  color: var(--ambar); }
+    .semaforo-btn.sel-total  { border-color: var(--verde); background: rgba(90,140,110,0.07);  color: var(--verde); }
+
+    /* SELECT */
+    .select-perfil {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1.5px solid var(--gris-claro);
+      border-radius: 6px;
+      background: white;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.88rem;
+      color: var(--carbon);
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6b6b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      cursor: pointer;
+    }
+
+    .select-perfil:focus { outline: none; border-color: var(--acento); }
+
+    /* OPCIONES */
+    .opciones {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .opcion {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 0.8rem 1rem;
+      border: 1.5px solid var(--gris-claro);
+      border-radius: 6px;
+      background: white;
+      cursor: pointer;
+      transition: border-color 0.18s, background 0.18s;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.85rem;
+      color: var(--carbon);
+      line-height: 1.5;
+      user-select: none;
+    }
+
+    .opcion:hover { border-color: var(--acento); }
+    .opcion.sel { border-color: var(--acento); background: rgba(193,127,90,0.06); }
+
+    .opcion-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gris-claro);
+      flex-shrink: 0;
+      margin-top: 1px;
+      transition: all 0.18s;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .opcion.sel .opcion-dot {
+      border-color: var(--acento);
+      background: var(--acento);
+    }
+
+    .opcion.sel .opcion-dot::after {
+      content: '';
+      width: 6px; height: 6px;
+      background: white;
+      border-radius: 50%;
+    }
+
+    .opcion-cuadro {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      border: 1.5px solid var(--gris-claro);
+      flex-shrink: 0;
+      margin-top: 1px;
+      transition: all 0.18s;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .opcion.sel .opcion-cuadro {
+      border-color: var(--acento);
+      background: var(--acento);
+    }
+
+    .opcion.sel .opcion-cuadro::after {
+      content: '';
+      width: 4px; height: 7px;
+      border-right: 2px solid white;
+      border-bottom: 2px solid white;
+      transform: rotate(45deg) translate(-1px, -1px);
+    }
+
+    /* TEXTAREA */
+    .campo {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      border: 1.5px solid var(--gris-claro);
+      border-radius: 6px;
+      background: white;
+      font-family: 'Georgia', serif;
+      font-size: 0.9rem;
+      color: var(--carbon);
+      line-height: 1.7;
+      resize: vertical;
+      min-height: 96px;
+      transition: border-color 0.2s;
+    }
+
+    .campo:focus { outline: none; border-color: var(--acento); }
+    .campo::placeholder { color: #b0a99f; font-style: italic; }
+    .campo.corto { min-height: 72px; }
+
+    /* CONDICIONAL */
+    .cond { display: none; }
+    .cond.vis {
+      display: block;
+      animation: aparecer 0.3s ease;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ENVIAR */
+    .btn-enviar {
+      padding: 1rem 2.8rem;
+      background: var(--carbon);
+      color: var(--crema);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 1.5rem;
+    }
+
+    .btn-enviar:hover { background: #333; }
+
+    /* GRACIAS */
+    #gracias {
+      display: none;
+      text-align: center;
+      padding: 5rem 1rem;
+    }
+
+    #gracias .linea { width: 3rem; height: 2px; background: var(--acento); margin: 0 auto 2.5rem; }
+
+    #gracias h2 {
+      font-size: 2.2rem;
+      font-weight: normal;
+      color: var(--carbon);
+      margin-bottom: 1.2rem;
+    }
+
+    #gracias p {
+      color: var(--gris);
+      font-size: 1rem;
+      max-width: 400px;
+      margin: 0 auto;
+      line-height: 1.75;
+    }
+
+    .divisor { width: 3rem; height: 2px; background: var(--acento); margin: 2.5rem 0; }
+
+    footer {
+      border-top: 1px solid var(--gris-claro);
+      padding-top: 2rem;
+      margin-top: 5rem;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.72rem;
+      color: var(--gris);
+    }
+
+    @media (max-width: 560px) {
+      .portada h1 { font-size: 2rem; }
+      .semaforo { grid-template-columns: 1fr; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="contenedor">
+
+  <div class="portada">
+    <div class="etiqueta">Simpleno — Concepto en desarrollo</div>
+    <h1>Quiero tu opinión</h1>
+    <p class="bajada">Estoy construyendo algo y quiero escucharte antes de seguir. No hay respuestas correctas — solo quiero saber qué pensás. Son entre 5 y 8 minutos.</p>
+  </div>
+
+  <form id="encuesta">
+
+    <!-- PERFIL -->
+    <div class="bloque">
+      <div class="bloque-titulo">Tu perfil</div>
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Desde qué lugar te invito a responder?</div>
+        <select class="select-perfil" id="perfil" onchange="actualizarPerfil()">
+          <option value="">— Elegí una opción —</option>
+          <option value="psicologo">Psicólogo / terapeuta</option>
+          <option value="periodista">Periodista / comunicador</option>
+          <option value="abogado">Abogado</option>
+          <option value="medico">Médico / profesional de salud</option>
+          <option value="disenador">Diseñador / creativo</option>
+          <option value="educador">Educador / docente</option>
+          <option value="emprendedor">Emprendedor / tecnología</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+    </div>
+
+
+    <!-- BLOQUE 1: LO QUE NO SE CUENTA -->
+    <div class="bloque">
+      <div class="bloque-titulo">Lo que no se cuenta</div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Hay historias/testimonios tuyos que no publicarías con tu nombre, pero sí contarías si nadie supiera que sos vos?</div>
+        <div class="semaforo">
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q1','nada')">Para nada</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q1','aveces')">A veces</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q1','total')">Totalmente</button>
+        </div>
+        <input type="hidden" id="q1" value="">
+      </div>
+
+      <div class="pregunta cond" id="cond-q2">
+        <div class="pregunta-texto">¿Por qué no las contarías con tu nombre? <span class="pregunta-nota">(podés elegir más de una)</span></div>
+        <div class="opciones" id="ops-q2">
+          <div class="opcion" onclick="check(this,'q2')"><div class="opcion-cuadro"></div>Miedo al juicio</div>
+          <div class="opcion" onclick="check(this,'q2')"><div class="opcion-cuadro"></div>Timidez</div>
+          <div class="opcion" onclick="check(this,'q2')"><div class="opcion-cuadro"></div>No encajan con mi imagen</div>
+          <div class="opcion" onclick="check(this,'q2')"><div class="opcion-cuadro"></div>Son demasiado personales</div>
+          <div class="opcion" onclick="check(this,'q2')"><div class="opcion-cuadro"></div>No sé cómo contarlas</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- BLOQUE 2: EL PESO DE LO NO DICHO -->
+    <div class="bloque">
+      <div class="bloque-titulo">El peso de lo no dicho</div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Te guardás historias/testimonios que te pesan, que nunca le contaste a nadie — o solo a 1 o 2 personas muy cercanas?</div>
+        <div class="semaforo">
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q3','nada')">Para nada</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q3','aveces')">A veces</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q3','total')">Totalmente</button>
+        </div>
+        <input type="hidden" id="q3" value="">
+      </div>
+
+      <div class="pregunta cond" id="cond-q4">
+        <div class="pregunta-texto">¿Por qué te las guardás? <span class="pregunta-nota">(podés elegir más de una)</span></div>
+        <div class="opciones" id="ops-q4">
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>Miedo a ser juzgado/a</div>
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>Timidez</div>
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>No quiero preocupar a otros</div>
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>Me da vergüenza</div>
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>No encuentro el espacio ni la persona correcta</div>
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>No sé cómo contarlo</div>
+          <div class="opcion" data-q5 onclick="check(this,'q4'); revisarQ5()"><div class="opcion-cuadro"></div>Prefiero guardármelo — creo no necesitar contarlo</div>
+          <div class="opcion" data-q5 onclick="check(this,'q4'); revisarQ5()"><div class="opcion-cuadro"></div>Prefiero guardármelo — creo que hablar me hace más mal que bien</div>
+        </div>
+      </div>
+
+      <div class="pregunta cond" id="cond-q5">
+        <div class="pregunta-texto">Si tuvieras evidencia de que sacar algo de tu mente es terapéutico para tu psiquis — ¿lo harías igual?</div>
+        <div class="opciones" id="ops-q5">
+          <div class="opcion" onclick="radio(this,'q5')"><div class="opcion-dot"></div>Sí, si hay evidencia lo intentaría</div>
+          <div class="opcion" onclick="radio(this,'q5')"><div class="opcion-dot"></div>A veces, depende de qué es</div>
+          <div class="opcion" onclick="radio(this,'q5')"><div class="opcion-dot"></div>No — creo que guardarlo no me afecta de todas formas</div>
+          <div class="opcion" onclick="radio(this,'q5')"><div class="opcion-dot"></div>No — creo que hablarlo me haría más mal que bien</div>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">Aunque expresar una historia/testimonio no te agregue valor a vos — si pudieras ayudar a alguien que está pasando por algo similar, ¿lo harías?</div>
+        <div class="opciones" id="ops-q6">
+          <div class="opcion" onclick="radio(this,'q6')"><div class="opcion-dot"></div>Totalmente — si ayuda a otros, vale la pena</div>
+          <div class="opcion" onclick="radio(this,'q6')"><div class="opcion-dot"></div>A veces — dependería de qué tan personal es</div>
+          <div class="opcion" onclick="radio(this,'q6')"><div class="opcion-dot"></div>Para nada — prefiero no compartir igual</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- BLOQUE 3: EL ANONIMATO -->
+    <div class="bloque">
+      <div class="bloque-titulo">El anonimato</div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Qué creés que cambia en una historia/testimonio cuando no sabés quién la vivió?</div>
+        <textarea class="campo" name="q7" placeholder="Escribí lo que se te venga..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Cuánto te importa saber quién escribió algo para decidir si te llega?</div>
+        <div class="semaforo">
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q8','nada')">Para nada</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q8','aveces')">A veces</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q8','total')">Totalmente</button>
+        </div>
+        <input type="hidden" id="q8" value="">
+      </div>
+    </div>
+
+
+    <!-- BLOQUE 4: EL CONCEPTO -->
+    <div class="bloque">
+      <div class="bloque-titulo">El concepto</div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Qué te generaría encontrar una plataforma donde las historias/testimonios no tienen autor y la única acción disponible es <em>"esto resuena conmigo"</em>?</div>
+        <textarea class="campo" name="q9" placeholder="Primera reacción, sin filtro..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Qué te frenaría de compartir una historia/testimonio ahí? <span class="pregunta-nota">(podés elegir más de una)</span></div>
+        <div class="opciones" id="ops-q10">
+          <div class="opcion" onclick="check(this,'q10')"><div class="opcion-cuadro"></div>No creo en el anonimato real</div>
+          <div class="opcion" onclick="check(this,'q10')"><div class="opcion-cuadro"></div>Prefiero saber que me leyeron</div>
+          <div class="opcion" onclick="check(this,'q10')"><div class="opcion-cuadro"></div>Miedo de que me identifiquen igual</div>
+          <div class="opcion" onclick="check(this,'q10')"><div class="opcion-cuadro"></div>Nada me frenaría</div>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">Si contás una historia/testimonio y nunca sabés si alguien la leyó — ¿lo harías igual?</div>
+        <div class="semaforo" style="margin-bottom:1rem;">
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q11','nada')">Para nada</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q11','aveces')">A veces</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q11','total')">Totalmente</button>
+        </div>
+        <input type="hidden" id="q11" value="">
+        <textarea class="campo corto" name="q11t" placeholder="¿Por qué?"></textarea>
+      </div>
+    </div>
+
+
+    <!-- PERFIL ESPECÍFICO (condicional) -->
+    <div class="bloque cond" id="cond-perfil">
+      <div class="bloque-titulo">Una pregunta más</div>
+      <div class="pregunta">
+        <div class="pregunta-texto" id="texto-perfil"></div>
+        <textarea class="campo" name="qpe" placeholder="Tu perspectiva desde tu campo..."></textarea>
+      </div>
+    </div>
+
+
+    <!-- CIERRE -->
+    <div class="bloque">
+      <div class="divisor"></div>
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Algo más que quieras decirme?</div>
+        <textarea class="campo" name="qcierre" placeholder="Espacio libre..."></textarea>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-enviar">Enviar mi opinión</button>
+
+  </form>
+
+
+  <div id="gracias">
+    <div class="linea"></div>
+    <h2>Gracias.</h2>
+    <p>Tu opinión es parte de esto. Lo que respondiste va a ayudar a construir algo que vale la pena.</p>
+  </div>
+
+
+  <footer>Simpleno — Octubre 2026</footer>
+
+</div>
+
+<script>
+  var datos = {};
+
+  // SEMÁFORO
+  function semaforo(btn, campo, val) {
+    var btns = btn.parentElement.querySelectorAll('.semaforo-btn');
+    btns.forEach(function(b) { b.classList.remove('sel-nada','sel-aveces','sel-total'); });
+    btn.classList.add(val === 'nada' ? 'sel-nada' : val === 'aveces' ? 'sel-aveces' : 'sel-total');
+    document.getElementById(campo).value = val;
+    if (campo === 'q1') condicional('cond-q2', val === 'aveces' || val === 'total');
+    if (campo === 'q3') condicional('cond-q4', val === 'aveces' || val === 'total');
+  }
+
+  // CHECKBOX (multi)
+  function check(el, grupo) {
+    el.classList.toggle('sel');
+    if (grupo === 'q4') revisarQ5();
+  }
+
+  // RADIO (único)
+  function radio(el, grupo) {
+    document.querySelectorAll('#ops-' + grupo + ' .opcion').forEach(function(o) { o.classList.remove('sel'); });
+    el.classList.add('sel');
+  }
+
+  // CONDICIONAL Q5
+  function revisarQ5() {
+    var activos = document.querySelectorAll('#ops-q4 .opcion[data-q5].sel');
+    condicional('cond-q5', activos.length > 0);
+  }
+
+  // MOSTRAR / OCULTAR
+  function condicional(id, mostrar) {
+    var el = document.getElementById(id);
+    if (mostrar) el.classList.add('vis');
+    else el.classList.remove('vis');
+  }
+
+  // PERFIL ESPECÍFICO
+  var preguntasPerfil = {
+    psicologo: '¿Qué ocurre en la psiquis de alguien que narra una experiencia personal sin identificarse?',
+    periodista: '¿Qué cambiaría en una historia/testimonio si no tuviera firma?',
+    abogado:    '¿Qué implicancias ves en historias/testimonios anónimos de carácter permanente?'
+  };
+
+  function actualizarPerfil() {
+    var p = document.getElementById('perfil').value;
+    if (preguntasPerfil[p]) {
+      document.getElementById('texto-perfil').textContent = preguntasPerfil[p];
+      condicional('cond-perfil', true);
+    } else {
+      condicional('cond-perfil', false);
+    }
+  }
+
+  // SUBMIT
+  document.getElementById('encuesta').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var respuesta = {
+      timestamp: new Date().toISOString(),
+      perfil: document.getElementById('perfil').value,
+      q1:  document.getElementById('q1').value,
+      q2:  Array.from(document.querySelectorAll('#ops-q2 .opcion.sel')).map(function(o){ return o.textContent.trim(); }),
+      q3:  document.getElementById('q3').value,
+      q4:  Array.from(document.querySelectorAll('#ops-q4 .opcion.sel')).map(function(o){ return o.textContent.trim(); }),
+      q5:  (document.querySelector('#ops-q5 .opcion.sel') || {}).textContent || '',
+      q6:  (document.querySelector('#ops-q6 .opcion.sel') || {}).textContent || '',
+      q7:  document.querySelector('[name="q7"]').value,
+      q8:  document.getElementById('q8').value,
+      q9:  document.querySelector('[name="q9"]').value,
+      q10: Array.from(document.querySelectorAll('#ops-q10 .opcion.sel')).map(function(o){ return o.textContent.trim(); }),
+      q11: document.getElementById('q11').value,
+      q11t: document.querySelector('[name="q11t"]').value,
+      perfilEspecifico: document.querySelector('[name="qpe"]').value,
+      cierre: document.querySelector('[name="qcierre"]').value
+    };
+
+    // TODO: conectar a Firebase Firestore
+    console.log('Respuesta:', respuesta);
+
+    document.getElementById('encuesta').style.display = 'none';
+    document.getElementById('gracias').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+
+</body>
+</html>
