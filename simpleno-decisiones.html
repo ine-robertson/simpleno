@@ -296,6 +296,27 @@
       color: var(--gris);
       letter-spacing: 0.05em;
     }
+
+    .nav-principal {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--crema);
+      border-bottom: 1px solid var(--gris-claro);
+      display: flex;
+      gap: 2rem;
+      padding: 0.85rem 2rem;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .nav-principal a { color: var(--gris); text-decoration: none; transition: color 0.2s; }
+    .nav-principal a:hover { color: var(--acento); }
+    .nav-principal a.activo { color: var(--carbon); }
+    .contenedor { padding-top: 7rem; }
   </style>
 </head>
 
@@ -353,6 +374,14 @@
 </script>
 
 <body>
+
+<nav class="nav-principal">
+  <a href="index.html">Concepto</a>
+  <a href="simpleno-origen.html">Origen</a>
+  <a href="simpleno-decisiones.html" class="activo">Decisiones</a>
+  <a href="desarrollo.html">Desarrollo</a>
+</nav>
+
 <div class="contenedor">
 
   <div class="portada">
