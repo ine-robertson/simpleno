@@ -571,7 +571,47 @@
     </div>
 
 
-    <!-- BLOQUE 5: EL CONCEPTO -->
+    <!-- BLOQUE 5: LA IA COMO OYENTE -->
+    <div class="bloque">
+      <div class="bloque-titulo">La IA como oyente</div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Alguna vez le contaste algo a una IA (ChatGPT, Gemini u otra) — algo que te pesaba, te emocionaba o necesitabas soltar — buscando que te escuche o te diga qué opina?</div>
+        <div class="opciones" id="ops-qia">
+          <div class="opcion" onclick="radio(this,'qia'); condicional('cond-ia-nunca', true); condicional('cond-ia-si', false)"><div class="opcion-dot"></div>No, nunca lo haría</div>
+          <div class="opcion" onclick="radio(this,'qia'); condicional('cond-ia-nunca', false); condicional('cond-ia-si', false)"><div class="opcion-dot"></div>No, pero me lo planteé</div>
+          <div class="opcion" onclick="radio(this,'qia'); condicional('cond-ia-nunca', false); condicional('cond-ia-si', true)"><div class="opcion-dot"></div>Sí, lo hice alguna vez</div>
+          <div class="opcion" onclick="radio(this,'qia'); condicional('cond-ia-nunca', false); condicional('cond-ia-si', true)"><div class="opcion-dot"></div>Sí, lo hago seguido</div>
+        </div>
+      </div>
+
+      <div class="pregunta cond" id="cond-ia-nunca">
+        <div class="pregunta-texto">¿Por qué nunca lo consideraste? <span class="pregunta-nota">(podés elegir más de una)</span></div>
+        <div class="opciones" id="ops-ia-nunca">
+          <div class="opcion" onclick="check(this,'ia-nunca')"><div class="opcion-cuadro"></div>Prefiero contárselo a una persona real</div>
+          <div class="opcion" onclick="check(this,'ia-nunca')"><div class="opcion-cuadro"></div>No le veo sentido si no hay un ser humano del otro lado</div>
+          <div class="opcion" onclick="check(this,'ia-nunca')"><div class="opcion-cuadro"></div>No confío en que la IA entienda lo que siento</div>
+          <div class="opcion" onclick="check(this,'ia-nunca')"><div class="opcion-cuadro"></div>Me parece frío o artificial</div>
+          <div class="opcion" onclick="check(this,'ia-nunca')"><div class="opcion-cuadro"></div>Tengo personas de confianza a quienes contarles</div>
+          <div class="opcion" onclick="check(this,'ia-nunca')"><div class="opcion-cuadro"></div>No me interesa la opinión de una máquina</div>
+        </div>
+      </div>
+
+      <div class="pregunta cond" id="cond-ia-si">
+        <div class="pregunta-texto">¿Por qué lo hiciste? <span class="pregunta-nota">(podés elegir más de una)</span></div>
+        <div class="opciones" id="ops-ia-si">
+          <div class="opcion" onclick="check(this,'ia-si')"><div class="opcion-cuadro"></div>No quería contárselo a alguien que me conoce</div>
+          <div class="opcion" onclick="check(this,'ia-si')"><div class="opcion-cuadro"></div>Quería ser escuchado/a sin recibir un juicio</div>
+          <div class="opcion" onclick="check(this,'ia-si')"><div class="opcion-cuadro"></div>Me da menos vergüenza que con una persona real</div>
+          <div class="opcion" onclick="check(this,'ia-si')"><div class="opcion-cuadro"></div>Necesitaba ordenar mis pensamientos</div>
+          <div class="opcion" onclick="check(this,'ia-si')"><div class="opcion-cuadro"></div>No encontré el momento ni la persona correcta</div>
+          <div class="opcion" onclick="check(this,'ia-si')"><div class="opcion-cuadro"></div>Está disponible en cualquier momento</div>
+          <div class="opcion" onclick="check(this,'ia-si')"><div class="opcion-cuadro"></div>Quería una respuesta rápida sin carga emocional</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 6: EL CONCEPTO -->
     <div class="bloque">
       <div class="bloque-titulo">El concepto</div>
 
@@ -713,6 +753,9 @@
       abandonarOtro: document.querySelector('[name="abandonar-otro"]').value,
       q7:            document.querySelector('[name="q7"]').value,
       q8:            radio1('q8'),
+      qia:           radio1('qia'),
+      iaNunca:       checks('ia-nunca'),
+      iaSi:          checks('ia-si'),
       q11:           radio1('q11'),
       qpe:           document.querySelector('[name="qpe"]').value,
       qcierre:       document.querySelector('[name="qcierre"]').value
