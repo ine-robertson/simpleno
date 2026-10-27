@@ -444,7 +444,7 @@
         <div class="decision-contenido">
           <div class="decision-tag tag-si">Decidido</div>
           <div class="decision-titulo">Moderación antes de publicar</div>
-          <div class="decision-desc">Una historia no va directo al blockchain. Pasa primero por moderación — IA preventiva de cuidado (no censura) y revisión manual si hace falta. Una vez aprobada, se graba en Arweave y ya no se puede borrar.</div>
+          <div class="decision-desc">Una historia no se publica directamente. Pasa primero por moderación — revisión preventiva de cuidado (no censura) y revisión manual si hace falta. Una vez aprobada, se publica y ya no se puede borrar.</div>
         </div>
       </div>
       <div class="decision">
@@ -452,7 +452,7 @@
         <div class="decision-contenido">
           <div class="decision-tag tag-si">Decidido</div>
           <div class="decision-titulo">Sin primer publicador</div>
-          <div class="decision-desc">No existe timestamp visible ni "subido por". La historia aparece y ya está. Nadie puede decir "yo la puse primero" — elimina el ego de la autoría incluso dentro del anonimato.</div>
+          <div class="decision-desc">No existe fecha visible ni "subido por". La historia aparece y ya está. Nadie puede decir "yo la puse primero" — elimina el ego de la autoría incluso dentro del anonimato.</div>
         </div>
       </div>
       <div class="decision">
@@ -505,74 +505,15 @@
       </div>
     </div>
 
-    <p>Cada historia tiene un <strong>embedding semántico</strong> — una representación matemática de su contenido emocional. Historias sobre pérdida están cerca entre sí. Historias sobre miedo al juicio también. El algoritmo navega ese mapa usando las señales en tiempo real, sin seguirte a vos.</p>
+    <p>Cada historia tiene una huella de su contenido emocional. Historias sobre pérdida están cerca entre sí. Historias sobre miedo al juicio también. El sistema navega ese mapa usando las señales en tiempo real, sin seguirte a vos.</p>
 
     <p>Si el usuario escribe un testimonio, los temas que aparecen en su texto son señal adicional para la sesión — sin guardar nada una vez que se va.</p>
   </section>
 
 
-  <!-- 3. TECNOLOGÍA -->
-  <section>
-    <div class="seccion-titulo">03 — Arquitectura técnica</div>
-    <h2>Blockchain es el corazón, no una feature</h2>
-
-    <p>Sin blockchain, Simpleno es PostSecret con mejor diseño. La promesa <em>"esta historia existe aunque yo desaparezca"</em> solo es verdad si está estructuralmente garantizada — no por buena voluntad.</p>
-
-    <div class="stack">
-      <div class="stack-item">
-        <div class="stack-nombre">Arweave</div>
-        <div class="stack-desc">Almacenamiento permanente descentralizado. Una historia se escribe una vez y existe para siempre. Costo: ~$0.001 USD por testimonio. Ningún servidor, ninguna empresa, ningún gobierno puede borrarlo.</div>
-      </div>
-      <div class="stack-item">
-        <div class="stack-nombre">Irys (ex-Bundlr)</div>
-        <div class="stack-desc">Capa sobre Arweave que simplifica la escritura. Permite que Simpleno pague el costo del storage sin que el usuario necesite una wallet de crypto.</div>
-      </div>
-      <div class="stack-item">
-        <div class="stack-nombre">Firebase</div>
-        <div class="stack-desc">Índice liviano para buscar y filtrar historias por categoría y resonancias. Firebase puede ser presionado para borrar del índice — pero la historia sigue en Arweave. El índice es la ventana, no el depósito.</div>
-      </div>
-      <div class="stack-item">
-        <div class="stack-nombre">Embeddings</div>
-        <div class="stack-desc">Modelo semántico para representar el contenido emocional de cada historia como un vector. Permite recomendación por similitud sin perfiles de usuario.</div>
-      </div>
-      <div class="stack-item">
-        <div class="stack-nombre">IA de moderación</div>
-        <div class="stack-desc">Revisión preventiva antes de publicar. Detecta crisis, contenido dañino, identificadores específicos. No censura — cuida. Opera antes de que la historia llegue al blockchain.</div>
-      </div>
-    </div>
-
-    <div class="divisor"></div>
-
-    <p style="font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.78rem; font-weight:600; color:var(--carbon); margin-bottom:0.8rem;">Flujo de publicación</p>
-
-    <div class="flujo">
-      <div class="flujo-paso">
-        <div class="flujo-num">01</div>
-        <div class="flujo-texto"><strong>Usuario escribe</strong> un testimonio en el browser. <em>Elige una categoría. Sin cuenta, sin nombre.</em></div>
-      </div>
-      <div class="flujo-paso">
-        <div class="flujo-num">02</div>
-        <div class="flujo-texto"><strong>IA revisa</strong> antes de publicar. Detecta si hay riesgo de daño, identificadores, o crisis. <em>No filtra el dolor — filtra el peligro.</em></div>
-      </div>
-      <div class="flujo-paso">
-        <div class="flujo-num">03</div>
-        <div class="flujo-texto"><strong>Simpleno firma</strong> la transacción con su wallet y paga el costo de Arweave. <em>El usuario no necesita crypto ni wallet.</em></div>
-      </div>
-      <div class="flujo-paso">
-        <div class="flujo-num">04</div>
-        <div class="flujo-texto"><strong>Historia grabada</strong> en Arweave con un ID único permanente. Nadie la puede borrar — ni Simpleno. <em>La clave efímera del usuario se descarta.</em></div>
-      </div>
-      <div class="flujo-paso">
-        <div class="flujo-num">05</div>
-        <div class="flujo-texto"><strong>Firebase indexa</strong> el ID, la categoría y el embedding. Permite que aparezca en búsquedas y recomendaciones.</div>
-      </div>
-    </div>
-  </section>
-
-
   <!-- 4. MONETIZACIÓN -->
   <section>
-    <div class="seccion-titulo">04 — Monetización</div>
+    <div class="seccion-titulo">03 — Monetización</div>
     <h2>Lo que está prohibido y lo que está abierto</h2>
 
     <div class="regla">
@@ -621,7 +562,7 @@
 
   <!-- 5. NOMBRE -->
   <section>
-    <div class="seccion-titulo">05 — El nombre</div>
+    <div class="seccion-titulo">04 — El nombre</div>
     <h2>Por qué Simpleno</h2>
     <p>El nombre tiene una historia que va más allá de la marca. Está en otro documento.</p>
     <div style="margin-top: 1.5rem;">
@@ -632,7 +573,7 @@
 
   <!-- 6. PRÓXIMOS PASOS -->
   <section>
-    <div class="seccion-titulo">06 — Próximos pasos</div>
+    <div class="seccion-titulo">05 — Próximos pasos</div>
     <h2>La secuencia para validar y construir</h2>
 
     <div class="decisiones">
@@ -650,8 +591,8 @@
         <div class="decision-estado pendiente"></div>
         <div class="decision-contenido">
           <div class="decision-tag tag-pendiente">Fase 2</div>
-          <div class="decision-titulo">MVP funcional — lanzamiento en la red</div>
-          <div class="decision-desc">Un producto real y mínimo: historias en texto plano, sin cuentas, sin login, sin metadata. Anonimato por diseño — el servidor no loguea IPs ni guarda ningún dato que identifique al autor. Una sola acción disponible: <em>"esto resuena conmigo"</em>. Sin blockchain en esta fase, pero las historias se guardan en un formato migrable (texto plano + ID único) para la transición futura.</div>
+          <div class="decision-titulo">MVP funcional — lanzamiento</div>
+          <div class="decision-desc">Un producto real y mínimo: historias en texto plano, sin cuentas, sin login. Anonimato por diseño — ningún dato que identifique al autor. Una sola acción disponible: <em>"esto resuena conmigo"</em>.</div>
         </div>
       </div>
 
@@ -659,8 +600,8 @@
         <div class="decision-estado pendiente"></div>
         <div class="decision-contenido">
           <div class="decision-tag tag-pendiente">Fase 3</div>
-          <div class="decision-titulo">Migración a blockchain</div>
-          <div class="decision-desc">Cuando el concepto esté validado, las historias del MVP migran a Arweave. El contenido existente se publica con fecha de migración — no de escritura original — lo cual no es un problema porque la permanencia y la garantía estructural son lo que importa, no la antigüedad.</div>
+          <div class="decision-titulo">Permanencia garantizada</div>
+          <div class="decision-desc">Cuando el concepto esté validado, las historias migran a una infraestructura descentralizada que garantice que existen aunque Simpleno desaparezca. La permanencia estructural es la promesa — no la antigüedad.</div>
         </div>
       </div>
 
