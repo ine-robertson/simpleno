@@ -1,4 +1,4 @@
-// v2026-10-24 — recibe respuestas de simpleno-encuesta y escribe fila en Sheet
+// v2026-10-28 — agrega campo qnombre (pregunta sobre el nombre Simpleno)
 var SHEET_ID   = '1zufm3lNJxfpk1IeqVYlHzOMe3zZO7TjoaZ94K13ymyw';
 var SHEET_NAME = 'Respuestas';
 
@@ -13,7 +13,7 @@ var HEADERS = [
   'Abandonar — Opciones', 'Abandonar — Otro',
   'Q7 — Qué cambia anónimo', 'Q8 — Importa saber quién',
   'Q11 — Feedback vs resonancia',
-  'Perfil específico', 'Cierre'
+  'Perfil específico', 'El nombre — Simpleno', 'Cierre'
 ];
 
 function doGet(e) {
@@ -48,6 +48,7 @@ function doGet(e) {
     p.q8            || '',
     p.q11           || '',
     p.qpe           || '',
+    p.qnombre       || '',
     p.qcierre       || ''
   ]);
 
