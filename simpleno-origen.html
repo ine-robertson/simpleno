@@ -233,6 +233,24 @@
     .nav-principal a { color: var(--gris); text-decoration: none; transition: color 0.2s; }
     .nav-principal a:hover { color: var(--acento); }
     .nav-principal a.activo { color: var(--carbon); }
+
+    .cta-encuesta {
+      display: block;
+      text-align: center;
+      background: var(--carbon);
+      color: var(--crema);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1.4rem 2rem;
+      border-radius: 6px;
+      margin: 3rem 0 2rem;
+      transition: background 0.2s;
+    }
+    .cta-encuesta:hover { background: #333; }
     .contenedor { padding-top: 7rem; }
   </style>
 </head>
@@ -337,7 +355,6 @@
   <a href="index.html">Concepto</a>
   <a href="simpleno-decisiones.html">Decisiones</a>
   <a href="simpleno-origen.html" class="activo">Origen</a>
-  <a href="simpleno-encuesta.html">Quiero saber tu opinión</a>
 </nav>
 
 <div class="contenedor">
@@ -462,6 +479,8 @@
   <div style="text-align: center; padding: 2rem 0;">
     <a href="simpleno.html" style="font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--acento); text-decoration:none;">← Volver al concepto</a>
   </div>
+
+  <a href="simpleno-encuesta.html" class="cta-encuesta">Queremos saber tu opinión →</a>
 
   <footer>
     Simpleno — Documento interno · Octubre 2026
