@@ -304,14 +304,18 @@
       background: var(--crema);
       border-bottom: 1px solid var(--gris-claro);
       display: flex;
-      gap: 2rem;
-      padding: 0.85rem 2rem;
+      flex-direction: column;
       font-family: 'Helvetica Neue', Arial, sans-serif;
       font-size: 0.62rem;
       font-weight: 700;
       letter-spacing: 0.15em;
       text-transform: uppercase;
     }
+
+    .nav-fila-1 { display: flex; gap: 2rem; padding: 0.85rem 2rem; }
+    .nav-fila-2 { border-top: 1px solid var(--gris-claro); padding: 0.6rem 2rem; background: var(--carbon); }
+    .nav-fila-2 a { color: var(--crema) !important; }
+    .nav-fila-2 a:hover { opacity: 0.75; }
 
     .nav-principal a { color: var(--gris); text-decoration: none; transition: color 0.2s; }
     .nav-principal a:hover { color: var(--acento); }
@@ -334,7 +338,7 @@
       transition: background 0.2s;
     }
     .cta-encuesta:hover { background: #333; }
-    .contenedor { padding-top: 7rem; }
+    .contenedor { padding-top: 8rem; }
   </style>
 </head>
 
@@ -394,9 +398,14 @@
 <body>
 
 <nav class="nav-principal">
-  <a href="index.html">Concepto</a>
-  <a href="simpleno-decisiones.html" class="activo">Decisiones</a>
-  <a href="simpleno-origen.html">Origen</a>
+  <div class="nav-fila-1">
+    <a href="index.html">Concepto</a>
+    <a href="simpleno-decisiones.html" class="activo">Decisiones</a>
+    <a href="simpleno-origen.html">Origen</a>
+  </div>
+  <div class="nav-fila-2">
+    <a href="simpleno-encuesta.html">Queremos saber tu opinión</a>
+  </div>
 </nav>
 
 <div class="contenedor">
