@@ -28,10 +28,52 @@
       padding: 0 1.5rem;
     }
 
+    .nav-principal {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--crema);
+      border-bottom: 1px solid var(--gris-claro);
+      display: flex;
+      flex-direction: column;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .nav-fila-1 { display: flex; gap: 2rem; padding: 0.85rem 2rem; }
+    .nav-fila-2 { border-top: 1px solid var(--gris-claro); padding: 0.6rem 2rem; background: var(--carbon); }
+    .nav-fila-2 a { color: var(--crema) !important; }
+    .nav-fila-2 a:hover { opacity: 0.75; }
+
+    .nav-principal a { color: var(--gris); text-decoration: none; transition: color 0.2s; }
+    .nav-principal a:hover { color: var(--acento); }
+    .nav-principal a.activo { color: var(--carbon); }
+
+    .cta-encuesta {
+      display: block;
+      text-align: center;
+      background: var(--carbon);
+      color: var(--crema);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1.4rem 2rem;
+      border-radius: 6px;
+      margin: 3rem 0 2rem;
+      transition: background 0.2s;
+    }
+    .cta-encuesta:hover { background: #333; }
+
     .contenedor {
       max-width: 660px;
       margin: 0 auto;
-      padding: 5rem 0 8rem;
+      padding: 8rem 0 8rem;
     }
 
     .portada {
@@ -336,6 +378,17 @@
   </style>
 </head>
 <body>
+
+<nav class="nav-principal">
+  <div class="nav-fila-1">
+    <a href="index.html">Concepto</a>
+    <a href="simpleno-decisiones.html">Decisiones</a>
+    <a href="simpleno-origen.html">Origen</a>
+  </div>
+  <div class="nav-fila-2">
+    <a href="simpleno-encuesta.html" class="activo">Queremos saber tu opinión</a>
+  </div>
+</nav>
 
 <div class="contenedor">
 
@@ -668,6 +721,8 @@
     <p style="margin-top:1.5rem; font-size:0.9rem; color:var(--gris);">Si querés saber más sobre el concepto, escribime a <a href="mailto:info@simpleno.co" style="color:var(--acento); text-decoration:none;">info@simpleno.co</a></p>
   </div>
 
+
+  <a href="index.html" class="cta-encuesta">Volver al concepto →</a>
 
   <footer>Simpleno — Octubre 2026 · Si querés saber más de este proyecto contactanos en <a href="mailto:info@simpleno.co" style="color:inherit; text-decoration:none;">info@simpleno.co</a></footer>
 
