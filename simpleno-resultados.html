@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simpleno — Resultados de la encuesta</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --crema: #f7f4ef;
+      --carbon: #1e1e1e;
+      --gris: #6b6b6b;
+      --gris-claro: #d4cfc9;
+      --acento: #c17f5a;
+      --verde: #5a8c6e;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--crema);
+      color: var(--carbon);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      padding: 0 1.5rem;
+    }
+
+    .contenedor { max-width: 800px; margin: 0 auto; padding: 4rem 0 8rem; }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+    }
+
+    .meta {
+      font-size: 0.75rem;
+      color: var(--gris);
+      margin-bottom: 3rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* CARDS RESUMEN */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    @media (max-width: 560px) { .cards { grid-template-columns: 1fr; } }
+
+    .card {
+      background: white;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      padding: 1.2rem 1.5rem;
+    }
+
+    .card-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gris);
+      margin-bottom: 0.4rem;
+    }
+
+    .card-valor {
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--carbon);
+    }
+
+    .card-sub {
+      font-size: 0.75rem;
+      color: var(--gris);
+      margin-top: 0.2rem;
+    }
+
+    /* SECCIONES */
+    .seccion {
+      margin-bottom: 3.5rem;
+    }
+
+    .seccion-titulo {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--acento);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--gris-claro);
+    }
+
+    /* BARRAS */
+    .pregunta-bloque { margin-bottom: 2rem; }
+
+    .pregunta-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--carbon);
+      margin-bottom: 0.8rem;
+    }
+
+    .barra-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .barra-texto {
+      font-size: 0.78rem;
+      color: var(--carbon);
+      width: 220px;
+      flex-shrink: 0;
+    }
+
+    .barra-track {
+      flex: 1;
+      background: var(--gris-claro);
+      border-radius: 2px;
+      height: 8px;
+      overflow: hidden;
+    }
+
+    .barra-fill {
+      height: 100%;
+      background: var(--acento);
+      border-radius: 2px;
+      transition: width 0.6s ease;
+    }
+
+    .barra-num {
+      font-size: 0.72rem;
+      color: var(--gris);
+      width: 2.5rem;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* TEXTOS LIBRES CON AI */
+    .texto-libre {
+      background: white;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 1.2rem;
+    }
+
+    .texto-libre-header {
+      padding: 1rem 1.4rem;
+      border-bottom: 1px solid var(--gris-claro);
+    }
+
+    .texto-libre-pregunta {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--carbon);
+      margin-bottom: 0.6rem;
+    }
+
+    .resumen-ia {
+      font-size: 0.85rem;
+      color: var(--carbon);
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    .resumen-ia-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--verde);
+      margin-bottom: 0.3rem;
+    }
+
+    .respuestas-toggle {
+      padding: 0.7rem 1.4rem;
+      font-size: 0.72rem;
+      color: var(--gris);
+      cursor: pointer;
+      user-select: none;
+      border-top: 1px solid var(--gris-claro);
+    }
+
+    .respuestas-toggle:hover { color: var(--acento); }
+
+    .respuestas-lista {
+      display: none;
+      padding: 0.5rem 1.4rem 1rem;
+    }
+
+    .respuestas-lista.visible { display: block; }
+
+    .respuesta-item {
+      font-size: 0.78rem;
+      color: var(--gris);
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--gris-claro);
+      line-height: 1.5;
+    }
+
+    .respuesta-item:last-child { border-bottom: none; }
+
+    .respuesta-perfil {
+      font-size: 0.65rem;
+      color: var(--acento);
+      font-weight: 600;
+      margin-right: 0.5rem;
+    }
+
+    /* LOADING */
+    .loading {
+      text-align: center;
+      padding: 4rem 0;
+      color: var(--gris);
+      font-size: 0.85rem;
+    }
+
+    .error {
+      text-align: center;
+      padding: 2rem;
+      color: #8c5a5a;
+      font-size: 0.85rem;
+      background: white;
+      border: 1px solid var(--gris-claro);
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+<div class="contenedor">
+
+  <h1>Resultados de la encuesta</h1>
+  <div class="meta" id="meta">Cargando...</div>
+
+  <div id="contenido"><div class="loading">Obteniendo datos y generando resúmenes con IA...</div></div>
+
+</div>
+
+<script>
+  // ⚠️ Reemplazá con el nuevo deployment ID después de actualizar el GAS
+  var GAS_URL = 'https://script.google.com/macros/s/AKfycbwNdoby6fD6fl28i-YgTSDolDu17fRKW4jg3BdC8LR4AQkqnEGWDGSJsCp5ei-axx0u/exec';
+
+  fetch(GAS_URL + '?action=dashboard')
+    .then(function(r) { return r.json(); })
+    .then(function(data) { render(data); })
+    .catch(function(err) {
+      document.getElementById('contenido').innerHTML =
+        '<div class="error">No se pudo conectar con el servidor. Verificá el deployment del GAS.</div>';
+    });
+
+  function contar(rows, campo) {
+    var counts = {};
+    rows.forEach(function(r) {
+      var vals = (r[campo] || '').split(' | ');
+      vals.forEach(function(v) {
+        v = v.trim();
+        if (v) counts[v] = (counts[v] || 0) + 1;
+      });
+    });
+    return counts;
+  }
+
+  function barras(counts, total) {
+    return Object.entries(counts)
+      .sort(function(a, b) { return b[1] - a[1]; })
+      .map(function(entry) {
+        var pct = Math.round((entry[1] / total) * 100);
+        return '<div class="barra-item">'
+          + '<div class="barra-texto">' + entry[0] + '</div>'
+          + '<div class="barra-track"><div class="barra-fill" style="width:' + pct + '%"></div></div>'
+          + '<div class="barra-num">' + entry[1] + ' / ' + total + '</div>'
+          + '</div>';
+      }).join('');
+  }
+
+  function textoLibre(campo, pregunta, rows, resumenes) {
+    var textos = rows.filter(function(r) { return (r[campo] || '').trim().length > 2; });
+    if (textos.length === 0) return '';
+
+    var resumen = resumenes[campo]
+      ? '<div class="resumen-ia-label">Resumen IA</div><div class="resumen-ia">' + resumenes[campo] + '</div>'
+      : '';
+
+    var id = 'tl-' + campo.replace(/[^a-z]/gi, '');
+    var items = textos.map(function(r) {
+      return '<div class="respuesta-item">'
+        + '<span class="respuesta-perfil">' + (r['Perfil'] || '') + ' · ' + (r['Edad'] || '') + '</span>'
+        + (r[campo] || '')
+        + '</div>';
+    }).join('');
+
+    return '<div class="texto-libre">'
+      + '<div class="texto-libre-header">'
+      + '<div class="texto-libre-pregunta">' + pregunta + '</div>'
+      + resumen
+      + '</div>'
+      + '<div class="respuestas-toggle" onclick="toggle(\'' + id + '\')" id="toggle-' + id + '">▸ Ver ' + textos.length + ' respuesta' + (textos.length > 1 ? 's' : '') + '</div>'
+      + '<div class="respuestas-lista" id="' + id + '">' + items + '</div>'
+      + '</div>';
+  }
+
+  function toggle(id) {
+    var el = document.getElementById(id);
+    var tog = document.getElementById('toggle-' + id);
+    var visible = el.classList.toggle('visible');
+    tog.textContent = (visible ? '▾ Ocultar' : '▸ Ver ' + el.children.length + ' respuesta' + (el.children.length > 1 ? 's' : ''));
+  }
+
+  function render(data) {
+    if (data.total === 0) {
+      document.getElementById('contenido').innerHTML = '<div class="error">Todavía no hay respuestas.</div>';
+      return;
+    }
+
+    var rows = data.rows;
+    var total = data.total;
+    var res = data.resumenes || {};
+
+    document.getElementById('meta').textContent =
+      total + ' respuesta' + (total > 1 ? 's' : '') + ' · Última: ' + new Date(data.ultima).toLocaleDateString('es-AR');
+
+    // Perfiles
+    var perfiles = contar(rows, 'Perfil');
+    var perfilTexto = Object.entries(perfiles).map(function(e) { return e[1] + ' ' + e[0]; }).join(' · ');
+
+    var html = '';
+
+    // Cards
+    html += '<div class="cards">'
+      + '<div class="card"><div class="card-label">Respuestas</div><div class="card-valor">' + total + '</div></div>'
+      + '<div class="card"><div class="card-label">Perfiles</div><div class="card-valor">' + Object.keys(perfiles).length + '</div><div class="card-sub">' + perfilTexto + '</div></div>'
+      + '<div class="card"><div class="card-label">Edades</div><div class="card-valor" style="font-size:0.85rem; padding-top:0.4rem;">' + Object.keys(contar(rows, 'Edad')).join(' · ') + '</div></div>'
+      + '</div>';
+
+    // Preguntas cerradas
+    html += '<div class="seccion"><div class="seccion-titulo">Preguntas cerradas</div>';
+
+    var cerradas = [
+      { campo: 'Q3 — Te guardás historias', label: '¿Te guardás cosas que te pasaron?' },
+      { campo: 'Q1 — Historias anónimas', label: '¿Las contarías de forma anónima?' },
+      { campo: 'Qsoltar — Escribir ayuda a soltar', label: '¿Escribir ayuda a soltar?' },
+      { campo: 'Q6 — Ayudar a otros', label: '¿Lo compartirías si ayuda a otros?' },
+      { campo: 'Lector — Leerías', label: '¿Leerías historias de desconocidos?' },
+      { campo: 'Q8 — Importa saber quién', label: '¿Cuánto importa saber quién escribió?' },
+      { campo: 'Q11 — Feedback vs resonancia', label: '¿Qué necesitás si publicás algo?' },
+      { campo: 'Q10 — Frenos al compartir', label: '¿Qué te frenaría de compartir?' },
+      { campo: 'Motivar — Opciones', label: '¿Qué te motivaría a seguir leyendo?' },
+    ];
+
+    cerradas.forEach(function(q) {
+      var counts = contar(rows, q.campo);
+      if (Object.keys(counts).length === 0) return;
+      html += '<div class="pregunta-bloque">'
+        + '<div class="pregunta-label">' + q.label + '</div>'
+        + barras(counts, total)
+        + '</div>';
+    });
+
+    html += '</div>';
+
+    // Textos libres
+    html += '<div class="seccion"><div class="seccion-titulo">Textos libres — resúmenes con IA</div>';
+
+    var libres = [
+      { campo: 'Primera reacción', label: '¿Cuál fue tu primera reacción?' },
+      { campo: 'Q4 — Por qué te las guardás', label: '¿Por qué te guardás cosas?' },
+      { campo: 'Q7 — Qué cambia anónimo', label: '¿Qué cambiaría si pudieras contar algo anónimamente?' },
+      { campo: 'El nombre — Simpleno', label: '¿Qué te inspira o dice la palabra Simpleno?' },
+      { campo: 'Cierre', label: '¿Algo más que quisieras decir?' },
+    ];
+
+    libres.forEach(function(q) {
+      html += textoLibre(q.campo, q.label, rows, res);
+    });
+
+    html += '</div>';
+
+    document.getElementById('contenido').innerHTML = html;
+  }
+</script>
+</body>
+</html>
