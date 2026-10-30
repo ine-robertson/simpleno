@@ -1,4 +1,4 @@
-// v2026-10-28 — agrega dashboard con resúmenes Gemini
+// v2026-10-29 — agrega campos qia/iaNunca/iaSi del bloque La IA como oyente
 var SHEET_ID   = '1zufm3lNJxfpk1IeqVYlHzOMe3zZO7TjoaZ94K13ymyw';
 var SHEET_NAME = 'Respuestas';
 var GEMINI_KEY = 'TU_API_KEY_ACA'; // reemplazá con tu key de Google AI Studio
@@ -13,6 +13,7 @@ var HEADERS = [
   'Motivar — Opciones', 'Motivar — Otro',
   'Abandonar — Opciones', 'Abandonar — Otro',
   'Q7 — Qué cambia anónimo', 'Q8 — Importa saber quién',
+  'QIA — La IA como oyente', 'IA nunca — Por qué no', 'IA sí — Por qué sí',
   'Q11 — Feedback vs resonancia',
   'Perfil específico', 'El nombre — Simpleno', 'Cierre'
 ];
@@ -52,6 +53,9 @@ function doGet(e) {
     p.abandonarOtro || '',
     p.q7            || '',
     p.q8            || '',
+    p.qia           || '',
+    p.iaNunca       || '',
+    p.iaSi          || '',
     p.q11           || '',
     p.qpe           || '',
     p.qnombre       || '',
@@ -113,12 +117,16 @@ function resumirConGemini(textos, pregunta) {
       + textos.map(function(t, i) { return (i + 1) + '. ' + t; }).join('\n')
       + '\n\nResumí los patrones principales en 2-3 líneas, en español, sin listar las respuestas una por una. Sé directo y concreto.';
 
-    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + GEMINI_KEY;
+    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=' + GEMINI_KEY;
     var res = UrlFetchApp.fetch(url, {
       method: 'post',
       contentType: 'application/json',
-      payload: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
-      muteHttpExceptions: true
+      payload: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { thinkingConfig: { thinkingBudget: 0 } }
+      }),
+      muteHttpExceptions: true,
+      deadline: 30
     });
     var json = JSON.parse(res.getContentText());
     return json.candidates[0].content.parts[0].text;

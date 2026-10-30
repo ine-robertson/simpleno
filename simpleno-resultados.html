@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simpleno — Resultados de la encuesta</title>
+  <script src="https://accounts.google.com/gsi/client" async></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -232,9 +233,51 @@
       border: 1px solid var(--gris-claro);
       border-radius: 6px;
     }
+
+    /* AUTH WALL */
+    #auth-wall {
+      position: fixed;
+      inset: 0;
+      background: var(--crema);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      gap: 1.5rem;
+    }
+
+    #auth-wall .auth-titulo {
+      font-family: 'Georgia', serif;
+      font-size: 1.4rem;
+      font-weight: normal;
+      color: var(--carbon);
+    }
+
+    #auth-wall .auth-sub {
+      font-size: 0.78rem;
+      color: var(--gris);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    #auth-error {
+      display: none;
+      font-size: 0.78rem;
+      color: #8c5a5a;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
   </style>
 </head>
 <body>
+
+<div id="auth-wall">
+  <div class="auth-titulo">Simpleno — Resultados</div>
+  <div class="auth-sub">Acceso restringido</div>
+  <div id="google-btn"></div>
+  <div id="auth-error">Tu cuenta no tiene permiso para ver esta página.</div>
+</div>
+
+<div id="app" style="display:none">
 <div class="contenedor">
 
   <h1>Resultados de la encuesta</h1>
@@ -243,25 +286,54 @@
   <div id="contenido"><div class="loading">Obteniendo datos y generando resúmenes con IA...</div></div>
 
 </div>
+</div>
 
 <script>
-  // ⚠️ Reemplazá con el nuevo deployment ID después de actualizar el GAS
-  var GAS_URL = 'https://script.google.com/macros/s/AKfycbwNdoby6fD6fl28i-YgTSDolDu17fRKW4jg3BdC8LR4AQkqnEGWDGSJsCp5ei-axx0u/exec';
+  var CLIENT_ID   = 'TU_CLIENT_ID_ACA'; // reemplazá con tu OAuth Client ID de Google Cloud
+  var EMAIL_OK    = 'robertson.ine@gmail.com';
+  var GAS_URL     = 'https://script.google.com/macros/s/AKfycbwNdoby6fD6fl28i-YgTSDolDu17fRKW4jg3BdC8LR4AQkqnEGWDGSJsCp5ei-axx0u/exec';
 
-  fetch(GAS_URL + '?action=dashboard')
-    .then(function(r) { return r.json(); })
-    .then(function(data) { render(data); })
-    .catch(function(err) {
-      document.getElementById('contenido').innerHTML =
-        '<div class="error">No se pudo conectar con el servidor. Verificá el deployment del GAS.</div>';
+  window.onload = function() {
+    google.accounts.id.initialize({
+      client_id: CLIENT_ID,
+      callback: function(response) {
+        var payload = JSON.parse(atob(response.credential.split('.')[1]));
+        if (payload.email === EMAIL_OK) {
+          document.getElementById('auth-wall').style.display = 'none';
+          document.getElementById('app').style.display = 'block';
+          cargarDashboard();
+        } else {
+          document.getElementById('auth-error').style.display = 'block';
+        }
+      },
+      auto_select: true
     });
+    google.accounts.id.renderButton(document.getElementById('google-btn'), {
+      theme: 'outline', size: 'large', locale: 'es'
+    });
+    google.accounts.id.prompt();
+  };
+
+  function cargarDashboard() {
+    fetch(GAS_URL + '?action=dashboard')
+      .then(function(r) { return r.json(); })
+      .then(function(data) { render(data); })
+      .catch(function() {
+        document.getElementById('contenido').innerHTML =
+          '<div class="error">No se pudo conectar con el servidor. Verificá el deployment del GAS.</div>';
+      });
+  }
+
+  var SEMAFORO_CODIGOS = { nada: 'Para nada', puedeser: 'Puede ser', aveces: 'A veces', total: 'Totalmente' };
+
+  function normalizar(v) { return SEMAFORO_CODIGOS[v] || v; }
 
   function contar(rows, campo) {
     var counts = {};
     rows.forEach(function(r) {
       var vals = (r[campo] || '').split(' | ');
       vals.forEach(function(v) {
-        v = v.trim();
+        v = normalizar(v.trim());
         if (v) counts[v] = (counts[v] || 0) + 1;
       });
     });
@@ -334,11 +406,17 @@
     var html = '';
 
     // Cards
-    html += '<div class="cards">'
+    html += '<div class="cards" style="grid-template-columns:1fr 1fr">'
       + '<div class="card"><div class="card-label">Respuestas</div><div class="card-valor">' + total + '</div></div>'
       + '<div class="card"><div class="card-label">Perfiles</div><div class="card-valor">' + Object.keys(perfiles).length + '</div><div class="card-sub">' + perfilTexto + '</div></div>'
-      + '<div class="card"><div class="card-label">Edades</div><div class="card-valor" style="font-size:0.85rem; padding-top:0.4rem;">' + Object.keys(contar(rows, 'Edad')).join(' · ') + '</div></div>'
       + '</div>';
+
+    // Edades — barras
+    var edades = contar(rows, 'Edad');
+    if (Object.keys(edades).length > 0) {
+      html += '<div class="seccion"><div class="seccion-titulo">Distribución por edad</div>'
+        + '<div class="pregunta-bloque">' + barras(edades, total) + '</div></div>';
+    }
 
     // Preguntas cerradas
     html += '<div class="seccion"><div class="seccion-titulo">Preguntas cerradas</div>';
@@ -350,8 +428,11 @@
       { campo: 'Q6 — Ayudar a otros', label: '¿Lo compartirías si ayuda a otros?' },
       { campo: 'Lector — Leerías', label: '¿Leerías historias de desconocidos?' },
       { campo: 'Q8 — Importa saber quién', label: '¿Cuánto importa saber quién escribió?' },
+      { campo: 'QIA — La IA como oyente', label: '¿Alguna vez le contaste algo a una IA?' },
       { campo: 'Q11 — Feedback vs resonancia', label: '¿Qué necesitás si publicás algo?' },
       { campo: 'Q10 — Frenos al compartir', label: '¿Qué te frenaría de compartir?' },
+      { campo: 'IA nunca — Por qué no', label: '¿Por qué nunca le contarías a una IA?' },
+      { campo: 'IA sí — Por qué sí', label: '¿Por qué sí le contaste a una IA?' },
       { campo: 'Motivar — Opciones', label: '¿Qué te motivaría a seguir leyendo?' },
     ];
 
@@ -388,3 +469,4 @@
 </script>
 </body>
 </html>
+

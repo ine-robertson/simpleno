@@ -737,7 +737,7 @@
     btns.forEach(function(b) { b.classList.remove('sel-nada','sel-puedeser','sel-aveces','sel-total'); });
     var clases = { nada: 'sel-nada', puedeser: 'sel-puedeser', aveces: 'sel-aveces', total: 'sel-total' };
     btn.classList.add(clases[val]);
-    document.getElementById(campo).value = val;
+    document.getElementById(campo).value = btn.textContent.trim();
     if (campo === 'q1') condicional('cond-q2', val !== 'nada' && val !== '');
   }
 
