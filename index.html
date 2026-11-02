@@ -955,68 +955,6 @@
     </blockquote>
   </section>
 
-  <!-- FEEDBACK -->
-  <section style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--gris-claro);">
-    <div class="seccion-titulo">Feedback</div>
-    <h2 style="margin-bottom: 1.2rem;">Todo lo que tengas para decir</h2>
-    <p style="color: var(--gris); margin-bottom: 2rem;">Simpleno está en sus primeros pasos y cada opinión importa. Podés escribir lo que quieras: lo que te gustó, lo que no, lo que agregarías, lo que cambiarías, o simplemente lo que pensaste mientras leías. No hay respuesta incorrecta.</p>
-    <textarea id="feedback-texto"
-      placeholder="Escribí acá lo que quieras..."
-      style="
-        width: 100%;
-        min-height: 200px;
-        font-family: 'Georgia', serif;
-        font-size: 1rem;
-        line-height: 1.7;
-        color: var(--carbon);
-        background: white;
-        border: 1px solid var(--gris-claro);
-        border-radius: 6px;
-        padding: 1.2rem;
-        resize: vertical;
-        outline: none;
-        transition: border-color 0.2s;
-      "
-      onfocus="this.style.borderColor='var(--acento)'"
-      onblur="this.style.borderColor='var(--gris-claro)'"
-    ></textarea>
-    <button onclick="enviarFeedback()"
-      style="
-        margin-top: 1rem;
-        background: var(--carbon);
-        color: var(--crema);
-        font-family: 'Helvetica Neue', Arial, sans-serif;
-        font-size: 0.78rem;
-        font-weight: 700;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        border: none;
-        border-radius: 6px;
-        padding: 1rem 2rem;
-        cursor: pointer;
-        transition: background 0.2s;
-      "
-      onmouseover="this.style.background='#333'"
-      onmouseout="this.style.background='var(--carbon)'"
-    >Enviar feedback</button>
-    <p id="feedback-confirmacion" style="display:none; margin-top:1rem; color: var(--acento); font-size: 0.9rem;">Gracias, recibimos tu mensaje.</p>
-  </section>
-
-  <script>
-    var GAS_FEEDBACK = 'https://script.google.com/macros/s/AKfycbwNdoby6fD6fl28i-YgTSDolDu17fRKW4jg3BdC8LR4AQkqnEGWDGSJsCp5ei-axx0u/exec';
-    function enviarFeedback() {
-      var texto = document.getElementById('feedback-texto').value.trim();
-      if (!texto) return;
-      var params = new URLSearchParams({ qcierre: texto });
-      fetch(GAS_FEEDBACK + '?' + params.toString(), { method: 'GET' })
-        .catch(function() {});
-      document.getElementById('feedback-texto').value = '';
-      document.getElementById('feedback-texto').style.display = 'none';
-      document.querySelector('[onclick="enviarFeedback()"]').style.display = 'none';
-      document.getElementById('feedback-confirmacion').style.display = 'block';
-    }
-  </script>
-
   <a href="simpleno-decisiones.html" class="cta-encuesta">Decisiones de diseño →</a>
 
 
