@@ -342,59 +342,6 @@
   </style>
 </head>
 
-<style>
-  #pin-overlay {
-    position: fixed; inset: 0; z-index: 9999;
-    background: #f7f4ef;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 2rem;
-    transition: opacity 0.5s ease;
-  }
-  #pin-overlay.saliendo { opacity: 0; pointer-events: none; }
-  #pin-logo { font-family: 'Georgia', serif; font-size: 2.2rem; font-weight: normal; color: #1e1e1e; }
-  #pin-label { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #6b6b6b; }
-  #pin-input { font-family: 'Georgia', serif; font-size: 1.8rem; letter-spacing: 0.5em; text-align: center; width: 180px; border: none; border-bottom: 2px solid #d4cfc9; background: transparent; color: #1e1e1e; outline: none; padding: 0.4rem 0; transition: border-color 0.3s; -webkit-text-security: disc; }
-  #pin-input:focus { border-color: #c17f5a; }
-  #pin-input.error { border-color: #c0705a; animation: shake 0.4s ease; }
-  #pin-error { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.72rem; color: #c0705a; letter-spacing: 0.05em; height: 1rem; }
-  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
-</style>
-
-<div id="pin-overlay">
-  <div id="pin-logo">Simpleno</div>
-  <div id="pin-label">Ingresá el código de acceso</div>
-  <input id="pin-input" type="password" inputmode="numeric" maxlength="4" autofocus autocomplete="off" />
-  <div id="pin-error"></div>
-</div>
-
-<script>
-  (function() {
-    if (sessionStorage.getItem('simpleno-access') === 'ok') {
-      document.getElementById('pin-overlay').style.display = 'none';
-      return;
-    }
-    var input = document.getElementById('pin-input');
-    var error = document.getElementById('pin-error');
-    input.addEventListener('input', function() {
-      error.textContent = '';
-      input.classList.remove('error');
-      if (input.value.length === 4) {
-        if (input.value === '2607') {
-          sessionStorage.setItem('simpleno-access', 'ok');
-          var overlay = document.getElementById('pin-overlay');
-          overlay.classList.add('saliendo');
-          setTimeout(function() { overlay.style.display = 'none'; }, 500);
-        } else {
-          input.classList.add('error');
-          error.textContent = 'Código incorrecto';
-          setTimeout(function() { input.value = ''; input.classList.remove('error'); }, 600);
-        }
-      }
-    });
-  })();
-</script>
-
 <body>
 
 <nav class="nav-principal">
