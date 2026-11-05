@@ -144,6 +144,10 @@
       flex-shrink: 0;
     }
 
+    .barra-item.ganador .barra-texto { font-weight: 700; color: var(--carbon); }
+    .barra-item.ganador .barra-fill { background: var(--verde); }
+    .barra-item.ganador .barra-num { font-weight: 700; color: var(--verde); }
+
     /* TEXTOS LIBRES CON AI */
     .texto-libre {
       background: white;
@@ -341,11 +345,12 @@
   }
 
   function barras(counts, total) {
-    return Object.entries(counts)
-      .sort(function(a, b) { return b[1] - a[1]; })
-      .map(function(entry) {
+    var entries = Object.entries(counts).sort(function(a, b) { return b[1] - a[1]; });
+    var maxVal = entries.length ? entries[0][1] : 0;
+    return entries.map(function(entry) {
         var pct = Math.round((entry[1] / total) * 100);
-        return '<div class="barra-item">'
+        var esGanador = entry[1] === maxVal && maxVal > 0;
+        return '<div class="barra-item' + (esGanador ? ' ganador' : '') + '">'
           + '<div class="barra-texto">' + entry[0] + '</div>'
           + '<div class="barra-track"><div class="barra-fill" style="width:' + pct + '%"></div></div>'
           + '<div class="barra-num">' + entry[1] + ' / ' + total + '</div>'
