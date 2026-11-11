@@ -98,6 +98,17 @@
     }
 
     /* BARRAS */
+    .seccion-subtitulo {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gris);
+      margin: 2rem 0 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--gris-claro);
+    }
+
     .pregunta-bloque { margin-bottom: 2rem; }
 
     .pregunta-label {
@@ -426,28 +437,59 @@
     // Preguntas cerradas
     html += '<div class="seccion"><div class="seccion-titulo">Preguntas cerradas</div>';
 
-    var cerradas = [
-      { campo: 'Q3 — Te guardás historias', label: '¿Te guardás cosas que te pasaron?' },
-      { campo: 'Q1 — Historias anónimas', label: '¿Las contarías de forma anónima?' },
-      { campo: 'Qsoltar — Escribir ayuda a soltar', label: '¿Escribir ayuda a soltar?' },
-      { campo: 'Q6 — Ayudar a otros', label: '¿Lo compartirías si ayuda a otros?' },
-      { campo: 'Lector — Leerías', label: '¿Leerías historias de desconocidos?' },
-      { campo: 'Q8 — Importa saber quién', label: '¿Cuánto importa saber quién escribió?' },
-      { campo: 'QIA — La IA como oyente', label: '¿Alguna vez le contaste algo a una IA?' },
-      { campo: 'Q11 — Feedback vs resonancia', label: '¿Qué necesitás si publicás algo?' },
-      { campo: 'Q10 — Frenos al compartir', label: '¿Qué te frenaría de compartir?' },
-      { campo: 'IA nunca — Por qué no', label: '¿Por qué nunca le contarías a una IA?' },
-      { campo: 'IA sí — Por qué sí', label: '¿Por qué sí le contaste a una IA?' },
-      { campo: 'Motivar — Opciones', label: '¿Qué te motivaría a seguir leyendo?' },
+    var secciones = [
+      {
+        titulo: 'Lo que no se cuenta',
+        preguntas: [
+          { campo: 'Q3 — Te guardás historias', label: '¿Tenés cosas que te pasaron y no contaste?' },
+          { campo: 'Q1 — Historias anónimas', label: '¿Las contarías al menos de forma anónima?' },
+        ]
+      },
+      {
+        titulo: 'El peso de lo no dicho',
+        preguntas: [
+          { campo: 'Qsoltar — Escribir ayuda a soltar', label: '¿Creés o has experimentado que el simple hecho de escribir algo que te pesa, afecta o emociona — aunque no sepas quién lo va a leer — te ayuda a soltarlo?' },
+          { campo: 'Q6 — Ayudar a otros', label: 'Aunque expresar una historia/testimonio no te agregue valor a vos — si pudieras aportar a alguien que está pasando por algo similar, ¿lo harías?' },
+          { campo: 'Q10 — Frenos al compartir', label: '¿Qué te frenaría de compartir una historia/testimonio si tuvieras la garantía de que nadie sabría que es tuya y que no queda guardada en una base de datos rescatable?' },
+        ]
+      },
+      {
+        titulo: 'El lector',
+        preguntas: [
+          { campo: 'Lector — Leerías', label: '¿Leerías historias/experiencias de personas que no sabés quiénes son?' },
+          { campo: 'Motivar — Opciones', label: '¿Qué te motivaría a empezar a leer algo personal de alguien que no conocés?' },
+          { campo: 'Q11 — Feedback vs resonancia', label: 'Si contás una historia/testimonio pero nadie te la puede comentar o dar feedback — ¿creés que pierde valor? ¿O con saber que hay alguien real del otro lado te alcanza?' },
+        ]
+      },
+      {
+        titulo: 'El anonimato',
+        preguntas: [
+          { campo: 'Q8 — Importa saber quién', label: '¿Cuánto te importa saber quién escribió algo?' },
+        ]
+      },
+      {
+        titulo: 'La IA como oyente',
+        preguntas: [
+          { campo: 'QIA — La IA como oyente', label: '¿Alguna vez le contaste algo a una IA (ChatGPT, Gemini u otra) — algo que te pesaba, te emocionaba o necesitabas soltar — buscando que te escuche o te diga qué opina?' },
+          { campo: 'IA nunca — Por qué no', label: '¿Por qué nunca lo consideraste?' },
+          { campo: 'IA sí — Por qué sí', label: '¿Por qué lo hiciste?' },
+        ]
+      },
     ];
 
-    cerradas.forEach(function(q) {
-      var counts = contar(rows, q.campo);
-      if (Object.keys(counts).length === 0) return;
-      html += '<div class="pregunta-bloque">'
-        + '<div class="pregunta-label">' + q.label + '</div>'
-        + barras(counts, total)
-        + '</div>';
+    secciones.forEach(function(s) {
+      var bloques = '';
+      s.preguntas.forEach(function(q) {
+        var counts = contar(rows, q.campo);
+        if (Object.keys(counts).length === 0) return;
+        bloques += '<div class="pregunta-bloque">'
+          + '<div class="pregunta-label">' + q.label + '</div>'
+          + barras(counts, total)
+          + '</div>';
+      });
+      if (bloques) {
+        html += '<div class="seccion-subtitulo">' + s.titulo + '</div>' + bloques;
+      }
     });
 
     html += '</div>';
