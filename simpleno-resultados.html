@@ -97,6 +97,38 @@
       border-bottom: 1px solid var(--gris-claro);
     }
 
+    /* FODA */
+    .foda-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    @media (max-width: 600px) { .foda-grid { grid-template-columns: 1fr; } }
+    .foda-cuadrante {
+      border-radius: 6px;
+      padding: 1.2rem 1.4rem;
+    }
+    .foda-cuadrante-titulo {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+    .foda-cuadrante ul { margin: 0; padding-left: 1.1rem; }
+    .foda-cuadrante li { font-size: 0.82rem; line-height: 1.6; margin-bottom: 0.3rem; }
+    .foda-f { background: #edf4f0; }
+    .foda-f .foda-cuadrante-titulo { color: var(--verde); }
+    .foda-o { background: #fdf3ec; }
+    .foda-o .foda-cuadrante-titulo { color: var(--acento); }
+    .foda-d { background: #f4eeed; }
+    .foda-d .foda-cuadrante-titulo { color: var(--rojo); }
+    .foda-a { background: #f4f2ea; }
+    .foda-a .foda-cuadrante-titulo { color: var(--ambar); }
+    .foda-loading { font-size: 0.82rem; color: var(--gris); font-style: italic; margin-top: 1rem; }
+
     /* BARRAS */
     .seccion-subtitulo {
       font-size: 0.6rem;
@@ -451,6 +483,24 @@
       + '<div class="card"><div class="card-label">Respuestas</div><div class="card-valor">' + total + '</div></div>'
       + '<div class="card"><div class="card-label">Perfiles</div><div class="card-valor">' + Object.keys(perfiles).length + '</div><div class="card-sub">' + perfilTexto + '</div></div>'
       + '</div>';
+
+    // FODA
+    if (data.foda) {
+      var f = data.foda;
+      function fodaItems(arr) {
+        return '<ul>' + (arr||[]).map(function(i){ return '<li>' + i + '</li>'; }).join('') + '</ul>';
+      }
+      html += '<div class="seccion"><div class="seccion-titulo">Análisis FODA</div>'
+        + '<div class="foda-grid">'
+        + '<div class="foda-cuadrante foda-f"><div class="foda-cuadrante-titulo">Fortalezas</div>' + fodaItems(f.fortalezas) + '</div>'
+        + '<div class="foda-cuadrante foda-o"><div class="foda-cuadrante-titulo">Oportunidades</div>' + fodaItems(f.oportunidades) + '</div>'
+        + '<div class="foda-cuadrante foda-d"><div class="foda-cuadrante-titulo">Debilidades</div>' + fodaItems(f.debilidades) + '</div>'
+        + '<div class="foda-cuadrante foda-a"><div class="foda-cuadrante-titulo">Amenazas</div>' + fodaItems(f.amenazas) + '</div>'
+        + '</div></div>';
+    } else {
+      html += '<div class="seccion"><div class="seccion-titulo">Análisis FODA</div>'
+        + '<div class="foda-loading">Disponible una vez que el GAS esté redeployado con la clave de Gemini.</div></div>';
+    }
 
     // Edades — barras
     var edades = contar(rows, 'Edad');
