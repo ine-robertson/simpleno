@@ -361,7 +361,12 @@
 
   var SEMAFORO_CODIGOS = { nada: 'Para nada', puedeser: 'Puede ser', aveces: 'A veces', total: 'Totalmente' };
 
-  function normalizar(v) { return SEMAFORO_CODIGOS[v] || v; }
+  // Mapea textos viejos de opciones a los actuales (para unificar respuestas antes/después de cambios)
+  var ALIASES = {
+    'Totalmente — si ayuda a otros, vale la pena': 'Totalmente — si aporta o habilita a otros, vale la pena'
+  };
+
+  function normalizar(v) { v = SEMAFORO_CODIGOS[v] || v; return ALIASES[v] || v; }
 
   function contar(rows, campo) {
     var counts = {};
