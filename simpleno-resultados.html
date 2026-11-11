@@ -308,15 +308,35 @@
   var EMAIL_OK    = 'robertson.ine@gmail.com';
   var GAS_URL     = 'https://script.google.com/macros/s/AKfycbwNdoby6fD6fl28i-YgTSDolDu17fRKW4jg3BdC8LR4AQkqnEGWDGSJsCp5ei-axx0u/exec';
 
+  var SESSION_KEY = 'simpleno_auth';
+  var SESSION_TTL = 30 * 24 * 60 * 60 * 1000; // 30 días
+
+  function entrar() {
+    document.getElementById('auth-wall').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    cargarDashboard();
+  }
+
   window.onload = function() {
+    var stored = localStorage.getItem(SESSION_KEY);
+    if (stored) {
+      try {
+        var s = JSON.parse(stored);
+        if (s.email === EMAIL_OK && (Date.now() - s.ts) < SESSION_TTL) {
+          entrar();
+          return;
+        }
+      } catch(e) {}
+      localStorage.removeItem(SESSION_KEY);
+    }
+
     google.accounts.id.initialize({
       client_id: CLIENT_ID,
       callback: function(response) {
         var payload = JSON.parse(atob(response.credential.split('.')[1]));
         if (payload.email === EMAIL_OK) {
-          document.getElementById('auth-wall').style.display = 'none';
-          document.getElementById('app').style.display = 'block';
-          cargarDashboard();
+          localStorage.setItem(SESSION_KEY, JSON.stringify({ email: EMAIL_OK, ts: Date.now() }));
+          entrar();
         } else {
           document.getElementById('auth-error').style.display = 'block';
         }
