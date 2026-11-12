@@ -1,4 +1,4 @@
-// v2026-11-12i — gemini-3.8-flash sin thinking (thinkingBudget:0), fix parsing parts
+// v2026-11-12j — gemini-3.8-flash sin thinkingConfig (causa 503), fix parsing parts
 var SHEET_ID   = '1zufm3lNJxfpk1IeqVYlHzOMe3zZO7TjoaZ94K13ymyw';
 var SHEET_NAME = 'Respuestas';
 var GEMINI_KEY = PropertiesService.getScriptProperties().getProperty('GEMINI_KEY') || '';
@@ -225,11 +225,10 @@ function generarFODA(data) {
       method: 'post',
       contentType: 'application/json',
       payload: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { thinkingConfig: { thinkingBudget: 0 } }
+        contents: [{ parts: [{ text: prompt }] }]
       }),
       muteHttpExceptions: true,
-      deadline: 45
+      deadline: 55
     });
     var json = JSON.parse(res.getContentText());
     var parts = json.candidates[0].content.parts;
@@ -253,11 +252,10 @@ function resumirConGemini(textos, pregunta) {
       method: 'post',
       contentType: 'application/json',
       payload: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { thinkingConfig: { thinkingBudget: 0 } }
+        contents: [{ parts: [{ text: prompt }] }]
       }),
       muteHttpExceptions: true,
-      deadline: 45
+      deadline: 55
     });
     var json = JSON.parse(res.getContentText());
     var parts = json.candidates[0].content.parts;
@@ -277,8 +275,7 @@ function testGemini() {
       method: 'post',
       contentType: 'application/json',
       payload: JSON.stringify({
-        contents: [{ parts: [{ text: 'Decí hola en una línea' }] }],
-        generationConfig: { thinkingConfig: { thinkingBudget: 0 } }
+        contents: [{ parts: [{ text: 'Decí hola en una línea' }] }]
       }),
       muteHttpExceptions: true,
       deadline: 45
