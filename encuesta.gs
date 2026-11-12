@@ -1,4 +1,4 @@
-// v2026-11-11 — agrega FODA generado por Gemini en getDashboard
+// v2026-11-12 — agrega qtipo (tipo de historia) al final de HEADERS y appendRow
 var SHEET_ID   = '1zufm3lNJxfpk1IeqVYlHzOMe3zZO7TjoaZ94K13ymyw';
 var SHEET_NAME = 'Respuestas';
 var GEMINI_KEY = 'TU_API_KEY_ACA'; // reemplazá con tu key de Google AI Studio
@@ -15,7 +15,8 @@ var HEADERS = [
   'Q7 — Qué cambia anónimo', 'Q8 — Importa saber quién',
   'QIA — La IA como oyente', 'IA nunca — Por qué no', 'IA sí — Por qué sí',
   'Q11 — Feedback vs resonancia',
-  'Perfil específico', 'El nombre — Simpleno', 'Cierre'
+  'Perfil específico', 'El nombre — Simpleno', 'Cierre',
+  'Qtipo — Tipo de historia'
 ];
 
 function doGet(e) {
@@ -59,7 +60,8 @@ function doGet(e) {
     p.q11           || '',
     p.qpe           || '',
     p.qnombre       || '',
-    p.qcierre       || ''
+    p.qcierre       || '',
+    p.qtipo         || ''
   ]);
 
   return ContentService
