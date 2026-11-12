@@ -1,6 +1,6 @@
-// v2026-11-12d — retrocompatibilidad nombres viejos/nuevos + try/catch en getDashboard
+// v2026-11-12e — nueva hoja "Respuestas v2" para recolección limpia; hoja vieja intacta
 var SHEET_ID   = '1zufm3lNJxfpk1IeqVYlHzOMe3zZO7TjoaZ94K13ymyw';
-var SHEET_NAME = 'Respuestas';
+var SHEET_NAME = 'Respuestas v2';
 var GEMINI_KEY = 'TU_API_KEY_ACA'; // reemplazá con tu key de Google AI Studio
 
 var HEADERS = [
@@ -71,7 +71,7 @@ function doGet(e) {
   }
 
   var ss    = SpreadsheetApp.openById(SHEET_ID);
-  var sheet = ss.getSheetByName(SHEET_NAME);
+  var sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
 
   if (sheet.getLastRow() === 0) {
     sheet.appendRow(HEADERS);
@@ -134,7 +134,7 @@ function repararEncabezados() {
 function getDashboard() {
   try {
     var ss    = SpreadsheetApp.openById(SHEET_ID);
-    var sheet = ss.getSheetByName(SHEET_NAME);
+    var sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
     var rows  = sheet.getDataRange().getValues();
 
     if (rows.length <= 1) {
