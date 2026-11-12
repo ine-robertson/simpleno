@@ -15,6 +15,8 @@
       --gris-claro: #d4cfc9;
       --acento: #c17f5a;
       --verde: #5a8c6e;
+      --rojo: #c0514a;
+      --ambar: #bf9000;
     }
 
     html { font-size: 16px; scroll-behavior: smooth; }
@@ -128,6 +130,7 @@
     .foda-a { background: #f4f2ea; }
     .foda-a .foda-cuadrante-titulo { color: var(--ambar); }
     .foda-loading { font-size: 0.82rem; color: var(--gris); font-style: italic; margin-top: 1rem; }
+    .pregunta-nota { font-size: 0.72rem; color: var(--gris-claro); font-style: italic; margin-top: 0.4rem; }
 
     /* BARRAS */
     .seccion-subtitulo {
@@ -570,7 +573,7 @@
           { campo: '¿Alguna vez algo genuino contado por alguien que no conocías te movilizó?', label: '¿Alguna vez leíste o escuchaste algo personal contado de manera muy genuina por alguien que NO conocías, y te movilizó?' },
           { campo: '¿Qué te motivaría a empezar a leer algo personal de alguien que no conocés?', label: '¿Qué te motivaría a empezar a leer algo personal de alguien que no conocés?' },
           { campo: '¿Qué te haría abandonar una historia a la mitad?', label: '¿Qué te haría abandonar una historia/experiencia a la mitad?' },
-          { campo: '¿Qué tipo de experiencia te gustaría leer o compartir?', label: '¿Qué tipo de experiencia te gustaría leer o compartir?' },
+          { campo: '¿Qué tipo de experiencia te gustaría leer o compartir?', label: '¿Qué tipo de experiencia te gustaría leer o compartir?', nota: 'Esta pregunta empezó a registrarse a partir de la respuesta 13.' },
           { campo: '¿Necesitás feedback o te alcanza saber que alguien te leyó?', label: 'Si contás una historia/testimonio pero nadie te la puede comentar — ¿creés que pierde valor? ¿O con saber que hay alguien real del otro lado te alcanza?' },
         ]
       },
@@ -583,9 +586,9 @@
       {
         titulo: 'La IA como oyente',
         preguntas: [
-          { campo: '¿Alguna vez le contaste algo a una IA buscando que te escuche?', label: '¿Alguna vez le contaste algo a una IA (ChatGPT, Gemini u otra) buscando que te escuche o te diga qué opina?' },
-          { campo: 'IA: ¿Por qué nunca lo harías?', label: '¿Por qué nunca lo consideraste?' },
-          { campo: 'IA: ¿Por qué sí lo hiciste?', label: '¿Por qué lo hiciste?' },
+          { campo: '¿Alguna vez le contaste algo a una IA buscando que te escuche?', label: '¿Alguna vez le contaste algo a una IA (ChatGPT, Gemini u otra) buscando que te escuche o te diga qué opina?', nota: 'Esta pregunta empezó a registrarse a partir de la respuesta 13.' },
+          { campo: 'IA: ¿Por qué nunca lo harías?', label: '¿Por qué nunca lo consideraste?', nota: 'Esta pregunta empezó a registrarse a partir de la respuesta 13.' },
+          { campo: 'IA: ¿Por qué sí lo hiciste?', label: '¿Por qué lo hiciste?', nota: 'Esta pregunta empezó a registrarse a partir de la respuesta 13.' },
         ]
       },
     ];
@@ -598,6 +601,7 @@
         bloques += '<div class="pregunta-bloque">'
           + '<div class="pregunta-label">' + q.label + '</div>'
           + barras(counts, total)
+          + (q.nota ? '<div class="pregunta-nota">' + q.nota + '</div>' : '')
           + '</div>';
       });
       if (bloques) {

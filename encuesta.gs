@@ -1,7 +1,7 @@
-// v2026-11-12e — nueva hoja "Respuestas v2" para recolección limpia; hoja vieja intacta
+// v2026-11-12f — fix FODA: modelo Gemini correcto (1.5-flash), SHEET_NAME = Respuestas, clave via PropertiesService
 var SHEET_ID   = '1zufm3lNJxfpk1IeqVYlHzOMe3zZO7TjoaZ94K13ymyw';
-var SHEET_NAME = 'Respuestas v2';
-var GEMINI_KEY = 'TU_API_KEY_ACA'; // reemplazá con tu key de Google AI Studio
+var SHEET_NAME = 'Respuestas';
+var GEMINI_KEY = PropertiesService.getScriptProperties().getProperty('GEMINI_KEY') || '';
 
 var HEADERS = [
   'Timestamp',
@@ -220,13 +220,12 @@ function generarFODA(data) {
     + 'Máximo 4 items por cuadrante. Breves y accionables, en español.';
 
   try {
-    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=' + GEMINI_KEY;
+    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=' + GEMINI_KEY;
     var res = UrlFetchApp.fetch(url, {
       method: 'post',
       contentType: 'application/json',
       payload: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { thinkingConfig: { thinkingBudget: 0 } }
+        contents: [{ parts: [{ text: prompt }] }]
       }),
       muteHttpExceptions: true,
       deadline: 30
@@ -246,13 +245,12 @@ function resumirConGemini(textos, pregunta) {
       + textos.map(function(t, i) { return (i + 1) + '. ' + t; }).join('\n')
       + '\n\nResumí los patrones principales en 2-3 líneas, en español, sin listar las respuestas una por una. Sé directo y concreto.';
 
-    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=' + GEMINI_KEY;
+    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=' + GEMINI_KEY;
     var res = UrlFetchApp.fetch(url, {
       method: 'post',
       contentType: 'application/json',
       payload: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { thinkingConfig: { thinkingBudget: 0 } }
+        contents: [{ parts: [{ text: prompt }] }]
       }),
       muteHttpExceptions: true,
       deadline: 30
