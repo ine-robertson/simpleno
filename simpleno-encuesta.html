@@ -464,7 +464,7 @@
 
       <div class="pregunta">
         <div class="pregunta-texto">¿Tenés cosas que te pasaron y no contaste?</div>
-        <p style="font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.8rem; color:var(--gris-claro); line-height:1.65; margin-bottom:1.1rem;">Pueden ser experiencias difíciles, familiares, laborales, accidentes, experiencias espirituales, cuestiones vinculares, cosas ridículas o divertidas que no te animás a contar.</p>
+        <p style="font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.8rem; color:var(--gris-claro); line-height:1.65; margin-bottom:1.1rem;">Pueden ser experiencias difíciles, familiares, laborales, accidentes, cuestiones vinculares. También momentos de amor o de plenitud, una decisión que te cambió la vida, un retiro que te transformó la mirada, cosas ridículas o divertidas. Cualquier vivencia que valió la pena y que nunca encontró el lugar para ser contada.</p>
         <div class="opciones" id="ops-q3">
           <div class="opcion" onclick="radio(this,'q3'); condicional('cond-q4', false)"><div class="opcion-dot"></div>Siempre cuento todo lo que me pasa y siento</div>
           <div class="opcion" onclick="radio(this,'q3'); condicional('cond-q4', true)"><div class="opcion-dot"></div>Hay muy poquitas cosas que nunca le conté a nadie</div>
@@ -483,6 +483,7 @@
           <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>Me da vergüenza</div>
           <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>No encuentro el espacio ni la persona correcta</div>
           <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>No sé cómo contarlo</div>
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>No sé cómo contar algo bueno que me pasó sin que suene a alarde</div>
           <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>Cuando lo cuento, la gente opina o da consejos — no me escucha</div>
           <div class="opcion" data-q5 onclick="check(this,'q4'); revisarQ5()"><div class="opcion-cuadro"></div>Prefiero guardármelo — creo no necesitar contarlo</div>
           <div class="opcion" data-q5 onclick="check(this,'q4'); revisarQ5()"><div class="opcion-cuadro"></div>Prefiero guardármelo — creo que hablar me hace más mal que bien</div>
@@ -515,10 +516,10 @@
 
     <!-- BLOQUE 2: EL PESO DE LO NO DICHO -->
     <div class="bloque">
-      <div class="bloque-titulo">El peso de lo no dicho</div>
+      <div class="bloque-titulo">Lo que no se expresa</div>
 
       <div class="pregunta">
-        <div class="pregunta-texto">¿Creés o has experimentado que el simple hecho de escribir algo que te pesa, afecta o emociona — aunque no sepas quién lo va a leer — te ayuda a soltarlo?</div>
+        <div class="pregunta-texto">¿Creés o has experimentado que el simple hecho de escribir algo que te pasó, que te pesa o que te llenó, aunque no sepas quién lo va a leer, te ayuda a procesarlo o a que trascienda?</div>
         <div class="semaforo">
           <button type="button" class="semaforo-btn" onclick="semaforo(this,'qsoltar','nada')">Para nada</button>
           <button type="button" class="semaforo-btn" onclick="semaforo(this,'qsoltar','aveces')">A veces</button>
@@ -593,6 +594,7 @@
           <div class="opcion" onclick="check(this,'motivar')"><div class="opcion-cuadro"></div>La forma de escribir me enganchó</div>
           <div class="opcion" onclick="check(this,'motivar')"><div class="opcion-cuadro"></div>Sentí que podría identificarme</div>
           <div class="opcion" onclick="check(this,'motivar')"><div class="opcion-cuadro"></div>Me llegó el tono emocional</div>
+          <div class="opcion" onclick="check(this,'motivar')"><div class="opcion-cuadro"></div>Busco algo que me inspire o que me cambie la perspectiva</div>
           <div class="opcion" onclick="check(this,'motivar')"><div class="opcion-cuadro"></div>Es breve y fácil de leer</div>
         </div>
         <input type="text" class="campo corto" name="motivar-otro" placeholder="Otro..." style="margin-top:0.6rem; min-height:auto; padding:0.65rem 1rem;">
@@ -675,6 +677,18 @@
     <!-- BLOQUE 6: EL CONCEPTO -->
     <div class="bloque">
       <div class="bloque-titulo">El concepto</div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Qué tipo de experiencia te gustaría leer o compartir? <span class="pregunta-nota">(podés elegir más de una)</span></div>
+        <div class="opciones" id="ops-qtipo">
+          <div class="opcion" onclick="check(this,'qtipo')"><div class="opcion-cuadro"></div>Algo que alguien superó o perdió</div>
+          <div class="opcion" onclick="check(this,'qtipo')"><div class="opcion-cuadro"></div>Un momento de amor o de plenitud</div>
+          <div class="opcion" onclick="check(this,'qtipo')"><div class="opcion-cuadro"></div>Una decisión que cambió una vida</div>
+          <div class="opcion" onclick="check(this,'qtipo')"><div class="opcion-cuadro"></div>Una pequeña felicidad cotidiana</div>
+          <div class="opcion" onclick="check(this,'qtipo')"><div class="opcion-cuadro"></div>Una experiencia de transformación o espiritual</div>
+          <div class="opcion" onclick="check(this,'qtipo')"><div class="opcion-cuadro"></div>Cualquier experiencia genuina</div>
+        </div>
+      </div>
 
       <div class="pregunta">
         <div class="pregunta-texto">Si contás una historia/testimonio pero nadie te la puede comentar o dar feedback — ¿creés que pierde valor? ¿O con saber que hay alguien real del otro lado te alcanza?</div>
@@ -820,6 +834,7 @@
       qia:           radio1('qia'),
       iaNunca:       checks('ia-nunca'),
       iaSi:          checks('ia-si'),
+      qtipo:         checks('qtipo'),
       q11:           radio1('q11'),
       qpe:           document.querySelector('[name="qpe"]').value,
       qnombre:       document.querySelector('[name="qnombre"]').value,
