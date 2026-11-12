@@ -268,6 +268,31 @@ function resumirConGemini(textos, pregunta) {
   }
 }
 
+function testGemini() {
+  var key = PropertiesService.getScriptProperties().getProperty('GEMINI_KEY');
+  Logger.log('Key: ' + (key ? key.substring(0,8) + '... (' + key.length + ' chars)' : 'NO ENCONTRADA'));
+  try {
+    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=' + key;
+    var res = UrlFetchApp.fetch(url, {
+      method: 'post',
+      contentType: 'application/json',
+      payload: JSON.stringify({
+        contents: [{ parts: [{ text: 'Decí hola en una línea' }] }],
+        generationConfig: { thinkingConfig: { thinkingBudget: 0 } }
+      }),
+      muteHttpExceptions: true,
+      deadline: 45
+    });
+    Logger.log('Status: ' + res.getResponseCode());
+    var json = JSON.parse(res.getContentText());
+    var parts = json.candidates[0].content.parts;
+    var textPart = parts.filter(function(p){ return !p.thought && p.text; })[0] || parts[parts.length-1];
+    Logger.log('Respuesta: ' + textPart.text);
+  } catch(e) {
+    Logger.log('ERROR: ' + e.message);
+  }
+}
+
 function jsonResponse(data) {
   return ContentService
     .createTextOutput(JSON.stringify(data))
