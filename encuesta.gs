@@ -1,4 +1,4 @@
-// v2026-11-12h — modelo gemini-3.8-flash (confirmado funcionando)
+// v2026-11-12i — gemini-3.8-flash sin thinking (thinkingBudget:0), fix parsing parts
 var SHEET_ID   = '1zufm3lNJxfpk1IeqVYlHzOMe3zZO7TjoaZ94K13ymyw';
 var SHEET_NAME = 'Respuestas';
 var GEMINI_KEY = PropertiesService.getScriptProperties().getProperty('GEMINI_KEY') || '';
@@ -225,13 +225,16 @@ function generarFODA(data) {
       method: 'post',
       contentType: 'application/json',
       payload: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }]
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { thinkingConfig: { thinkingBudget: 0 } }
       }),
       muteHttpExceptions: true,
-      deadline: 30
+      deadline: 45
     });
     var json = JSON.parse(res.getContentText());
-    var text = json.candidates[0].content.parts[0].text.trim()
+    var parts = json.candidates[0].content.parts;
+    var textPart = parts.filter(function(p){ return !p.thought && p.text; })[0] || parts[parts.length - 1];
+    var text = textPart.text.trim()
       .replace(/^```json\s*/,'').replace(/^```\s*/,'').replace(/\s*```$/,'');
     return JSON.parse(text);
   } catch(err) {
@@ -250,13 +253,16 @@ function resumirConGemini(textos, pregunta) {
       method: 'post',
       contentType: 'application/json',
       payload: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }]
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { thinkingConfig: { thinkingBudget: 0 } }
       }),
       muteHttpExceptions: true,
-      deadline: 30
+      deadline: 45
     });
     var json = JSON.parse(res.getContentText());
-    return json.candidates[0].content.parts[0].text;
+    var parts = json.candidates[0].content.parts;
+    var textPart = parts.filter(function(p){ return !p.thought && p.text; })[0] || parts[parts.length - 1];
+    return textPart.text;
   } catch(err) {
     return '(resumen no disponible)';
   }
