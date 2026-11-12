@@ -1,22 +1,37 @@
-// v2026-11-12b — auto-completa encabezados faltantes en la hoja existente
+// v2026-11-12c — encabezados con texto de pregunta real + función repararEncabezados()
 var SHEET_ID   = '1zufm3lNJxfpk1IeqVYlHzOMe3zZO7TjoaZ94K13ymyw';
 var SHEET_NAME = 'Respuestas';
 var GEMINI_KEY = 'TU_API_KEY_ACA'; // reemplazá con tu key de Google AI Studio
 
 var HEADERS = [
-  'Timestamp', 'Perfil', 'Edad', 'Primera reacción',
-  'Q1 — Historias anónimas', 'Q2 — Por qué no con nombre',
-  'Q3 — Te guardás historias', 'Qsoltar — Escribir ayuda a soltar',
-  'Q4 — Por qué te las guardás', 'Q5 — Si hay evidencia lo harías',
-  'Q6 — Ayudar a otros', 'Q10 — Frenos al compartir',
-  'Lector — Leerías', 'Lector2 — Alguna vez te movilizó',
-  'Motivar — Opciones', 'Motivar — Otro',
-  'Abandonar — Opciones', 'Abandonar — Otro',
-  'Q7 — Qué cambia anónimo', 'Q8 — Importa saber quién',
-  'QIA — La IA como oyente', 'IA nunca — Por qué no', 'IA sí — Por qué sí',
-  'Q11 — Feedback vs resonancia',
-  'Perfil específico', 'El nombre — Simpleno', 'Cierre',
-  'Qtipo — Tipo de historia'
+  'Timestamp',
+  'Profesión',
+  'Edad',
+  'Primera reacción al concepto',
+  '¿Las contarías anónimas?',
+  '¿Por qué no con tu nombre?',
+  '¿Tenés cosas que no contaste?',
+  '¿Escribir ayuda a soltarlo o procesarlo?',
+  '¿Por qué te las guardás?',
+  '¿Si hay evidencia de que es terapéutico, lo harías?',
+  '¿Lo harías para ayudar a otros aunque no te sume a vos?',
+  '¿Qué te frenaría al compartir con anonimato garantizado?',
+  '¿Leerías historias de desconocidos?',
+  '¿Alguna vez algo genuino contado por alguien que no conocías te movilizó?',
+  '¿Qué te motivaría a empezar a leer algo personal de alguien que no conocés?',
+  'Motivar — otro (texto libre)',
+  '¿Qué te haría abandonar una historia a la mitad?',
+  'Abandonar — otro (texto libre)',
+  '¿Qué cambia en una historia cuando no sabés quién la vivió?',
+  '¿Cuánto te importa saber quién escribió algo?',
+  '¿Alguna vez le contaste algo a una IA buscando que te escuche?',
+  'IA: ¿Por qué nunca lo harías?',
+  'IA: ¿Por qué sí lo hiciste?',
+  '¿Necesitás feedback o te alcanza saber que alguien te leyó?',
+  'Pregunta específica por profesión',
+  '¿Qué te inspira o dice la palabra Simpleno?',
+  'Cierre — todo lo que tengas para decir',
+  '¿Qué tipo de experiencia te gustaría leer o compartir?'
 ];
 
 function doGet(e) {
@@ -72,6 +87,19 @@ function doGet(e) {
   return ContentService
     .createTextOutput(JSON.stringify({ ok: true }))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+function repararEncabezados() {
+  var ss    = SpreadsheetApp.openById(SHEET_ID);
+  var sheet = ss.getSheetByName(SHEET_NAME);
+
+  // Escribe todos los encabezados en fila 1, columna por columna
+  // No toca ninguna fila de datos
+  for (var i = 0; i < HEADERS.length; i++) {
+    sheet.getRange(1, i + 1).setValue(HEADERS[i]);
+  }
+
+  Logger.log('Encabezados actualizados: ' + HEADERS.length + ' columnas.');
 }
 
 function getDashboard() {
