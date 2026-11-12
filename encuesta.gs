@@ -1,4 +1,4 @@
-// v2026-11-12f — fix FODA: modelo Gemini correcto (1.5-flash), SHEET_NAME = Respuestas, clave via PropertiesService
+// v2026-11-12g — modelo Gemini 2.5-flash (1.5 no disponible en esta cuenta)
 var SHEET_ID   = '1zufm3lNJxfpk1IeqVYlHzOMe3zZO7TjoaZ94K13ymyw';
 var SHEET_NAME = 'Respuestas';
 var GEMINI_KEY = PropertiesService.getScriptProperties().getProperty('GEMINI_KEY') || '';
@@ -220,7 +220,7 @@ function generarFODA(data) {
     + 'Máximo 4 items por cuadrante. Breves y accionables, en español.';
 
   try {
-    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=' + GEMINI_KEY;
+    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + GEMINI_KEY;
     var res = UrlFetchApp.fetch(url, {
       method: 'post',
       contentType: 'application/json',
@@ -245,7 +245,7 @@ function resumirConGemini(textos, pregunta) {
       + textos.map(function(t, i) { return (i + 1) + '. ' + t; }).join('\n')
       + '\n\nResumí los patrones principales en 2-3 líneas, en español, sin listar las respuestas una por una. Sé directo y concreto.';
 
-    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=' + GEMINI_KEY;
+    var url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + GEMINI_KEY;
     var res = UrlFetchApp.fetch(url, {
       method: 'post',
       contentType: 'application/json',
