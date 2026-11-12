@@ -1,4 +1,4 @@
-// v2026-11-12 — agrega qtipo (tipo de historia) al final de HEADERS y appendRow
+// v2026-11-12b — auto-completa encabezados faltantes en la hoja existente
 var SHEET_ID   = '1zufm3lNJxfpk1IeqVYlHzOMe3zZO7TjoaZ94K13ymyw';
 var SHEET_NAME = 'Respuestas';
 var GEMINI_KEY = 'TU_API_KEY_ACA'; // reemplazá con tu key de Google AI Studio
@@ -31,6 +31,11 @@ function doGet(e) {
 
   if (sheet.getLastRow() === 0) {
     sheet.appendRow(HEADERS);
+  } else {
+    var existingCols = sheet.getLastColumn();
+    for (var i = existingCols; i < HEADERS.length; i++) {
+      sheet.getRange(1, i + 1).setValue(HEADERS[i]);
+    }
   }
 
   sheet.appendRow([
