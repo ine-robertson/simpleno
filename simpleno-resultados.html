@@ -393,17 +393,45 @@
 
   var SEMAFORO_CODIGOS = { nada: 'Para nada', puedeser: 'Puede ser', aveces: 'A veces', total: 'Totalmente' };
 
-  // Mapea textos viejos de opciones a los actuales (para unificar respuestas antes/después de cambios)
-  var ALIASES = {
+  var VALOR_ALIASES = {
     'Totalmente — si ayuda a otros, vale la pena': 'Totalmente — si aporta o habilita a otros, vale la pena'
   };
 
-  function normalizar(v) { v = SEMAFORO_CODIGOS[v] || v; return ALIASES[v] || v; }
+  // Retrocompatibilidad: mapea nombre nuevo de columna → nombre viejo
+  var CAMPO_ALIASES = {
+    '¿Tenés cosas que no contaste?':                                    'Q3 — Te guardás historias',
+    '¿Las contarías anónimas?':                                         'Q1 — Historias anónimas',
+    '¿Escribir ayuda a soltarlo o procesarlo?':                         'Qsoltar — Escribir ayuda a soltar',
+    '¿Lo harías para ayudar a otros aunque no te sume a vos?':          'Q6 — Ayudar a otros',
+    '¿Qué te frenaría al compartir con anonimato garantizado?':         'Q10 — Frenos al compartir',
+    '¿Leerías historias de desconocidos?':                              'Lector — Leerías',
+    '¿Alguna vez algo genuino contado por alguien que no conocías te movilizó?': 'Lector2 — Alguna vez te movilizó',
+    '¿Qué te motivaría a empezar a leer algo personal de alguien que no conocés?': 'Motivar — Opciones',
+    '¿Qué te haría abandonar una historia a la mitad?':                 'Abandonar — Opciones',
+    '¿Qué tipo de experiencia te gustaría leer o compartir?':           'Qtipo — Tipo de historia',
+    '¿Necesitás feedback o te alcanza saber que alguien te leyó?':      'Q11 — Feedback vs resonancia',
+    '¿Cuánto te importa saber quién escribió algo?':                    'Q8 — Importa saber quién',
+    '¿Alguna vez le contaste algo a una IA buscando que te escuche?':   'QIA — La IA como oyente',
+    'IA: ¿Por qué nunca lo harías?':                                    'IA nunca — Por qué no',
+    'IA: ¿Por qué sí lo hiciste?':                                      'IA sí — Por qué sí',
+    'Primera reacción al concepto':                                     'Primera reacción',
+    '¿Por qué te las guardás?':                                         'Q4 — Por qué te las guardás',
+    '¿Qué cambia en una historia cuando no sabés quién la vivió?':      'Q7 — Qué cambia anónimo',
+    '¿Qué te inspira o dice la palabra Simpleno?':                      'El nombre — Simpleno',
+    'Cierre — todo lo que tengas para decir':                           'Cierre',
+    'Profesión':                                                        'Perfil'
+  };
+
+  function getVal(r, campo) {
+    return r[campo] || r[CAMPO_ALIASES[campo]] || '';
+  }
+
+  function normalizar(v) { v = SEMAFORO_CODIGOS[v] || v; return VALOR_ALIASES[v] || v; }
 
   function contar(rows, campo) {
     var counts = {};
     rows.forEach(function(r) {
-      var vals = (r[campo] || '').split(' | ');
+      var vals = getVal(r, campo).split(' | ');
       vals.forEach(function(v) {
         v = normalizar(v.trim());
         if (v) counts[v] = (counts[v] || 0) + 1;
@@ -427,18 +455,19 @@
   }
 
   function textoLibre(campo, pregunta, rows, resumenes) {
-    var textos = rows.filter(function(r) { return (r[campo] || '').trim().length > 2; });
+    var textos = rows.filter(function(r) { return getVal(r, campo).trim().length > 2; });
     if (textos.length === 0) return '';
 
-    var resumen = resumenes[campo]
-      ? '<div class="resumen-ia-label">Resumen IA</div><div class="resumen-ia">' + resumenes[campo] + '</div>'
+    var resumenTexto = resumenes[campo] || resumenes[CAMPO_ALIASES[campo]] || '';
+    var resumen = resumenTexto
+      ? '<div class="resumen-ia-label">Resumen IA</div><div class="resumen-ia">' + resumenTexto + '</div>'
       : '';
 
     var id = 'tl-' + campo.replace(/[^a-z]/gi, '');
     var items = textos.map(function(r) {
       return '<div class="respuesta-item">'
-        + '<span class="respuesta-perfil">' + (r['Perfil'] || '') + ' · ' + (r['Edad'] || '') + '</span>'
-        + (r[campo] || '')
+        + '<span class="respuesta-perfil">' + (getVal(r, 'Profesión') || '') + ' · ' + (r['Edad'] || '') + '</span>'
+        + getVal(r, campo)
         + '</div>';
     }).join('');
 
@@ -460,6 +489,12 @@
   }
 
   function render(data) {
+    if (data.error) {
+      document.getElementById('contenido').innerHTML =
+        '<div class="error">Error del servidor: ' + data.error + '<br><br>Verificá que el GAS tenga permiso para acceder al Sheet (ejecutá cualquier función desde el editor para autorizar).</div>';
+      return;
+    }
+
     if (data.total === 0) {
       document.getElementById('contenido').innerHTML = '<div class="error">Todavía no hay respuestas.</div>';
       return;
@@ -473,7 +508,7 @@
       total + ' respuesta' + (total > 1 ? 's' : '') + ' · Última: ' + new Date(data.ultima).toLocaleDateString('es-AR');
 
     // Perfiles
-    var perfiles = contar(rows, 'Perfil');
+    var perfiles = contar(rows, 'Profesión');
     var perfilTexto = Object.entries(perfiles).map(function(e) { return e[1] + ' ' + e[0]; }).join(' · ');
 
     var html = '';
@@ -516,38 +551,41 @@
       {
         titulo: 'Lo que no se cuenta',
         preguntas: [
-          { campo: 'Q3 — Te guardás historias', label: '¿Tenés cosas que te pasaron y no contaste?' },
-          { campo: 'Q1 — Historias anónimas', label: '¿Las contarías al menos de forma anónima?' },
+          { campo: '¿Tenés cosas que no contaste?', label: '¿Tenés cosas que te pasaron y no contaste?' },
+          { campo: '¿Las contarías anónimas?', label: '¿Las contarías al menos de forma anónima?' },
         ]
       },
       {
-        titulo: 'El peso de lo no dicho',
+        titulo: 'Lo que no se expresa',
         preguntas: [
-          { campo: 'Qsoltar — Escribir ayuda a soltar', label: '¿Creés o has experimentado que el simple hecho de escribir algo que te pesa, afecta o emociona — aunque no sepas quién lo va a leer — te ayuda a soltarlo?' },
-          { campo: 'Q6 — Ayudar a otros', label: 'Aunque expresar una historia/testimonio no te agregue valor a vos — si pudieras aportar a alguien que está pasando por algo similar, ¿lo harías?' },
-          { campo: 'Q10 — Frenos al compartir', label: '¿Qué te frenaría de compartir una historia/testimonio si tuvieras la garantía de que nadie sabría que es tuya y que no queda guardada en una base de datos rescatable?' },
+          { campo: '¿Escribir ayuda a soltarlo o procesarlo?', label: '¿Creés o has experimentado que el simple hecho de escribir algo que te pasó, que te pesa o que te llenó te ayuda a procesarlo o a que trascienda?' },
+          { campo: '¿Lo harías para ayudar a otros aunque no te sume a vos?', label: 'Aunque expresar una historia/testimonio no te agregue valor a vos — si pudieras aportar a alguien que está pasando por algo similar, ¿lo harías?' },
+          { campo: '¿Qué te frenaría al compartir con anonimato garantizado?', label: '¿Qué te frenaría de compartir una historia/testimonio si tuvieras la garantía de que nadie sabría que es tuya?' },
         ]
       },
       {
         titulo: 'El lector',
         preguntas: [
-          { campo: 'Lector — Leerías', label: '¿Leerías historias/experiencias de personas que no sabés quiénes son?' },
-          { campo: 'Motivar — Opciones', label: '¿Qué te motivaría a empezar a leer algo personal de alguien que no conocés?' },
-          { campo: 'Q11 — Feedback vs resonancia', label: 'Si contás una historia/testimonio pero nadie te la puede comentar o dar feedback — ¿creés que pierde valor? ¿O con saber que hay alguien real del otro lado te alcanza?' },
+          { campo: '¿Leerías historias de desconocidos?', label: '¿Leerías historias/experiencias de personas que no sabés quiénes son?' },
+          { campo: '¿Alguna vez algo genuino contado por alguien que no conocías te movilizó?', label: '¿Alguna vez leíste o escuchaste algo personal contado de manera muy genuina por alguien que NO conocías, y te movilizó?' },
+          { campo: '¿Qué te motivaría a empezar a leer algo personal de alguien que no conocés?', label: '¿Qué te motivaría a empezar a leer algo personal de alguien que no conocés?' },
+          { campo: '¿Qué te haría abandonar una historia a la mitad?', label: '¿Qué te haría abandonar una historia/experiencia a la mitad?' },
+          { campo: '¿Qué tipo de experiencia te gustaría leer o compartir?', label: '¿Qué tipo de experiencia te gustaría leer o compartir?' },
+          { campo: '¿Necesitás feedback o te alcanza saber que alguien te leyó?', label: 'Si contás una historia/testimonio pero nadie te la puede comentar — ¿creés que pierde valor? ¿O con saber que hay alguien real del otro lado te alcanza?' },
         ]
       },
       {
         titulo: 'El anonimato',
         preguntas: [
-          { campo: 'Q8 — Importa saber quién', label: '¿Cuánto te importa saber quién escribió algo?' },
+          { campo: '¿Cuánto te importa saber quién escribió algo?', label: '¿Cuánto te importa saber quién escribió algo?' },
         ]
       },
       {
         titulo: 'La IA como oyente',
         preguntas: [
-          { campo: 'QIA — La IA como oyente', label: '¿Alguna vez le contaste algo a una IA (ChatGPT, Gemini u otra) — algo que te pesaba, te emocionaba o necesitabas soltar — buscando que te escuche o te diga qué opina?' },
-          { campo: 'IA nunca — Por qué no', label: '¿Por qué nunca lo consideraste?' },
-          { campo: 'IA sí — Por qué sí', label: '¿Por qué lo hiciste?' },
+          { campo: '¿Alguna vez le contaste algo a una IA buscando que te escuche?', label: '¿Alguna vez le contaste algo a una IA (ChatGPT, Gemini u otra) buscando que te escuche o te diga qué opina?' },
+          { campo: 'IA: ¿Por qué nunca lo harías?', label: '¿Por qué nunca lo consideraste?' },
+          { campo: 'IA: ¿Por qué sí lo hiciste?', label: '¿Por qué lo hiciste?' },
         ]
       },
     ];
@@ -573,11 +611,11 @@
     html += '<div class="seccion"><div class="seccion-titulo">Textos libres — resúmenes con IA</div>';
 
     var libres = [
-      { campo: 'Primera reacción', label: '¿Cuál fue tu primera reacción?' },
-      { campo: 'Q4 — Por qué te las guardás', label: '¿Por qué te guardás cosas?' },
-      { campo: 'Q7 — Qué cambia anónimo', label: '¿Qué cambiaría si pudieras contar algo anónimamente?' },
-      { campo: 'El nombre — Simpleno', label: '¿Qué te inspira o dice la palabra Simpleno?' },
-      { campo: 'Cierre', label: '¿Algo más que quisieras decir?' },
+      { campo: 'Primera reacción al concepto', label: '¿Cuál fue tu primera reacción?' },
+      { campo: '¿Por qué te las guardás?', label: '¿Por qué te guardás cosas?' },
+      { campo: '¿Qué cambia en una historia cuando no sabés quién la vivió?', label: '¿Qué cambiaría si pudieras contar algo anónimamente?' },
+      { campo: '¿Qué te inspira o dice la palabra Simpleno?', label: '¿Qué te inspira o dice la palabra Simpleno?' },
+      { campo: 'Cierre — todo lo que tengas para decir', label: '¿Algo más que quisieras decir?' },
     ];
 
     libres.forEach(function(q) {

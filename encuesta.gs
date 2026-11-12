@@ -1,4 +1,4 @@
-// v2026-11-12c — encabezados con texto de pregunta real + función repararEncabezados()
+// v2026-11-12d — retrocompatibilidad nombres viejos/nuevos + try/catch en getDashboard
 var SHEET_ID   = '1zufm3lNJxfpk1IeqVYlHzOMe3zZO7TjoaZ94K13ymyw';
 var SHEET_NAME = 'Respuestas';
 var GEMINI_KEY = 'TU_API_KEY_ACA'; // reemplazá con tu key de Google AI Studio
@@ -33,6 +33,35 @@ var HEADERS = [
   'Cierre — todo lo que tengas para decir',
   '¿Qué tipo de experiencia te gustaría leer o compartir?'
 ];
+
+// Mapeo nuevo nombre → viejo nombre para retrocompatibilidad con datos existentes
+var CAMPO_ALIAS = {
+  '¿Tenés cosas que no contaste?':                                    'Q3 — Te guardás historias',
+  '¿Las contarías anónimas?':                                         'Q1 — Historias anónimas',
+  '¿Escribir ayuda a soltarlo o procesarlo?':                         'Qsoltar — Escribir ayuda a soltar',
+  '¿Lo harías para ayudar a otros aunque no te sume a vos?':          'Q6 — Ayudar a otros',
+  '¿Qué te frenaría al compartir con anonimato garantizado?':         'Q10 — Frenos al compartir',
+  '¿Leerías historias de desconocidos?':                              'Lector — Leerías',
+  '¿Alguna vez algo genuino contado por alguien que no conocías te movilizó?': 'Lector2 — Alguna vez te movilizó',
+  '¿Qué te motivaría a empezar a leer algo personal de alguien que no conocés?': 'Motivar — Opciones',
+  '¿Qué te haría abandonar una historia a la mitad?':                 'Abandonar — Opciones',
+  '¿Qué tipo de experiencia te gustaría leer o compartir?':           'Qtipo — Tipo de historia',
+  '¿Necesitás feedback o te alcanza saber que alguien te leyó?':      'Q11 — Feedback vs resonancia',
+  '¿Cuánto te importa saber quién escribió algo?':                    'Q8 — Importa saber quién',
+  '¿Alguna vez le contaste algo a una IA buscando que te escuche?':   'QIA — La IA como oyente',
+  'IA: ¿Por qué nunca lo harías?':                                    'IA nunca — Por qué no',
+  'IA: ¿Por qué sí lo hiciste?':                                      'IA sí — Por qué sí',
+  'Primera reacción al concepto':                                     'Primera reacción',
+  '¿Por qué te las guardás?':                                         'Q4 — Por qué te las guardás',
+  '¿Qué cambia en una historia cuando no sabés quién la vivió?':      'Q7 — Qué cambia anónimo',
+  '¿Qué te inspira o dice la palabra Simpleno?':                      'El nombre — Simpleno',
+  'Cierre — todo lo que tengas para decir':                           'Cierre',
+  'Profesión':                                                        'Perfil'
+};
+
+function getR(r, campo) {
+  return r[campo] || r[CAMPO_ALIAS[campo]] || '';
+}
 
 function doGet(e) {
   var p = e.parameter;
@@ -103,48 +132,51 @@ function repararEncabezados() {
 }
 
 function getDashboard() {
-  var ss    = SpreadsheetApp.openById(SHEET_ID);
-  var sheet = ss.getSheetByName(SHEET_NAME);
-  var rows  = sheet.getDataRange().getValues();
+  try {
+    var ss    = SpreadsheetApp.openById(SHEET_ID);
+    var sheet = ss.getSheetByName(SHEET_NAME);
+    var rows  = sheet.getDataRange().getValues();
 
-  if (rows.length <= 1) {
-    return jsonResponse({ total: 0, rows: [], resumenes: {} });
-  }
-
-  var headers = rows[0];
-  var data = rows.slice(1).map(function(row) {
-    var obj = {};
-    headers.forEach(function(h, i) { obj[h] = row[i] || ''; });
-    return obj;
-  });
-
-  // Campos de texto libre a resumir
-  var camposTexto = {
-    'Primera reacción':        '¿Cuál fue tu primera reacción al conocer el concepto de Simpleno?',
-    'Q4 — Por qué te las guardás': '¿Por qué te guardás cosas que te pasaron?',
-    'Q7 — Qué cambia anónimo': '¿Qué cambiaría para vos si pudieras contar algo de forma anónima?',
-    'El nombre — Simpleno':    '¿Qué te inspira o dice el nombre Simpleno?',
-    'Cierre':                  '¿Qué más querías decir sobre Simpleno?'
-  };
-
-  var resumenes = {};
-  Object.keys(camposTexto).forEach(function(campo) {
-    var textos = data
-      .map(function(r) { return (r[campo] || '').toString().trim(); })
-      .filter(function(t) { return t.length > 2; });
-
-    if (textos.length > 0) {
-      resumenes[campo] = resumirConGemini(textos, camposTexto[campo]);
+    if (rows.length <= 1) {
+      return jsonResponse({ total: 0, rows: [], resumenes: {} });
     }
-  });
 
-  return jsonResponse({
-    total: data.length,
-    ultima: data[data.length - 1]['Timestamp'],
-    rows: data,
-    resumenes: resumenes,
-    foda: generarFODA(data)
-  });
+    var headers = rows[0];
+    var data = rows.slice(1).map(function(row) {
+      var obj = {};
+      headers.forEach(function(h, i) { obj[h] = row[i] || ''; });
+      return obj;
+    });
+
+    var camposTexto = {
+      'Primera reacción al concepto':                                '¿Cuál fue tu primera reacción al conocer el concepto de Simpleno?',
+      '¿Por qué te las guardás?':                                    '¿Por qué te guardás cosas que te pasaron?',
+      '¿Qué cambia en una historia cuando no sabés quién la vivió?': '¿Qué cambiaría para vos si pudieras contar algo de forma anónima?',
+      '¿Qué te inspira o dice la palabra Simpleno?':                 '¿Qué te inspira o dice el nombre Simpleno?',
+      'Cierre — todo lo que tengas para decir':                      '¿Qué más querías decir sobre Simpleno?'
+    };
+
+    var resumenes = {};
+    Object.keys(camposTexto).forEach(function(campo) {
+      var textos = data
+        .map(function(r) { return getR(r, campo).toString().trim(); })
+        .filter(function(t) { return t.length > 2; });
+
+      if (textos.length > 0) {
+        resumenes[campo] = resumirConGemini(textos, camposTexto[campo]);
+      }
+    });
+
+    return jsonResponse({
+      total: data.length,
+      ultima: data[data.length - 1]['Timestamp'],
+      rows: data,
+      resumenes: resumenes,
+      foda: generarFODA(data)
+    });
+  } catch(e) {
+    return jsonResponse({ error: e.message, total: 0, rows: [], resumenes: {} });
+  }
 }
 
 function generarFODA(data) {
@@ -155,13 +187,13 @@ function generarFODA(data) {
   function normSem(v) { return SEM[v] || v; }
 
   function pctCampo(campo, valor) {
-    var n = data.filter(function(r) { return normSem((r[campo]||'').trim()) === valor; }).length;
+    var n = data.filter(function(r) { return normSem(getR(r, campo).trim()) === valor; }).length;
     return n + '/' + total + ' (' + Math.round(n/total*100) + '%)';
   }
   function topMulti(campo, top) {
     var c = {};
     data.forEach(function(r) {
-      (r[campo]||'').split(' | ').forEach(function(v) {
+      getR(r, campo).split(' | ').forEach(function(v) {
         v = v.trim(); if (v) c[v] = (c[v]||0) + 1;
       });
     });
@@ -170,16 +202,16 @@ function generarFODA(data) {
   }
 
   var stats = 'Total encuestados: ' + total + '\n'
-    + 'Tienen cosas sin contar: ' + data.filter(function(r){ return (r['Q3 — Te guardás historias']||'').indexOf('Hay') !== -1 || (r['Q3 — Te guardás historias']||'').indexOf('Generalmente') !== -1; }).length + '/' + total + '\n'
-    + 'Las contarían anónimas (totalmente): ' + pctCampo('Q1 — Historias anónimas', 'Totalmente') + '\n'
-    + 'Las contarían anónimas (a veces): ' + pctCampo('Q1 — Historias anónimas', 'A veces') + '\n'
-    + 'Escribir ayuda a soltar (totalmente): ' + pctCampo('Qsoltar — Escribir ayuda a soltar', 'Totalmente') + '\n'
-    + 'Compartirían si aporta a otros (totalmente): ' + pctCampo('Q6 — Ayudar a otros', 'Totalmente — si aporta o habilita a otros, vale la pena') + '\n'
-    + 'Leerían historias de desconocidos (totalmente): ' + pctCampo('Lector — Leerías', 'Totalmente') + '\n'
-    + 'No les importa saber quién escribió: ' + pctCampo('Q8 — Importa saber quién', 'No me importa') + '\n'
-    + 'Le contaron algo a una IA: ' + data.filter(function(r){ return (r['QIA — La IA como oyente']||'').indexOf('Sí') !== -1; }).length + '/' + total + '\n'
-    + 'Frenos al compartir (top opciones): ' + topMulti('Q10 — Frenos al compartir', 5) + '\n'
-    + 'Motivadores de lectura (top opciones): ' + topMulti('Motivar — Opciones', 4);
+    + 'Tienen cosas sin contar: ' + data.filter(function(r){ var v = getR(r,'¿Tenés cosas que no contaste?'); return v.indexOf('Hay') !== -1 || v.indexOf('Generalmente') !== -1; }).length + '/' + total + '\n'
+    + 'Las contarían anónimas (totalmente): ' + pctCampo('¿Las contarías anónimas?', 'Totalmente') + '\n'
+    + 'Las contarían anónimas (a veces): ' + pctCampo('¿Las contarías anónimas?', 'A veces') + '\n'
+    + 'Escribir ayuda a soltar (totalmente): ' + pctCampo('¿Escribir ayuda a soltarlo o procesarlo?', 'Totalmente') + '\n'
+    + 'Compartirían si aporta a otros (totalmente): ' + pctCampo('¿Lo harías para ayudar a otros aunque no te sume a vos?', 'Totalmente — si aporta o habilita a otros, vale la pena') + '\n'
+    + 'Leerían historias de desconocidos (totalmente): ' + pctCampo('¿Leerías historias de desconocidos?', 'Totalmente') + '\n'
+    + 'No les importa saber quién escribió: ' + pctCampo('¿Cuánto te importa saber quién escribió algo?', 'No me importa') + '\n'
+    + 'Le contaron algo a una IA: ' + data.filter(function(r){ return getR(r,'¿Alguna vez le contaste algo a una IA buscando que te escuche?').indexOf('Sí') !== -1; }).length + '/' + total + '\n'
+    + 'Frenos al compartir (top opciones): ' + topMulti('¿Qué te frenaría al compartir con anonimato garantizado?', 5) + '\n'
+    + 'Motivadores de lectura (top opciones): ' + topMulti('¿Qué te motivaría a empezar a leer algo personal de alguien que no conocés?', 4);
 
   var prompt = 'Sos estratega de producto. Simpleno es una plataforma donde las personas publican historias/experiencias de forma completamente anónima. No hay autor visible, no hay comentarios, no hay likes. Las únicas acciones son "esto resuena conmigo" y "te entiendo". El propósito es la trascendencia: que lo que viví ayude a otros (Viktor Frankl).\n\n'
     + 'Datos de encuesta de validación:\n' + stats + '\n\n'
