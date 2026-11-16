@@ -1,4 +1,4 @@
-// v2026-11-12j — gemini-3.8-flash sin thinkingConfig (causa 503), fix parsing parts
+// v2026-11-15k — notificación por mail en cada nueva respuesta
 var SHEET_ID   = '1zufm3lNJxfpk1IeqVYlHzOMe3zZO7TjoaZ94K13ymyw';
 var SHEET_NAME = 'Respuestas';
 var GEMINI_KEY = PropertiesService.getScriptProperties().getProperty('GEMINI_KEY') || '';
@@ -113,9 +113,29 @@ function doGet(e) {
     p.qtipo         || ''
   ]);
 
+  notificarNuevaRespuesta(p, sheet.getLastRow() - 1);
+
   return ContentService
     .createTextOutput(JSON.stringify({ ok: true }))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+function notificarNuevaRespuesta(p, total) {
+  try {
+    var cuerpo = 'Nueva respuesta en Simpleno (#' + total + ')\n\n'
+      + 'Perfil: '           + (p.perfil  || '-') + '\n'
+      + 'Edad: '             + (p.edad    || '-') + '\n'
+      + 'Primera reacción: ' + (p.q9      || '-') + '\n'
+      + 'Cierre: '           + (p.qcierre || '-') + '\n\n'
+      + 'Ver resultados: https://simpleno.co/simpleno-resultados.html';
+    MailApp.sendEmail({
+      to: 'robertson.ine@gmail.com',
+      subject: 'Nueva respuesta en Simpleno (#' + total + ')',
+      body: cuerpo
+    });
+  } catch(e) {
+    // silencioso, no frena el guardado
+  }
 }
 
 function repararEncabezados() {
