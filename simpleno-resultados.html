@@ -384,14 +384,49 @@
     google.accounts.id.prompt();
   };
 
+  function fetchConTimeout(url, ms) {
+    var ctrl = new AbortController();
+    var timer = setTimeout(function() { ctrl.abort(); }, ms);
+    return fetch(url, { signal: ctrl.signal })
+      .then(function(r) { clearTimeout(timer); return r.json(); });
+  }
+
   function cargarDashboard() {
-    fetch(GAS_URL + '?action=dashboard')
-      .then(function(r) { return r.json(); })
-      .then(function(data) { render(data); })
+    // 1. Carga rápida sin Gemini
+    fetchConTimeout(GAS_URL + '?action=dashboard&nogemini=1', 20000)
+      .then(function(data) {
+        render(data);
+        // 2. Luego carga Gemini en segundo plano (90s timeout)
+        cargarGemini();
+      })
       .catch(function() {
         document.getElementById('contenido').innerHTML =
           '<div class="error">No se pudo conectar con el servidor. Verificá el deployment del GAS.</div>';
       });
+  }
+
+  function cargarGemini() {
+    fetchConTimeout(GAS_URL + '?action=dashboard', 90000)
+      .then(function(data) {
+        if (data.resumenes) actualizarResumenes(data.resumenes);
+        if (data.foda)      actualizarFODA(data.foda);
+      })
+      .catch(function() {
+        // Gemini no disponible, los placeholders quedan como están
+      });
+  }
+
+  function actualizarResumenes(resumenes) {
+    Object.keys(resumenes).forEach(function(campo) {
+      var el = document.querySelector('[data-resumen="' + campo + '"]');
+      if (el) el.textContent = resumenes[campo];
+    });
+  }
+
+  function actualizarFODA(foda) {
+    var el = document.getElementById('foda-container');
+    if (!el || !foda) return;
+    el.innerHTML = renderFODA(foda);
   }
 
   var SEMAFORO_CODIGOS = { nada: 'Para nada', puedeser: 'Puede ser', aveces: 'A veces', total: 'Totalmente' };
@@ -462,9 +497,10 @@
     if (textos.length === 0) return '';
 
     var resumenTexto = resumenes[campo] || resumenes[CAMPO_ALIASES[campo]] || '';
-    var resumen = resumenTexto
-      ? '<div class="resumen-ia-label">Resumen IA</div><div class="resumen-ia">' + resumenTexto + '</div>'
-      : '';
+    var resumen = '<div class="resumen-ia-label">Resumen IA</div>'
+      + '<div class="resumen-ia" data-resumen="' + campo + '">'
+      + (resumenTexto || '<span style="color:var(--gris);font-style:italic">Cargando...</span>')
+      + '</div>';
 
     var id = 'tl-' + campo.replace(/[^a-z]/gi, '');
     var items = textos.map(function(r) {
@@ -489,6 +525,18 @@
     var tog = document.getElementById('toggle-' + id);
     var visible = el.classList.toggle('visible');
     tog.textContent = (visible ? '▾ Ocultar' : '▸ Ver ' + el.children.length + ' respuesta' + (el.children.length > 1 ? 's' : ''));
+  }
+
+  function renderFODA(f) {
+    function fodaItems(arr) {
+      return '<ul>' + (arr||[]).map(function(i){ return '<li>' + i + '</li>'; }).join('') + '</ul>';
+    }
+    return '<div class="foda-grid">'
+      + '<div class="foda-cuadrante foda-f"><div class="foda-cuadrante-titulo">Fortalezas</div>' + fodaItems(f.fortalezas) + '</div>'
+      + '<div class="foda-cuadrante foda-o"><div class="foda-cuadrante-titulo">Oportunidades</div>' + fodaItems(f.oportunidades) + '</div>'
+      + '<div class="foda-cuadrante foda-d"><div class="foda-cuadrante-titulo">Debilidades</div>' + fodaItems(f.debilidades) + '</div>'
+      + '<div class="foda-cuadrante foda-a"><div class="foda-cuadrante-titulo">Amenazas</div>' + fodaItems(f.amenazas) + '</div>'
+      + '</div>';
   }
 
   function render(data) {
@@ -523,22 +571,10 @@
       + '</div>';
 
     // FODA
-    if (data.foda) {
-      var f = data.foda;
-      function fodaItems(arr) {
-        return '<ul>' + (arr||[]).map(function(i){ return '<li>' + i + '</li>'; }).join('') + '</ul>';
-      }
-      html += '<div class="seccion"><div class="seccion-titulo">Análisis FODA</div>'
-        + '<div class="foda-grid">'
-        + '<div class="foda-cuadrante foda-f"><div class="foda-cuadrante-titulo">Fortalezas</div>' + fodaItems(f.fortalezas) + '</div>'
-        + '<div class="foda-cuadrante foda-o"><div class="foda-cuadrante-titulo">Oportunidades</div>' + fodaItems(f.oportunidades) + '</div>'
-        + '<div class="foda-cuadrante foda-d"><div class="foda-cuadrante-titulo">Debilidades</div>' + fodaItems(f.debilidades) + '</div>'
-        + '<div class="foda-cuadrante foda-a"><div class="foda-cuadrante-titulo">Amenazas</div>' + fodaItems(f.amenazas) + '</div>'
-        + '</div></div>';
-    } else {
-      html += '<div class="seccion"><div class="seccion-titulo">Análisis FODA</div>'
-        + '<div class="foda-loading">Disponible una vez que el GAS esté redeployado con la clave de Gemini.</div></div>';
-    }
+    html += '<div class="seccion"><div class="seccion-titulo">Análisis FODA</div>'
+      + '<div id="foda-container">'
+      + (data.foda ? renderFODA(data.foda) : '<div class="foda-loading">Cargando análisis FODA...</div>')
+      + '</div></div>';
 
     // Edades — barras
     var edades = contar(rows, 'Edad');

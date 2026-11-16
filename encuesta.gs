@@ -1,4 +1,4 @@
-// v2026-11-15k — notificación por mail en cada nueva respuesta
+// v2026-11-16l — dashboard sin Gemini (nogemini=1) para carga rápida; Gemini en llamada separada
 var SHEET_ID   = '1zufm3lNJxfpk1IeqVYlHzOMe3zZO7TjoaZ94K13ymyw';
 var SHEET_NAME = 'Respuestas';
 var GEMINI_KEY = PropertiesService.getScriptProperties().getProperty('GEMINI_KEY') || '';
@@ -67,7 +67,7 @@ function doGet(e) {
   var p = e.parameter;
 
   if (p.action === 'dashboard') {
-    return getDashboard();
+    return getDashboard(p.nogemini === '1');
   }
 
   var ss    = SpreadsheetApp.openById(SHEET_ID);
@@ -151,7 +151,7 @@ function repararEncabezados() {
   Logger.log('Encabezados actualizados: ' + HEADERS.length + ' columnas.');
 }
 
-function getDashboard() {
+function getDashboard(noGemini) {
   try {
     var ss    = SpreadsheetApp.openById(SHEET_ID);
     var sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
@@ -167,6 +167,16 @@ function getDashboard() {
       headers.forEach(function(h, i) { obj[h] = row[i] || ''; });
       return obj;
     });
+
+    if (noGemini) {
+      return jsonResponse({
+        total: data.length,
+        ultima: data[data.length - 1]['Timestamp'],
+        rows: data,
+        resumenes: {},
+        foda: null
+      });
+    }
 
     var camposTexto = {
       'Primera reacción al concepto':                                '¿Cuál fue tu primera reacción al conocer el concepto de Simpleno?',
