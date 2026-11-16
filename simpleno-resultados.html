@@ -410,10 +410,22 @@
       .then(function(data) {
         if (data.resumenes) actualizarResumenes(data.resumenes);
         if (data.foda)      actualizarFODA(data.foda);
+        else limpiarPlaceholders();
       })
-      .catch(function() {
-        // Gemini no disponible, los placeholders quedan como están
+      .catch(function(err) {
+        console.warn('Gemini fetch falló:', err && err.message);
+        limpiarPlaceholders();
       });
+  }
+
+  function limpiarPlaceholders() {
+    document.querySelectorAll('[data-resumen]').forEach(function(el) {
+      if (el.querySelector('span')) el.innerHTML = '<span style="color:var(--gris);font-style:italic">No disponible</span>';
+    });
+    var foda = document.getElementById('foda-container');
+    if (foda && foda.querySelector('.foda-loading')) {
+      foda.innerHTML = '<div class="foda-loading">No disponible</div>';
+    }
   }
 
   function actualizarResumenes(resumenes) {
