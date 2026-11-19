@@ -354,6 +354,37 @@
     /* SEMÁFORO 4 opciones */
     .semaforo-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
 
+    .recuadro-pitch {
+      background: white;
+      border: 1px solid var(--gris-claro);
+      border-top: 3px solid var(--acento);
+      border-radius: 6px;
+      padding: 2rem 2.2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .recuadro-pitch .gancho {
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--carbon);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.4rem;
+      border-bottom: 1px solid var(--gris-claro);
+    }
+
+    .recuadro-pitch .parrafo {
+      font-size: 0.95rem;
+      color: var(--carbon);
+      line-height: 1.75;
+      margin-bottom: 1.1rem;
+    }
+
+    .recuadro-pitch .parrafo:last-child {
+      margin-bottom: 0;
+      color: var(--gris);
+    }
+
     @media (max-width: 560px) {
       html { font-size: 16px; }
 
@@ -397,7 +428,14 @@
   <div class="portada">
     <div class="etiqueta">Simpleno — Concepto en desarrollo</div>
     <h1>Quiero tu opinión</h1>
-    <p class="bajada">Simpleno está en sus primeros pasos y cada opinión importa. Podés escribir lo que quieras: lo que te gustó, lo que no, lo que agregarías, lo que cambiarías, o simplemente lo que pensaste mientras leías. No hay respuesta incorrecta. Son entre 5 y 7 minutos.</p>
+  </div>
+
+  <div class="recuadro-pitch">
+    <p class="gancho">¿Cuándo fue la última vez que contaste algo que viviste? No un resumen, ni la versión prolija. La verdadera, sin pensar en lo que iban a opinar.</p>
+    <p class="parrafo">🕊️ Para las personas que vivieron experiencias que les gustaría compartir pero se las guardan por vergüenza o por miedo a quedar expuestas, Simpleno es un espacio anónimo donde podés contar lo que te pasó, porque lo que importa es lo que viviste, no quién lo vivió.</p>
+    <p class="parrafo">🚫 A diferencia de otros espacios o redes, en Simpleno no hay autor, ni comentarios, ni likes: solo respuestas como "te entiendo" o "me inspira lo que viviste". 🫂</p>
+    <p class="parrafo">🌱 Porque contarlo es un acto de libertad y de trascendencia, sobre todo cuando lo que te pasó se convierte en un vehículo, en algo que sostiene a otro. 🤍</p>
+    <p class="parrafo">🙏 Lo estoy construyendo y quiero saber si te haría sentido. ¿Me regalás 3 minutos para una encuesta? 👇<br>Es anonima y la puedes reenviar a quien quieras. Tanto alguien adulto con muchos años vividos como un adolescente. Quiero escucharlos a todos ❤️</p>
   </div>
 
   <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.85rem; color: var(--gris); line-height: 1.75; margin-bottom: 3rem;">Si antes de contestar querés saber más de este proyecto, <a href="http://simpleno.co" style="color:var(--acento); text-decoration:none;">visitá el concepto</a> o contactanos en <a href="mailto:info@simpleno.co" style="color:var(--acento); text-decoration:none;">info@simpleno.co</a>. Y si en tus respuestas querés dejar algún dato tuyo para que te contacte cuando avance, también!</p>
