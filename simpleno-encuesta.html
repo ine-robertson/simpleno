@@ -4,16 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simpleno — Quiero tu opinión</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --crema: #f7f4ef;
-      --carbon: #1e1e1e;
-      --gris: #6b6b6b;
-      --gris-claro: #d4cfc9;
-      --acento: #c17f5a;
+      --crema: #FAF7FF;
+      --carbon: #24103F;
+      --gris: #7A738A;
+      --gris-claro: #DDD6F0;
+      --acento: #5B2E94;
       --verde: #5a8c6e;
       --rojo: #8c5a5a;
       --ambar: #8b7b4a;
@@ -24,7 +25,7 @@
     body {
       background-color: var(--crema);
       color: var(--carbon);
-      font-family: 'Nunito', 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       line-height: 1.65;
       padding: 0 1.5rem;
     }
@@ -37,14 +38,16 @@
       border-bottom: 1px solid var(--gris-claro);
       display: flex;
       flex-direction: column;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 0.62rem;
       font-weight: 700;
       letter-spacing: 0.15em;
       text-transform: uppercase;
     }
 
-    .nav-fila-1 { display: flex; gap: 2rem; padding: 0.85rem 2rem; }
+    .nav-fila-1 { display: flex; align-items: center; gap: 1.5rem; padding: 0.65rem 2rem; }
+    .nav-logo { display: flex; align-items: center; padding-right: 1.2rem; border-right: 1px solid var(--gris-claro); }
+    .nav-logo img { height: 28px; width: auto; display: block; }
     .nav-fila-2 { border-top: 1px solid var(--gris-claro); padding: 0.6rem 2rem; background: var(--carbon); }
     .nav-fila-2 a { color: var(--crema) !important; }
     .nav-fila-2 a:hover { opacity: 0.75; }
@@ -58,7 +61,7 @@
       text-align: center;
       background: var(--carbon);
       color: var(--crema);
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 0.78rem;
       font-weight: 700;
       letter-spacing: 0.15em;
@@ -69,7 +72,7 @@
       margin: 3rem 0 2rem;
       transition: background 0.2s;
     }
-    .cta-encuesta:hover { background: #333; }
+    .cta-encuesta:hover { background: #1A0725; }
 
     .contenedor {
       max-width: 660px;
@@ -84,7 +87,7 @@
     }
 
     .portada .etiqueta {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 0.68rem;
       font-weight: 700;
       letter-spacing: 0.18em;
@@ -94,6 +97,7 @@
     }
 
     .portada h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 2.6rem;
       font-weight: normal;
       line-height: 1.2;
@@ -113,7 +117,7 @@
     }
 
     .bloque-titulo {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.22em;
@@ -136,7 +140,7 @@
     }
 
     .pregunta-nota {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 0.78rem;
       color: var(--gris);
       font-style: italic;
@@ -156,7 +160,7 @@
       border-radius: 6px;
       background: white;
       cursor: pointer;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 0.70rem;
       font-weight: 600;
       text-align: center;
@@ -178,7 +182,7 @@
       border: 1.5px solid var(--gris-claro);
       border-radius: 6px;
       background: white;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 0.78rem;
       color: var(--carbon);
       appearance: none;
@@ -207,7 +211,7 @@
       background: white;
       cursor: pointer;
       transition: border-color 0.18s, background 0.18s;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 0.78rem;
       color: var(--carbon);
       line-height: 1.5;
@@ -215,7 +219,7 @@
     }
 
     .opcion:hover { border-color: var(--acento); }
-    .opcion.sel { border-color: var(--acento); background: rgba(193,127,90,0.06); }
+    .opcion.sel { border-color: var(--acento); background: rgba(91, 46, 148, 0.06); }
 
     .opcion-dot {
       width: 12px;
@@ -271,7 +275,7 @@
       border: 1.5px solid var(--gris-claro);
       border-radius: 6px;
       background: white;
-      font-family: 'Georgia', serif;
+      font-family: 'Inter', sans-serif;
       font-size: 0.78rem;
       color: var(--carbon);
       line-height: 1.7;
@@ -302,7 +306,7 @@
       padding: 1rem 2.8rem;
       background: var(--carbon);
       color: var(--crema);
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.18em;
@@ -314,7 +318,7 @@
       margin-top: 1.5rem;
     }
 
-    .btn-enviar:hover { background: #333; }
+    .btn-enviar:hover { background: #1A0725; }
 
     /* GRACIAS */
     #gracias {
@@ -326,6 +330,7 @@
     #gracias .linea { width: 3rem; height: 2px; background: var(--acento); margin: 0 auto 2.5rem; }
 
     #gracias h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 2.2rem;
       font-weight: normal;
       color: var(--carbon);
@@ -346,7 +351,7 @@
       border-top: 1px solid var(--gris-claro);
       padding-top: 2rem;
       margin-top: 5rem;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 0.72rem;
       color: var(--gris);
     }
@@ -414,6 +419,7 @@
 
 <nav class="nav-principal">
   <div class="nav-fila-1">
+    <a href="index.html" class="nav-logo"><img src="logos/isotipo-color.png" alt="Simpleno"></a>
     <a href="index.html">Concepto</a>
     <a href="simpleno-decisiones.html">Decisiones</a>
     <a href="simpleno-origen.html">Origen</a>
@@ -428,10 +434,10 @@
   <div class="portada">
     <div class="etiqueta">Simpleno — Concepto en desarrollo</div>
     <h1>Quiero tu opinión</h1>
-    <div style="display:inline-block; font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.72rem; font-weight:600; letter-spacing:0.06em; color:var(--gris); background:white; border:1px solid var(--gris-claro); border-radius:20px; padding:0.25rem 0.8rem; margin-top:0.8rem;">⏱ 3 min</div>
+    <div style="display:inline-block; font-family:'Inter',sans-serif; font-size:0.72rem; font-weight:600; letter-spacing:0.06em; color:var(--gris); background:white; border:1px solid var(--gris-claro); border-radius:20px; padding:0.25rem 0.8rem; margin-top:0.8rem;">⏱ 3 min</div>
   </div>
 
-  <p style="font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 0.85rem; color: var(--gris); line-height: 1.75; margin-bottom: 2rem;">Si antes de contestar querés saber más de este proyecto, <a href="http://simpleno.co" style="color:var(--acento); text-decoration:none;">visitá el concepto</a>, sino acá te dejo un breve resumen. Si en tus respuestas querés dejar algún dato tuyo para que te contacte cuando avance, también!</p>
+  <p style="font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--gris); line-height: 1.75; margin-bottom: 2rem;">Si antes de contestar querés saber más de este proyecto, <a href="http://simpleno.co" style="color:var(--acento); text-decoration:none;">visitá el concepto</a>, sino acá te dejo un breve resumen. Si en tus respuestas querés dejar algún dato tuyo para que te contacte cuando avance, también!</p>
 
   <div class="recuadro-pitch">
     <p class="gancho">¿Cuándo fue la última vez que contaste algo que viviste? No un resumen, ni la versión prolija. La verdadera, sin pensar en lo que iban a opinar.</p>
@@ -504,7 +510,7 @@
 
       <div class="pregunta">
         <div class="pregunta-texto">¿Tenés cosas que te pasaron y no contaste?</div>
-        <p style="font-family:'Helvetica Neue',Arial,sans-serif; font-size:0.8rem; color:var(--gris-claro); line-height:1.65; margin-bottom:1.1rem;">Pueden ser experiencias difíciles, familiares, laborales, accidentes, cuestiones vinculares. También momentos de amor o de plenitud, una decisión que te cambió la vida, un retiro que te transformó la mirada, cosas ridículas o divertidas. Cualquier vivencia que valió la pena y que nunca encontró el lugar para ser contada.</p>
+        <p style="font-family:'Inter',sans-serif; font-size:0.8rem; color:var(--gris-claro); line-height:1.65; margin-bottom:1.1rem;">Pueden ser experiencias difíciles, familiares, laborales, accidentes, cuestiones vinculares. También momentos de amor o de plenitud, una decisión que te cambió la vida, un retiro que te transformó la mirada, cosas ridículas o divertidas. Cualquier vivencia que valió la pena y que nunca encontró el lugar para ser contada.</p>
         <div class="opciones" id="ops-q3">
           <div class="opcion" onclick="radio(this,'q3'); condicional('cond-q4', false)"><div class="opcion-dot"></div>Siempre cuento todo lo que me pasa y siento</div>
           <div class="opcion" onclick="radio(this,'q3'); condicional('cond-q4', true)"><div class="opcion-dot"></div>Hay muy poquitas cosas que nunca le conté a nadie</div>

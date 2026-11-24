@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simpleno — Manual de marca</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://accounts.google.com/gsi/client" async></script>
   <style>
     :root {
       --noche:    #24103F;
@@ -19,7 +20,7 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 13px; scroll-behavior: smooth; }
+    html { font-size: 11px; scroll-behavior: smooth; }
 
     body {
       background: var(--bruma);
@@ -446,9 +447,50 @@
       .portada-footer { flex-direction: column; }
       .contenedor { padding: 5rem 1.2rem 5rem; }
     }
+
+    /* AUTH WALL */
+    #auth-wall {
+      position: fixed;
+      inset: 0;
+      background: var(--bruma);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      gap: 1.5rem;
+    }
+    #auth-wall .auth-titulo {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.2rem;
+      font-weight: 400;
+      color: var(--violeta);
+      letter-spacing: 0.05em;
+    }
+    #auth-wall .auth-sub {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gris);
+    }
+    #auth-error {
+      display: none;
+      font-size: 0.72rem;
+      color: #8c5a5a;
+    }
   </style>
 </head>
 <body>
+
+<div id="auth-wall">
+  <div class="auth-titulo">Simpleno</div>
+  <div class="auth-sub">Manual de marca · Acceso restringido</div>
+  <div id="google-btn"></div>
+  <div id="auth-error">Tu cuenta no tiene permiso para ver esta página.</div>
+</div>
+
+<div id="app" style="display:none">
 
 <nav class="nav-back">
   <a href="index.html">← Simpleno</a>
@@ -803,6 +845,51 @@
   <span>Simpleno · Manual de marca</span>
   <span>versión 1.0 · noviembre 2026</span>
 </footer>
+
+</div><!-- #app -->
+
+<script>
+  var CLIENT_ID   = '308208183848-vf6v7s9je63uck58al8a590q48au3kr9.apps.googleusercontent.com';
+  var EMAIL_OK    = 'robertson.ine@gmail.com';
+  var SESSION_KEY = 'simpleno_marca_auth';
+  var SESSION_TTL = 30 * 24 * 60 * 60 * 1000;
+
+  function entrar() {
+    document.getElementById('auth-wall').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+  }
+
+  window.onload = function() {
+    var stored = localStorage.getItem(SESSION_KEY);
+    if (stored) {
+      try {
+        var s = JSON.parse(stored);
+        if (s.email === EMAIL_OK && (Date.now() - s.ts) < SESSION_TTL) {
+          entrar();
+          return;
+        }
+      } catch(e) {}
+      localStorage.removeItem(SESSION_KEY);
+    }
+    google.accounts.id.initialize({
+      client_id: CLIENT_ID,
+      callback: function(response) {
+        var payload = JSON.parse(atob(response.credential.split('.')[1]));
+        if (payload.email === EMAIL_OK) {
+          localStorage.setItem(SESSION_KEY, JSON.stringify({ email: EMAIL_OK, ts: Date.now() }));
+          entrar();
+        } else {
+          document.getElementById('auth-error').style.display = 'block';
+        }
+      },
+      auto_select: true
+    });
+    google.accounts.id.renderButton(document.getElementById('google-btn'), {
+      theme: 'outline', size: 'large', locale: 'es'
+    });
+    google.accounts.id.prompt();
+  };
+</script>
 
 </body>
 </html>
