@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simpleno — Manual de marca</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --noche:    #24103F;
+      --violeta:  #3D1A6E;
+      --violeta-m:#5B2E94;
+      --lavanda:  #C9B6EE;
+      --bruma:    #FAF7FF;
+      --oro:      #F5C542;
+      --oro-osc:  #A87400;
+      --gris:     #6b6b6b;
+      --gris-cl:  #e0dbe8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 13px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bruma);
+      color: var(--violeta);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.65;
+    }
+
+    /* NAV */
+    .nav-back {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(250,247,255,0.94);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--gris-cl);
+      padding: 0.7rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-back a {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--violeta-m);
+      text-decoration: none;
+    }
+    .nav-back a:hover { color: var(--violeta); }
+    .nav-titulo {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gris);
+    }
+
+    /* PORTADA */
+    .portada {
+      background: var(--noche);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 3rem 4rem;
+    }
+    .portada-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--lavanda);
+    }
+    .portada-centro {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .portada-wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5.5rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--lavanda);
+    }
+    .portada-wordmark .ple { color: var(--oro); }
+    .portada-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 2rem;
+    }
+    .portada-desc {
+      font-size: 0.88rem;
+      color: var(--lavanda);
+      max-width: 420px;
+      line-height: 1.65;
+      opacity: 0.85;
+    }
+    .portada-meta {
+      font-size: 0.72rem;
+      color: rgba(201,182,238,0.55);
+      white-space: nowrap;
+    }
+
+    /* CONTENEDOR */
+    .contenedor {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5rem 2rem 8rem;
+    }
+
+    /* SECCIÓN */
+    .seccion {
+      margin-bottom: 5rem;
+      padding-bottom: 5rem;
+      border-bottom: 1px solid var(--gris-cl);
+    }
+    .seccion:last-child { border-bottom: none; }
+
+    .seccion-num {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--violeta-m);
+      margin-bottom: 0.5rem;
+    }
+    .seccion h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 600;
+      line-height: 1.1;
+      color: var(--violeta);
+      margin-bottom: 1.8rem;
+    }
+    p {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: #3a3050;
+      margin-bottom: 0.9rem;
+    }
+    strong { color: var(--violeta); }
+
+    /* 01 — CONCEPTO layout */
+    .concepto-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 2rem;
+      margin: 1.8rem 0;
+      align-items: start;
+    }
+    .concepto-img-wrap {
+      background: var(--bruma);
+      border: 1px solid var(--gris-cl);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .concepto-img-wrap img { width: 100%; height: auto; display: block; }
+    .concepto-isologo {
+      margin-top: 1.8rem;
+      display: flex;
+      justify-content: center;
+      padding: 1.2rem 2rem;
+      background: var(--bruma);
+      border: 1px solid var(--gris-cl);
+      border-radius: 10px;
+    }
+    .concepto-isologo img { max-width: 420px; width: 100%; height: auto; }
+
+    /* 01 — CONCEPTO */
+    .tres-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      margin: 1.8rem 0;
+    }
+    .col-titulo {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--oro-osc);
+      margin-bottom: 0.4rem;
+    }
+    .col-texto {
+      font-size: 0.82rem;
+      color: #5a5070;
+      line-height: 1.65;
+    }
+
+    /* 02 — VERSIONES */
+    .versiones-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.2rem;
+      margin: 1.8rem 0;
+    }
+    .version-card {
+      background: white;
+      border: 1px solid var(--gris-cl);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .version-preview {
+      background: var(--bruma);
+      border-bottom: 1px solid var(--gris-cl);
+      overflow: hidden;
+    }
+    .version-preview img { width: 100%; height: auto; display: block; }
+    .version-info { padding: 1rem 1.2rem; }
+    .version-nombre {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--violeta);
+      margin-bottom: 0.3rem;
+    }
+    .version-desc {
+      font-size: 0.75rem;
+      color: var(--gris);
+      line-height: 1.55;
+    }
+
+    /* 03 — COLOR */
+    .swatches {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 1rem;
+      margin: 1.8rem 0;
+    }
+    .swatch-color {
+      height: 72px;
+      border-radius: 8px;
+      margin-bottom: 0.6rem;
+      border: 1px solid rgba(0,0,0,0.07);
+    }
+    .swatch-nombre {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--violeta);
+      margin-bottom: 0.15rem;
+    }
+    .swatch-hex {
+      font-size: 0.65rem;
+      color: var(--gris);
+      font-family: 'Courier New', monospace;
+      display: block;
+    }
+    .swatch-uso {
+      font-size: 0.63rem;
+      color: var(--gris);
+      line-height: 1.4;
+      margin-top: 0.3rem;
+    }
+    .prop-label {
+      font-size: 0.63rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--violeta-m);
+      margin-bottom: 0.5rem;
+    }
+    .proporcion {
+      display: flex;
+      height: 20px;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 0.8rem;
+    }
+
+    /* 04 — TIPOGRAFÍA */
+    .tipo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin: 1.8rem 0;
+    }
+    .tipo-card {
+      background: white;
+      border: 1px solid var(--gris-cl);
+      border-radius: 8px;
+      padding: 1.8rem;
+    }
+    .tipo-label {
+      font-size: 0.63rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--violeta-m);
+      margin-bottom: 1rem;
+    }
+    .tipo-muestra-cg {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--violeta);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .tipo-muestra-inter {
+      font-family: 'Inter', sans-serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--violeta);
+      margin-bottom: 0.6rem;
+    }
+    .tipo-desc {
+      font-size: 0.75rem;
+      color: var(--gris);
+      line-height: 1.6;
+    }
+
+    /* 05 — RESGUARDO */
+    .resguardo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 1.8rem 0;
+    }
+    .resguardo-box {
+      background: white;
+      border: 1px solid var(--gris-cl);
+      border-radius: 8px;
+      padding: 1.8rem;
+    }
+    .resguardo-label {
+      font-size: 0.63rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--violeta-m);
+      margin-bottom: 1.2rem;
+    }
+    .minimo-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid var(--gris-cl);
+    }
+    .minimo-item:last-child { border-bottom: none; }
+    .minimo-preview {
+      min-width: 90px;
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--violeta);
+      font-size: 0.72rem;
+    }
+    .minimo-dato {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--violeta);
+    }
+    .minimo-sub {
+      font-size: 0.7rem;
+      color: var(--gris);
+      display: block;
+      margin-top: 0.1rem;
+    }
+
+    /* 06 — FONDOS */
+    .fondos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 0.9rem;
+      margin: 1.8rem 0;
+    }
+    .fondo-card {
+      border: 1px solid var(--gris-cl);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .fondo-preview {
+      overflow: hidden;
+      border-radius: 8px 8px 0 0;
+    }
+    .fondo-preview img { width: 100%; height: auto; display: block; }
+    .fondo-info { padding: 0.65rem 0.8rem; }
+    .fondo-nombre {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--violeta);
+      margin-bottom: 0.2rem;
+    }
+    .fondo-desc {
+      font-size: 0.63rem;
+      color: var(--gris);
+      line-height: 1.4;
+    }
+
+    /* 07 — USOS */
+    .usos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 0.9rem;
+      margin: 1.8rem 0;
+    }
+    .uso-card {
+      background: white;
+      border: 1px solid var(--gris-cl);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .uso-preview {
+      height: 72px;
+      background: var(--bruma);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--gris-cl);
+      overflow: hidden;
+    }
+    .uso-info {
+      padding: 0.6rem 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .uso-no {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #c0392b;
+    }
+    .uso-no::before { content: '✕  '; }
+
+    /* FOOTER */
+    footer {
+      background: var(--noche);
+      color: var(--lavanda);
+      padding: 1.8rem 4rem;
+      font-size: 0.72rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 640px) {
+      .tres-cols, .versiones-grid, .tipo-grid, .fondos-grid, .usos-grid { grid-template-columns: 1fr 1fr; }
+      .swatches { grid-template-columns: repeat(4, 1fr); }
+      .resguardo-grid { grid-template-columns: 1fr; }
+      .concepto-layout { grid-template-columns: 1fr; }
+      .portada { padding: 2rem; }
+      .portada-footer { flex-direction: column; }
+      .contenedor { padding: 5rem 1.2rem 5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav-back">
+  <a href="index.html">← Simpleno</a>
+  <span class="nav-titulo">Manual de marca</span>
+</nav>
+
+<!-- PORTADA -->
+<div class="portada">
+  <div class="portada-label">Manual de marca</div>
+  <div class="portada-centro">
+    <img src="logos/isologo-portada.png" alt="Simpleno" style="max-width:min(72vw,820px); height:auto;">
+  </div>
+  <div class="portada-footer">
+    <p class="portada-desc">Cómo usar la identidad de Simpleno: concepto, versiones, color, tipografía y reglas de uso.</p>
+    <div class="portada-meta">simpleno.co · versión 1.0 · noviembre 2026</div>
+  </div>
+</div>
+
+<div class="contenedor">
+
+  <!-- 01 CONCEPTO -->
+  <div class="seccion">
+    <div class="seccion-num">01 · Concepto</div>
+    <h2>Una huella que trasciende</h2>
+
+    <div class="concepto-layout">
+      <div class="concepto-img-wrap">
+        <img src="logos/isotipo-concepto.png" alt="Isotipo Simpleno">
+      </div>
+      <div>
+        <p>Simpleno es un espacio para compartir vivencias de forma anónima, donde la historia es el centro y no quien la cuenta. Su nombre une dos palabras: <strong>simple</strong> y <strong>pleno</strong>.</p>
+        <div class="tres-cols">
+          <div>
+            <div class="col-titulo">Autenticidad</div>
+            <p class="col-texto">Una huella dactilar dibujada a mano: única, humana, sin pose. Es propia sin mostrar quién sos.</p>
+          </div>
+          <div>
+            <div class="col-titulo">Expresar</div>
+            <p class="col-texto">El núcleo, un pequeño círculo, es la vivencia: el centro desde donde cada historia empieza a contarse.</p>
+          </div>
+          <div>
+            <div class="col-titulo">Trascender</div>
+            <p class="col-texto">La línea exterior se suelta y sube hacia un punto de luz: una historia que sale de uno y sostiene a otros.</p>
+          </div>
+        </div>
+        <p>En el nombre, «ple» es la sílaba que comparten las dos palabras: allí el violeta de lo simple se transforma en el dorado de lo pleno.</p>
+      </div>
+    </div>
+
+    <div class="concepto-isologo">
+      <img src="logos/isologo-color.png" alt="Isologo Simpleno">
+    </div>
+  </div>
+
+  <!-- 02 VERSIONES -->
+  <div class="seccion">
+    <div class="seccion-num">02 · Versiones</div>
+    <h2>Versiones de la marca</h2>
+    <div class="versiones-grid">
+      <div class="version-card">
+        <div class="version-preview">
+          <img src="logos/isologo-color.png" alt="Isologo Simpleno">
+        </div>
+        <div class="version-info">
+          <div class="version-nombre">Isologo · versión principal</div>
+          <p class="version-desc">Símbolo más nombre. Es la firma de la marca: usala siempre que haya espacio.</p>
+        </div>
+      </div>
+      <div class="version-card">
+        <div class="version-preview">
+          <img src="logos/logo-color.png" alt="Logo Simpleno">
+        </div>
+        <div class="version-info">
+          <div class="version-nombre">Logo</div>
+          <p class="version-desc">Solo el nombre. Para espacios horizontales angostos o cuando el símbolo ya aparece cerca.</p>
+        </div>
+      </div>
+      <div class="version-card">
+        <div class="version-preview">
+          <img src="logos/isotipo-color.png" alt="Isotipo Simpleno">
+        </div>
+        <div class="version-info">
+          <div class="version-nombre">Isotipo</div>
+          <p class="version-desc">Solo el símbolo. Para perfil de redes, ícono de app, favicon y sellos.</p>
+        </div>
+      </div>
+    </div>
+    <p>Las tres piezas no se rearman ni se recomponen: usá siempre los archivos originales de la carpeta de marca.</p>
+  </div>
+
+  <!-- 03 COLOR -->
+  <div class="seccion">
+    <div class="seccion-num">03 · Color</div>
+    <h2>Paleta de color</h2>
+    <div class="swatches">
+      <div>
+        <div class="swatch-color" style="background:#24103F;"></div>
+        <div class="swatch-nombre">Noche violeta</div>
+        <span class="swatch-hex">#24103F</span>
+        <span class="swatch-hex">RGB 36, 16, 63</span>
+        <span class="swatch-hex">CMYK 43 75 0 75</span>
+        <div class="swatch-uso">Fondos oscuros, ícono de app</div>
+      </div>
+      <div>
+        <div class="swatch-color" style="background:#3D1A6E;"></div>
+        <div class="swatch-nombre">Violeta profundo</div>
+        <span class="swatch-hex">#3D1A6E</span>
+        <span class="swatch-hex">RGB 61, 26, 110</span>
+        <span class="swatch-hex">CMYK 45 76 0 57</span>
+        <div class="swatch-uso">Símbolo, textos</div>
+      </div>
+      <div>
+        <div class="swatch-color" style="background:#5B2E94;"></div>
+        <div class="swatch-nombre">Violeta</div>
+        <span class="swatch-hex">#5B2E94</span>
+        <span class="swatch-hex">RGB 91, 46, 148</span>
+        <span class="swatch-hex">CMYK 39 69 0 42</span>
+        <div class="swatch-uso">«sim» del nombre</div>
+      </div>
+      <div>
+        <div class="swatch-color" style="background:#C9B6EE; border:1px solid #ccc;"></div>
+        <div class="swatch-nombre">Lavanda</div>
+        <span class="swatch-hex">#C9B6EE</span>
+        <span class="swatch-hex">RGB 201, 182, 238</span>
+        <span class="swatch-hex">CMYK 16 24 0 7</span>
+        <div class="swatch-uso">Versión negativa</div>
+      </div>
+      <div>
+        <div class="swatch-color" style="background:#FAF7FF; border:1px solid #ccc;"></div>
+        <div class="swatch-nombre">Bruma</div>
+        <span class="swatch-hex">#FAF7FF</span>
+        <span class="swatch-hex">RGB 250, 247, 255</span>
+        <span class="swatch-hex">CMYK 2 3 0 0</span>
+        <div class="swatch-uso">Fondos claros</div>
+      </div>
+      <div>
+        <div class="swatch-color" style="background:#F5C542;"></div>
+        <div class="swatch-nombre">Oro</div>
+        <span class="swatch-hex">#F5C542</span>
+        <span class="swatch-hex">RGB 245, 197, 66</span>
+        <span class="swatch-hex">CMYK 0 20 73 4</span>
+        <div class="swatch-uso">Punto de luz, acento</div>
+      </div>
+      <div>
+        <div class="swatch-color" style="background:#A87400;"></div>
+        <div class="swatch-nombre">Oro oscuro</div>
+        <span class="swatch-hex">#A87400</span>
+        <span class="swatch-hex">RGB 168, 116, 0</span>
+        <span class="swatch-hex">CMYK 0 31 100 34</span>
+        <div class="swatch-uso">«no» sobre fondo claro</div>
+      </div>
+    </div>
+    <div class="prop-label">Proporción de uso</div>
+    <div class="proporcion">
+      <div style="width:50%; background:#24103F;"></div>
+      <div style="width:28%; background:#3D1A6E;"></div>
+      <div style="width:12%; background:#FAF7FF; border-top:1px solid #ccc; border-bottom:1px solid #ccc;"></div>
+      <div style="width:10%; background:#F5C542;"></div>
+    </div>
+    <p>Los violetas llevan la marca; el oro es un acento, nunca protagonista (alrededor del 10 %). Los valores CMYK son aproximados: validalos con una prueba de imprenta.</p>
+  </div>
+
+  <!-- 04 TIPOGRAFÍA -->
+  <div class="seccion">
+    <div class="seccion-num">04 · Tipografía</div>
+    <h2>Tipografía</h2>
+    <div class="tipo-grid">
+      <div class="tipo-card">
+        <div class="tipo-label">Títulos y nombre</div>
+        <div class="tipo-muestra-cg">Cormorant<br>Garamond</div>
+        <p style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--violeta); margin-bottom:0.4rem;">Aa Bb Cc Ññ 0123456789</p>
+        <p style="font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:var(--violeta); margin-bottom:0.9rem;">Historias que trascienden</p>
+        <p class="tipo-desc">Semibold (600) y Bold (700). Clásica y cálida: da el tono reflexivo y humano. Para títulos, frases destacadas y citas.</p>
+      </div>
+      <div class="tipo-card">
+        <div class="tipo-label">Textos</div>
+        <div class="tipo-muestra-inter">Inter</div>
+        <p style="font-family:'Inter',sans-serif; font-size:0.88rem; font-weight:500; color:var(--violeta); margin-bottom:0.4rem;">Aa Bb Cc Ññ 0123456789</p>
+        <p style="font-family:'Inter',sans-serif; font-size:0.88rem; font-weight:500; color:var(--violeta); margin-bottom:0.9rem;">¿Qué querés leer o escuchar hoy?</p>
+        <p class="tipo-desc">Regular (400), Medium (500) y Semibold (600). Clara y legible en pantalla: para textos, botones e interfaz.</p>
+      </div>
+    </div>
+    <p>Ambas son de uso libre y se descargan de Google Fonts. El nombre en el logo está convertido a curvas: no se reescribe con la tipografía.</p>
+  </div>
+
+  <!-- 05 ÁREA DE RESGUARDO -->
+  <div class="seccion">
+    <div class="seccion-num">05 · Área de resguardo</div>
+    <h2>Espacio y tamaño mínimo</h2>
+    <div class="resguardo-grid">
+      <div class="resguardo-box">
+        <div class="resguardo-label">Área de resguardo</div>
+        <div style="border:2px dashed var(--lavanda); border-radius:6px; padding:2.5rem; text-align:center; background:var(--bruma); position:relative;">
+          <div style="border:1.5px dashed var(--violeta-m); padding:1.2rem 2rem; display:inline-block; position:relative;">
+            <span style="position:absolute; top:-9px; left:-9px; background:var(--lavanda); color:var(--violeta); font-size:0.6rem; font-weight:700; padding:1px 5px; border-radius:2px;">x</span>
+            <span style="position:absolute; bottom:-9px; right:-9px; background:var(--lavanda); color:var(--violeta); font-size:0.6rem; font-weight:700; padding:1px 5px; border-radius:2px;">x</span>
+            <span style="font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:var(--violeta);">simp<span style="color:var(--oro-osc)">le</span>no</span>
+          </div>
+        </div>
+        <p style="margin-top:1rem; font-size:0.75rem; color:var(--gris);">x = la altura de la letra «o» del nombre. Dejá al menos ese espacio libre alrededor de la marca, sin textos, bordes ni imágenes.</p>
+      </div>
+      <div class="resguardo-box">
+        <div class="resguardo-label">Tamaño mínimo</div>
+        <div class="minimo-item">
+          <div class="minimo-preview">&#9679; simp<span style="color:var(--oro-osc)">le</span>no</div>
+          <div>
+            <div class="minimo-dato">Isologo</div>
+            <span class="minimo-sub">120 px · 30 mm de ancho</span>
+          </div>
+        </div>
+        <div class="minimo-item">
+          <div class="minimo-preview">simp<span style="color:var(--oro-osc)">le</span>no</div>
+          <div>
+            <div class="minimo-dato">Logo</div>
+            <span class="minimo-sub">90 px · 22 mm de ancho</span>
+          </div>
+        </div>
+        <div class="minimo-item">
+          <div class="minimo-preview" style="font-size:1rem;">&#9679;</div>
+          <div>
+            <div class="minimo-dato">Isotipo</div>
+            <span class="minimo-sub">24 px · 8 mm de alto</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 06 FONDOS -->
+  <div class="seccion">
+    <div class="seccion-num">06 · Aplicación</div>
+    <h2>Fondos y versiones de color</h2>
+    <div class="fondos-grid">
+      <div class="fondo-card">
+        <div class="fondo-preview"><img src="logos/isologo-01-color.png" alt="Color"></div>
+        <div class="fondo-info">
+          <div class="fondo-nombre">Color</div>
+          <div class="fondo-desc">Versión principal, sobre blanco o Bruma.</div>
+        </div>
+      </div>
+      <div class="fondo-card">
+        <div class="fondo-preview"><img src="logos/isologo-02-color-bruma.png" alt="Color Bruma"></div>
+        <div class="fondo-info">
+          <div class="fondo-nombre">Color sobre Bruma</div>
+          <div class="fondo-desc">Fondos claros de la paleta.</div>
+        </div>
+      </div>
+      <div class="fondo-card">
+        <div class="fondo-preview"><img src="logos/isologo-03-negativo.png" alt="Negativo"></div>
+        <div class="fondo-info">
+          <div class="fondo-nombre">Negativo</div>
+          <div class="fondo-desc">Sobre Noche violeta o fondos oscuros.</div>
+        </div>
+      </div>
+      <div class="fondo-card">
+        <div class="fondo-preview"><img src="logos/isologo-04-negativo-negro.png" alt="Negativo negro"></div>
+        <div class="fondo-info">
+          <div class="fondo-nombre">Negativo sobre negro</div>
+          <div class="fondo-desc">Fondos negros.</div>
+        </div>
+      </div>
+      <div class="fondo-card">
+        <div class="fondo-preview"><img src="logos/isologo-05-negro.png" alt="Negro"></div>
+        <div class="fondo-info">
+          <div class="fondo-nombre">Negro</div>
+          <div class="fondo-desc">Una sola tinta: sellos, facturas, impresión económica.</div>
+        </div>
+      </div>
+      <div class="fondo-card">
+        <div class="fondo-preview"><img src="logos/isologo-06-blanco.png" alt="Blanco"></div>
+        <div class="fondo-info">
+          <div class="fondo-nombre">Blanco</div>
+          <div class="fondo-desc">Una sola tinta sobre fondos oscuros.</div>
+        </div>
+      </div>
+      <div class="fondo-card">
+        <div class="fondo-preview"><img src="logos/isologo-07-blanco-violeta.png" alt="Blanco violeta"></div>
+        <div class="fondo-info">
+          <div class="fondo-nombre">Blanco sobre violeta</div>
+          <div class="fondo-desc">Sobre los violetas de la marca.</div>
+        </div>
+      </div>
+      <div class="fondo-card">
+        <div class="fondo-preview"><img src="logos/isologo-08-sobre-fotos.png" alt="Sobre fotos"></div>
+        <div class="fondo-info">
+          <div class="fondo-nombre">Sobre fotos</div>
+          <div class="fondo-desc">Solo en blanco o negro, sobre zona pareja de la imagen.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 USOS INCORRECTOS -->
+  <div class="seccion">
+    <div class="seccion-num">07 · Lo que no se hace</div>
+    <h2>Usos incorrectos</h2>
+    <div class="usos-grid">
+      <div class="uso-card">
+        <div class="uso-preview">
+          <span style="font-family:'Cormorant Garamond',serif; color:var(--violeta); transform:scaleX(1.6); display:inline-block; font-size:0.9rem;">simp<span style="color:var(--oro-osc)">le</span>no</span>
+        </div>
+        <div class="uso-info"><span class="uso-no">No deformar</span></div>
+      </div>
+      <div class="uso-card">
+        <div class="uso-preview">
+          <span style="font-family:'Cormorant Garamond',serif; color:var(--violeta); transform:rotate(-18deg); display:inline-block; font-size:0.9rem;">simp<span style="color:var(--oro-osc)">le</span>no</span>
+        </div>
+        <div class="uso-info"><span class="uso-no">No rotar</span></div>
+      </div>
+      <div class="uso-card">
+        <div class="uso-preview">
+          <span style="font-family:'Cormorant Garamond',serif; font-size:0.9rem; color:#2ecc71;">simp<span style="color:#e74c3c">le</span>no</span>
+        </div>
+        <div class="uso-info"><span class="uso-no">No cambiar los colores</span></div>
+      </div>
+      <div class="uso-card">
+        <div class="uso-preview">
+          <span style="font-family:'Cormorant Garamond',serif; font-size:0.9rem; color:var(--violeta); text-shadow:3px 3px 6px rgba(0,0,0,0.35);">simp<span style="color:var(--oro-osc)">le</span>no</span>
+        </div>
+        <div class="uso-info"><span class="uso-no">No agregar sombras ni efectos</span></div>
+      </div>
+      <div class="uso-card">
+        <div class="uso-preview" style="background:#C9B6EE;">
+          <span style="font-family:'Cormorant Garamond',serif; font-size:0.9rem; color:#d8c8f0;">simp<span style="color:#e8dca0">le</span>no</span>
+        </div>
+        <div class="uso-info"><span class="uso-no">No usar sin contraste</span></div>
+      </div>
+      <div class="uso-card">
+        <div class="uso-preview">
+          <span style="font-family:'Arial',sans-serif; font-weight:700; font-size:1rem; color:var(--violeta);">Simpleno</span>
+        </div>
+        <div class="uso-info"><span class="uso-no">No cambiar la tipografía</span></div>
+      </div>
+      <div class="uso-card">
+        <div class="uso-preview">
+          <span style="font-family:'Cormorant Garamond',serif; font-size:0.9rem; color:var(--violeta);">simple <span style="color:var(--oro-osc)">no</span></span>
+        </div>
+        <div class="uso-info"><span class="uso-no">No separar el nombre</span></div>
+      </div>
+      <div class="uso-card">
+        <div class="uso-preview">
+          <span style="font-family:'Cormorant Garamond',serif; font-size:0.9rem; color:var(--violeta);">simp<span style="color:var(--oro-osc)">le</span>no &#9679;</span>
+        </div>
+        <div class="uso-info"><span class="uso-no">No reubicar el símbolo</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <span>Simpleno · Manual de marca</span>
+  <span>versión 1.0 · noviembre 2026</span>
+</footer>
+
+</body>
+</html>
