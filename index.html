@@ -30,7 +30,7 @@
     html { font-size: 11px; scroll-behavior: smooth; }
 
     body {
-      background-color: var(--crema);
+      background-color: white;
       color: var(--carbon);
       font-family: 'Plus Jakarta Sans', sans-serif;
       line-height: 1.65;
@@ -40,97 +40,120 @@
     .contenedor {
       max-width: 720px;
       margin: 0 auto;
-      padding: 4rem 0 6rem;
+      padding: 0 0 6rem;
     }
 
     /* PORTADA */
     .portada {
-      padding: 3rem 0 2rem;
-      border-bottom: 1px solid var(--gris-claro);
-      margin-bottom: 2rem;
+      background: var(--noche);
+      margin: 0 -1.5rem 5rem;
+      padding: 14rem 2.5rem 5rem;
     }
 
     .portada .etiqueta {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--acento);
-      margin-bottom: 1.2rem;
+      color: var(--lavanda);
+      opacity: 0.65;
+      margin-bottom: 1.5rem;
     }
 
     .portada h1 {
       font-family: 'Fraunces', Georgia, serif;
-      font-size: 2.8rem;
+      font-size: 5rem;
       font-weight: 300;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 1.2rem;
-      color: var(--carbon);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+      color: white;
     }
+
+    .portada h1 .ple { color: var(--oro); }
 
     .portada .bajada {
       font-size: 1.1rem;
-      color: var(--gris);
-      max-width: 560px;
-      line-height: 1.7;
+      color: var(--lavanda);
+      max-width: 500px;
+      line-height: 1.75;
+    }
+
+    .portada .tiempo-lectura {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--lavanda);
+      opacity: 0.6;
+      margin-bottom: 1rem;
     }
 
     /* SECCIONES */
     section {
-      margin-bottom: 3rem;
+      margin-bottom: 4rem;
     }
 
     .seccion-titulo {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.65rem;
+      font-size: 0.63rem;
       font-weight: 700;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--acento);
-      margin-bottom: 1.2rem;
+      margin-bottom: 1rem;
+      opacity: 0.75;
     }
 
     h2 {
       font-family: 'Fraunces', Georgia, serif;
-      font-size: 1.3rem;
+      font-size: 1.9rem;
       font-weight: 600;
-      line-height: 1.3;
-      margin-bottom: 0.9rem;
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
       color: var(--carbon);
     }
 
     p {
-      margin-bottom: 1rem;
+      font-size: 1rem;
+      margin-bottom: 0.9rem;
       color: var(--carbon);
+      line-height: 1.75;
     }
 
-    p + p { margin-top: 0.2rem; }
+    /* BANDA DE COLOR */
+    .banda {
+      margin: 0 -1.5rem;
+      padding: 3.5rem 2.5rem;
+    }
+    .banda-crema { background: var(--crema); }
+    .banda-lavanda { background: #ECE2FA; }
+    .banda-noche { background: var(--noche); color: var(--bruma); }
 
     /* CITA */
     blockquote {
-      border-left: 3px solid var(--acento);
-      padding: 1rem 1.5rem;
-      margin: 2rem 0;
-      background: rgba(91, 46, 148, 0.06);
-      border-radius: 0 4px 4px 0;
+      border-left: 3px solid var(--oro);
+      padding: 1.2rem 2rem;
+      margin: 2.5rem 0;
+      background: none;
     }
 
     blockquote p {
       font-family: 'Fraunces', Georgia, serif;
-      font-size: 1.1rem;
+      font-size: 1.35rem;
       font-style: italic;
       color: var(--carbon);
       margin: 0;
+      line-height: 1.4;
     }
 
     blockquote .autor {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       font-style: normal;
       color: var(--gris);
-      margin-top: 0.6rem;
+      margin-top: 0.7rem;
       display: block;
     }
 
@@ -585,32 +608,62 @@
 
     /* PORQUE LISTA */
     .porque-lista {
-      margin: 2rem 0;
-      border: 1px solid var(--gris-claro);
-      border-radius: 6px;
-      overflow: hidden;
+      margin: 3rem 0;
     }
 
     .porque-item {
-      padding: 1.3rem 1.5rem;
-      border-bottom: 1px solid var(--gris-claro);
+      display: grid;
+      grid-template-columns: 3.5rem 1fr;
+      gap: 1.5rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--gris-claro);
+      align-items: start;
     }
 
-    .porque-item:last-child { border-bottom: none; }
+    .porque-item:last-child { border-bottom: 1px solid var(--gris-claro); }
+
+    .porque-num {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--oro-osc);
+      line-height: 1;
+      opacity: 0.5;
+      padding-top: 0.1rem;
+    }
 
     .porque-titulo {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.83rem;
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 1.1rem;
       font-weight: 600;
       color: var(--carbon);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.8rem;
+      line-height: 1.3;
     }
 
     .porque-desc {
-      font-size: 0.88rem;
+      font-size: 0.95rem;
       color: var(--gris);
-      line-height: 1.65;
+      line-height: 1.75;
     }
+
+    .porque-desc p {
+      font-size: 0.95rem;
+      color: var(--gris);
+      margin-bottom: 0.5rem;
+    }
+
+    .porque-cuerpo { flex: 1; }
+
+    /* INSIGHT con bleed */
+    .insight-bleed {
+      background: var(--noche);
+      color: var(--bruma);
+      margin: 3rem -1.5rem;
+      padding: 3.5rem 2.5rem;
+    }
+    .insight-bleed p { color: var(--bruma); margin-bottom: 0.9rem; }
+    .insight-bleed p:last-child { margin-bottom: 0; }
 
     /* RESPONSIVE */
     @media (max-width: 600px) {
@@ -665,7 +718,7 @@
     .nav-principal a:hover { color: var(--acento); }
     .nav-principal a.activo { color: var(--carbon); }
 
-    .contenedor { padding-top: 8rem; }
+    .contenedor { padding-top: 0; }
 
     .cta-encuesta {
       display: block;
@@ -703,14 +756,14 @@
 
   <!-- PORTADA -->
   <div class="portada">
-    <div class="etiqueta">Concepto, Agosto 2026</div>
-    <h1>Simpleno</h1>
-    <div style="display:inline-block; font-family:'Plus Jakarta Sans',sans-serif; font-size:0.72rem; font-weight:600; letter-spacing:0.06em; color:var(--gris); background:white; border:1px solid var(--gris-claro); border-radius:20px; padding:0.25rem 0.8rem; margin-bottom:1rem;">⏱ 10 min de lectura</div>
+    <div class="etiqueta">Concepto · Agosto 2026</div>
+    <h1>simp<span class="ple">le</span>no</h1>
+    <div class="tiempo-lectura">⏱ 10 min de lectura</div>
     <p class="bajada">Trascendemos cuando una experiencia propia se convierte en algo que sostiene a otro.</p>
   </div>
 
   <!-- MANIFIESTO -->
-  <section style="margin-bottom: 1.5rem;">
+  <section class="banda banda-crema" style="margin-bottom: 0;">
     <div class="seccion-titulo">Nuestro Manifiesto</div>
     <p>Nunca tuvimos tantas formas de comunicarnos y tan pocos espacios para conectar de verdad.</p>
     <p>Vivimos rodeados de perfiles, opiniones, métricas y versiones editadas de la realidad. Mostramos cada vez más, pero compartimos cada vez menos de lo que realmente nos atraviesa.</p>
@@ -755,6 +808,8 @@
 
     <div class="porque-lista">
       <div class="porque-item">
+        <div class="porque-num">01</div>
+        <div class="porque-cuerpo">
         <div class="porque-titulo">Porque hay cosas que no podemos decir en voz alta</div>
         <div class="porque-desc">
           <p>Hay miedos, deseos, contradicciones, pérdidas, errores y verdades que somos capaces de reconocer frente a nosotros mismos, pero no frente a los demás.</p>
@@ -764,8 +819,11 @@
           <p>Pero cuando ponemos algo en palabras ocurre una pequeña separación entre lo que me pasa y quién soy. Lo que estaba dando vueltas adentro adquiere forma. Podemos mirarlo.</p>
           <p>Escribir no necesariamente resuelve lo vivido. Pero puede hacer que dejemos de cargarlo de manera completamente silenciosa.</p>
         </div>
+        </div>
       </div>
       <div class="porque-item">
+        <div class="porque-num">02</div>
+        <div class="porque-cuerpo">
         <div class="porque-titulo">Porque muchas veces queremos ser comprendidos, no resueltos</div>
         <div class="porque-desc">
           <p>Cuando alguien nos cuenta algo difícil, nuestra reacción suele ser intentar solucionarlo. Opinamos. Explicamos. Aconsejamos.</p>
@@ -774,8 +832,11 @@
           <p>Hay momentos en los que escuchar tiene más valor que responder.</p>
           <p>Por eso Simpleno no debería construirse alrededor de la reacción, sino alrededor de la resonancia. No todo necesita una opinión. Algunas cosas simplemente necesitan encontrar a alguien al otro lado.</p>
         </div>
+        </div>
       </div>
       <div class="porque-item">
+        <div class="porque-num">03</div>
+        <div class="porque-cuerpo">
         <div class="porque-titulo">Porque contar algo también puede convertirnos en "el que necesita"</div>
         <div class="porque-desc">
           <p>Existe un rol social que muchas personas intentamos evitar. Ser el frágil. El que está perdido. El que necesita ayuda. El que no tiene todo bajo control.</p>
@@ -784,16 +845,22 @@
           <p>Quiero poder contar una pérdida sin transformarme en "el que perdió". Una enfermedad sin ser "el enfermo". Un fracaso sin convertirme en "el que fracasó".</p>
           <p>Somos más grandes que cualquier cosa que nos haya ocurrido.</p>
         </div>
+        </div>
       </div>
       <div class="porque-item">
+        <div class="porque-num">04</div>
+        <div class="porque-cuerpo">
         <div class="porque-titulo">Porque nos enseñaron a explicar lo que sentimos antes que a sentirlo</div>
         <div class="porque-desc">
           <p>Durante mucho tiempo aprendimos frases como: No llores. No tengas miedo. No te enojes. No exageres.</p>
           <p>Aprendimos a dominar la emoción antes incluso de aprender a escucharla. Y sin embargo, las emociones son una parte esencial de la manera en que interpretamos el mundo.</p>
           <p>Simpleno no necesita convertirlas en diagnósticos ni explicarlas. Puede hacer algo mucho más humilde: darles un lugar. Porque a veces nombrar algo es la primera forma de reconocer que existe.</p>
         </div>
+        </div>
       </div>
       <div class="porque-item">
+        <div class="porque-num">05</div>
+        <div class="porque-cuerpo">
         <div class="porque-titulo">Porque escribir vuelve consciente algo que antes era solamente ruido</div>
         <div class="porque-desc">
           <p>Hay experiencias que vivimos durante meses o años sin lograr entender realmente qué significaron para nosotros. Hasta que intentamos escribirlas. Entonces aparece una palabra que no habíamos usado. Una contradicción. Una emoción que estaba escondida debajo de otra.</p>
@@ -801,12 +868,16 @@
           <p>Todo desaparece: el scroll, la historia de 24 horas, la notificación, el siguiente contenido.</p>
           <p>Frente a esa lógica, escribir es casi un acto de resistencia. Es una forma de decir: esto ocurrió. Esto significó algo. No quiero que desaparezca sin haberlo mirado.</p>
         </div>
+        </div>
       </div>
       <div class="porque-item">
+        <div class="porque-num">06</div>
+        <div class="porque-cuerpo">
         <div class="porque-titulo">Porque creemos que guardarlo nos protege</div>
         <div class="porque-desc">
           <p>Pero algunas cosas pesan precisamente porque permanecen encerradas. Nombrarlas no hace que desaparezcan. Tampoco cambia lo ocurrido. Pero puede cambiar nuestra relación con ello.</p>
           <p>A veces creemos que estamos guardando una experiencia. Y con el tiempo descubrimos que, de alguna manera, esa experiencia nos estaba guardando a nosotros.</p>
+        </div>
         </div>
       </div>
     </div>
@@ -818,15 +889,15 @@
 
     <p>Porque una historia adquiere otra dimensión cuando sale de nosotros y encuentra a alguien. Ahí empieza a aparecer algo diferente.</p>
 
-    <div class="insight" style="margin: 2rem 0;">
-      <p style="font-family:'Fraunces',Georgia,serif; font-size:1.5rem; font-weight:600; letter-spacing:-0.01em; margin-bottom:1.2rem;">De la catarsis a la <em>trascendencia</em></p>
+    <div class="insight-bleed">
+      <p style="font-family:'Fraunces',Georgia,serif; font-size:1.5rem; font-weight:600; letter-spacing:-0.01em; margin-bottom:1.2rem; color:white;">De la catarsis a la <em>trascendencia</em></p>
       <p>Hay una diferencia enorme entre contar algo solamente para descargarlo y transformar lo vivido en algo que pueda existir más allá de uno mismo.</p>
       <p>Podemos escribir: "Esto me pasó."</p>
       <p>Pero también podemos llegar a: "Esto me pasó y quizás, al contarlo, le sirva a alguien que todavía no sabe que no está solo."</p>
       <p>Ese movimiento cambia completamente el significado de compartir. Ya no se trata exclusivamente de mí. A partir de ese momento mi experiencia puede convertirse en materia para la experiencia de otro. Puede acompañarlo. Puede darle palabras para algo que todavía no sabía nombrar. Puede hacerle sentir que alguien estuvo antes exactamente donde está él ahora.</p>
     </div>
 
-    <p style="font-family:'Fraunces',Georgia,serif; font-size:1.1rem; font-weight:600; color:var(--carbon); margin: 2rem 0 0.5rem;">Trascender</p>
+    <p style="font-family:'Fraunces',Georgia,serif; font-size:1.2rem; font-weight:600; color:var(--carbon); margin: 2.5rem 0 0.5rem;">Trascender</p>
     <p>Trascender no significa ser recordado. Eso sería nuevamente reconocimiento.</p>
     <p>Trascender significa que algo que viviste siga produciendo sentido cuando vos ya no estás en el centro. Quizás incluso cuando nadie sabe que fuiste vos.</p>
     <p>Una historia puede trascender a su autor. Y ahí ocurre algo extraordinario: lo que alguna vez fue solamente mío puede convertirse en algo que sostiene a otro.</p>
