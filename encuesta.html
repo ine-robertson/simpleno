@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="logos/simpleno_favicon_32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="logos/simpleno_favicon_16.png">
+  <link rel="apple-touch-icon" href="logos/simpleno_icono-app_180.png">
+  <title>Simpleno — Quiero tu opinión</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bruma: #FAF7FF;
+      --crema: #FFF3C4;
+      --carbon: #24103F;
+      --gris: #7A738A;
+      --gris-claro: #D9C8F3;
+      --acento: #5B2E94;
+      --verde: #5a8c6e;
+      --rojo: #8c5a5a;
+      --ambar: #8b7b4a;
+    }
+
+    html { font-size: 11px; scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--crema);
+      color: var(--carbon);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.65;
+      padding: 0 1.5rem;
+    }
+
+    .nav-principal {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--bruma);
+      border-bottom: 1px solid var(--gris-claro);
+      display: flex;
+      flex-direction: column;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .nav-fila-1 { display: flex; align-items: center; gap: 1.5rem; padding: 0.65rem 2rem; }
+    .nav-logo { display: flex; align-items: center; padding-right: 1.2rem; border-right: 1px solid var(--gris-claro); }
+    .nav-logo img { height: 28px; width: auto; display: block; }
+    .nav-fila-2 { border-top: 1px solid var(--gris-claro); padding: 0.6rem 2rem; background: var(--carbon); }
+    .nav-fila-2 a { color: var(--bruma) !important; }
+    .nav-fila-2 a:hover { opacity: 0.75; }
+
+    .nav-principal a { color: var(--gris); text-decoration: none; transition: color 0.2s; }
+    .nav-principal a:hover { color: var(--acento); }
+    .nav-principal a.activo { color: var(--carbon); }
+
+    .cta-encuesta {
+      display: block;
+      text-align: center;
+      background: var(--carbon);
+      color: var(--bruma);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1.4rem 2rem;
+      border-radius: 6px;
+      margin: 3rem 0 2rem;
+      transition: background 0.2s;
+    }
+    .cta-encuesta:hover { background: #1A0725; }
+
+    .contenedor {
+      max-width: 660px;
+      margin: 0 auto;
+      padding: 8rem 0 8rem;
+    }
+
+    .portada {
+      padding: 2rem 0 1.5rem;
+      border-bottom: 1px solid var(--gris-claro);
+      margin-bottom: 2rem;
+    }
+
+    .portada .etiqueta {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--acento);
+      margin-bottom: 1.5rem;
+    }
+
+    .portada h1 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 2.6rem;
+      font-weight: normal;
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+      color: var(--carbon);
+    }
+
+    .portada .bajada {
+      font-size: 1rem;
+      color: var(--gris);
+      max-width: 520px;
+      line-height: 1.75;
+    }
+
+    .bloque {
+      margin-bottom: 2rem;
+    }
+
+    .bloque-titulo {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--acento);
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--gris-claro);
+    }
+
+    .pregunta {
+      margin-bottom: 1.5rem;
+    }
+
+    .pregunta-texto {
+      font-size: 0.86rem;
+      color: var(--carbon);
+      line-height: 1.65;
+      margin-bottom: 0.65rem;
+    }
+
+    .pregunta-nota {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.78rem;
+      color: var(--gris);
+      font-style: italic;
+      margin-left: 0.3rem;
+    }
+
+    /* SEMÁFORO */
+    .semaforo {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.3rem;
+    }
+
+    .semaforo-btn {
+      padding: 0.28rem 0.25rem;
+      border: 1.5px solid var(--gris-claro);
+      border-radius: 6px;
+      background: white;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.70rem;
+      font-weight: 600;
+      text-align: center;
+      transition: all 0.2s;
+      color: var(--gris);
+      letter-spacing: 0.03em;
+    }
+
+    .semaforo-btn:hover { border-color: var(--acento); color: var(--carbon); }
+    .semaforo-btn.sel-nada     { border-color: var(--rojo);  background: rgba(140,90,90,0.07);   color: var(--rojo); }
+    .semaforo-btn.sel-puedeser { border-color: var(--gris);  background: rgba(107,107,107,0.07); color: var(--gris); }
+    .semaforo-btn.sel-aveces   { border-color: var(--ambar); background: rgba(139,123,74,0.07);  color: var(--ambar); }
+    .semaforo-btn.sel-total    { border-color: var(--verde); background: rgba(90,140,110,0.07);  color: var(--verde); }
+
+    /* SELECT */
+    .select-perfil {
+      width: 100%;
+      padding: 0.28rem 0.55rem;
+      border: 1.5px solid var(--gris-claro);
+      border-radius: 6px;
+      background: white;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.78rem;
+      color: var(--carbon);
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2020/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6b6b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      cursor: pointer;
+    }
+
+    .select-perfil:focus { outline: none; border-color: var(--acento); }
+
+    /* OPCIONES */
+    .opciones {
+      display: flex;
+      flex-direction: column;
+      gap: 0.28rem;
+    }
+
+    .opcion {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      padding: 0.28rem 0.55rem;
+      border: 1.5px solid var(--gris-claro);
+      border-radius: 6px;
+      background: white;
+      cursor: pointer;
+      transition: border-color 0.18s, background 0.18s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.78rem;
+      color: var(--carbon);
+      line-height: 1.5;
+      user-select: none;
+    }
+
+    .opcion:hover { border-color: var(--acento); }
+    .opcion.sel { border-color: var(--acento); background: rgba(91, 46, 148, 0.06); }
+
+    .opcion-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gris-claro);
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: all 0.18s;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .opcion.sel .opcion-dot {
+      border-color: var(--acento);
+      background: var(--acento);
+    }
+
+    .opcion.sel .opcion-dot::after {
+      content: '';
+      width: 4px; height: 4px;
+      background: white;
+      border-radius: 50%;
+    }
+
+    .opcion-cuadro {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      border: 1.5px solid var(--gris-claro);
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: all 0.18s;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .opcion.sel .opcion-cuadro {
+      border-color: var(--acento);
+      background: var(--acento);
+    }
+
+    .opcion.sel .opcion-cuadro::after {
+      content: '';
+      width: 4px; height: 7px;
+      border-right: 2px solid white;
+      border-bottom: 2px solid white;
+      transform: rotate(45deg) translate(-1px, -1px);
+    }
+
+    /* TEXTAREA */
+    .campo {
+      width: 100%;
+      padding: 0.32rem 0.55rem;
+      border: 1.5px solid var(--gris-claro);
+      border-radius: 6px;
+      background: white;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.78rem;
+      color: var(--carbon);
+      line-height: 1.7;
+      resize: vertical;
+      min-height: 70px;
+      transition: border-color 0.2s;
+    }
+
+    .campo:focus { outline: none; border-color: var(--acento); }
+    .campo::placeholder { color: #b0a99f; font-style: italic; }
+    .campo.corto { min-height: 54px; }
+    .campo.grande { min-height: 140px; }
+
+    /* CONDICIONAL */
+    .cond { display: none; }
+    .cond.vis {
+      display: block;
+      animation: aparecer 0.3s ease;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ENVIAR */
+    .btn-enviar {
+      padding: 1rem 2.8rem;
+      background: var(--carbon);
+      color: var(--bruma);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 1.5rem;
+    }
+
+    .btn-enviar:hover { background: #1A0725; }
+
+    /* GRACIAS */
+    #gracias {
+      display: none;
+      text-align: center;
+      padding: 5rem 1rem;
+    }
+
+    #gracias .linea { width: 3rem; height: 2px; background: var(--acento); margin: 0 auto 2.5rem; }
+
+    #gracias h2 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 2.2rem;
+      font-weight: normal;
+      color: var(--carbon);
+      margin-bottom: 1.2rem;
+    }
+
+    #gracias p {
+      color: var(--gris);
+      font-size: 1rem;
+      max-width: 400px;
+      margin: 0 auto;
+      line-height: 1.75;
+    }
+
+    .divisor { width: 3rem; height: 2px; background: var(--acento); margin: 2.5rem 0; }
+
+    footer {
+      border-top: 1px solid var(--gris-claro);
+      padding-top: 2rem;
+      margin-top: 5rem;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.72rem;
+      color: var(--gris);
+    }
+
+    /* SEMÁFORO 4 opciones */
+    .semaforo-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+    .recuadro-pitch {
+      background: white;
+      border: 1px solid var(--gris-claro);
+      border-top: 3px solid var(--acento);
+      border-radius: 6px;
+      padding: 2rem 2.2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .recuadro-pitch .gancho {
+      font-size: 0.82rem;
+      font-style: italic;
+      color: var(--carbon);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.4rem;
+      border-bottom: 1px solid var(--gris-claro);
+    }
+
+    .recuadro-pitch .parrafo {
+      font-size: 0.75rem;
+      color: var(--carbon);
+      line-height: 1.75;
+      margin-bottom: 1.1rem;
+    }
+
+    .recuadro-pitch .parrafo:last-child {
+      margin-bottom: 0;
+      color: var(--gris);
+    }
+
+    @media (max-width: 560px) {
+      html { font-size: 12px; }
+
+      body { padding: 0 1.1rem; }
+
+      .contenedor { padding: 2.5rem 0 5rem; }
+
+      .portada { padding: 2.5rem 0 2rem; }
+      .portada h1 { font-size: 1.85rem; }
+
+      .semaforo { grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; }
+      .semaforo-4 { grid-template-columns: 1fr 1fr; }
+
+      .semaforo-btn {
+        padding: 1rem 0.4rem;
+        font-size: 0.7rem;
+        min-height: 52px;
+      }
+
+      .opcion { padding: 0.9rem 0.85rem; min-height: 48px; }
+
+      .btn-enviar { width: 100%; text-align: center; padding: 1.1rem; }
+    }
+  </style>
+
+<style id="simpleno-brand-system">
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+:root{--violeta:#24103F;--acento:#5B2E94;--lavanda:#C9B6EE;--papel:#FFFDF8;--niebla:#FAF7FF;--oro:#F5C542;--crema:#FFF3C4;--borde:#E4D9ED;--carbon:#24103F;--gris:#706579;--gris-claro:#E4D9ED}
+html{scroll-behavior:smooth}body{background:linear-gradient(180deg,var(--papel),#fbf8ff);color:var(--violeta);font-family:'Plus Jakarta Sans',sans-serif!important}.nav-principal{position:sticky!important;top:0;z-index:50;background:rgba(255,253,248,.94)!important;backdrop-filter:blur(14px);border-bottom:1px solid var(--borde)!important;box-shadow:none!important}.nav-fila-1{min-height:62px!important;display:flex!important;align-items:center!important;gap:26px!important}.nav-fila-1:before{content:'simpleno.';font:500 1.45rem 'Fraunces',serif;color:var(--acento);margin-right:auto}.nav-fila-1 a{font-family:'Plus Jakarta Sans',sans-serif!important;font-size:.81rem!important;color:var(--violeta)!important}.nav-fila-2{background:var(--oro)!important}.nav-fila-2 a{color:var(--violeta)!important;font-family:'Plus Jakarta Sans',sans-serif!important;font-weight:700!important}.contenedor{max-width:920px!important;padding-top:3rem!important}.portada{position:relative;overflow:hidden;background:var(--violeta)!important;color:white!important;border-radius:32px!important;padding:4.7rem 3.8rem!important;margin-bottom:2.2rem!important;box-shadow:0 28px 80px rgba(36,16,63,.16)!important}.portada:before,.portada:after{content:'';position:absolute;border:2px solid rgba(201,182,238,.18);border-radius:50%;width:320px;height:320px;left:-160px;bottom:-170px}.portada:after{width:205px;height:205px;left:auto;right:-85px;bottom:auto;top:-95px}.portada>*{position:relative;z-index:2}.etiqueta{color:var(--lavanda)!important;letter-spacing:.18em!important}.portada h1{font:500 clamp(3.2rem,8vw,6.7rem)/.92 'Fraunces',serif!important;color:white!important;margin:.9rem 0 1.2rem!important}.portada h1:after{content:'queremos escucharte';display:block;font:500 1.7rem 'Caveat',cursive;color:var(--oro);margin-top:1.2rem;transform:rotate(-1deg)}.tiempo{background:rgba(255,255,255,.1)!important;color:white!important;border:1px solid rgba(255,255,255,.2)!important;border-radius:999px!important;padding:.65rem 1rem!important}.recuadro-pitch{background:var(--crema)!important;border:0!important;border-radius:25px!important;padding:2rem!important;box-shadow:none!important;font-family:'Fraunces',serif!important;font-size:1.15rem!important;line-height:1.65!important}.recuadro-pitch:before{content:'“';font:600 4.8rem/0 'Fraunces',serif;color:var(--oro);display:block;margin:1.1rem 0 .4rem}.bloque{background:white!important;border:1px solid var(--borde)!important;border-radius:26px!important;padding:2.1rem!important;margin-bottom:1.25rem!important;box-shadow:0 16px 42px rgba(36,16,63,.055)!important}.bloque-titulo{font-family:'Plus Jakarta Sans',sans-serif!important;color:var(--acento)!important;border-bottom:1px solid var(--borde)!important;letter-spacing:.18em!important}.pregunta{padding:1.1rem 0!important;margin-bottom:.3rem!important;border-bottom:1px solid #f0eaf4}.pregunta:last-child{border-bottom:0}.pregunta-texto{font-size:.98rem!important;line-height:1.58!important;color:var(--violeta)!important;font-weight:600}.pregunta-nota{color:var(--gris)!important}.opciones{gap:.5rem!important}.opcion,.semaforo-btn,.select-perfil,textarea,input[type=text],input[type=email]{border:1.5px solid var(--borde)!important;border-radius:14px!important;background:#fff!important;padding:.72rem .85rem!important;font-family:'Plus Jakarta Sans',sans-serif!important;font-size:.82rem!important;transition:.18s ease!important}.opcion:hover,.semaforo-btn:hover{border-color:var(--lavanda)!important;transform:translateY(-1px)}.opcion.sel{border-color:var(--acento)!important;background:var(--niebla)!important;box-shadow:0 0 0 3px rgba(91,46,148,.08)}.opcion-dot,.opcion-cuadro{border-color:var(--lavanda)!important}.opcion.sel .opcion-dot,.opcion.sel .opcion-cuadro{border-color:var(--acento)!important;background:var(--acento)!important}.semaforo{gap:.5rem!important}.semaforo-btn{min-height:48px}.select-perfil:focus,textarea:focus,input:focus{outline:none!important;border-color:var(--acento)!important;box-shadow:0 0 0 4px rgba(91,46,148,.09)!important}.btn-enviar,button[type=submit]{background:var(--oro)!important;color:var(--violeta)!important;border:0!important;border-radius:999px!important;padding:1rem 1.6rem!important;font-family:'Plus Jakarta Sans',sans-serif!important;font-weight:700!important;box-shadow:0 12px 30px rgba(245,197,66,.22)!important}.btn-enviar:hover,button[type=submit]:hover{transform:translateY(-2px)!important;background:#f8ce59!important}.mensaje-exito,.exito{background:var(--violeta)!important;color:white!important;border-radius:30px!important}.mensaje-exito h2,.exito h2{color:white!important;font:500 3.2rem 'Fraunces',serif!important}footer{background:var(--violeta)!important;color:var(--lavanda)!important}.footer-inner:before{content:'simpleno.';font:500 1.4rem 'Fraunces',serif;color:var(--oro);display:block;margin-bottom:.5rem}@media(max-width:700px){.contenedor{padding:1.2rem!important}.portada{padding:3.2rem 1.5rem!important;border-radius:24px!important}.bloque{padding:1.25rem!important;border-radius:20px!important}.nav-fila-1:before{font-size:1.1rem}.nav-fila-1{gap:12px!important}.semaforo{grid-template-columns:1fr!important}}
+</style>
+
+<style id="simpleno-typography-manual-fix">
+/* Escala exacta del manual: H1 56, H2 36, cita 26, texto 18, etiqueta 12, voz 28 */
+body, p, a, label, input, textarea, select, button, .pregunta-texto, .pregunta-nota, .opcion, .semaforo-btn, .select-perfil {font-family:'Plus Jakarta Sans',Arial,sans-serif!important}
+body{font-size:18px!important;line-height:1.6!important}
+h1,h2,h3,h4,.portada h1,.mensaje-exito h2,.exito h2{font-family:'Fraunces',Georgia,serif!important}
+.portada h1{font-size:56px!important;line-height:1.05!important;font-weight:500!important;letter-spacing:-.02em!important}
+h2,.mensaje-exito h2,.exito h2{font-size:36px!important;line-height:1.15!important;font-weight:500!important}
+h3{font-size:28px!important;line-height:1.2!important;font-weight:500!important}
+.recuadro-pitch{font-family:'Fraunces',Georgia,serif!important;font-size:26px!important;line-height:1.42!important;font-style:italic!important}
+.pregunta-texto{font-size:18px!important;line-height:1.55!important;font-weight:500!important}
+.pregunta-nota,.opcion,.semaforo-btn,.select-perfil,textarea,input[type=text],input[type=email]{font-size:16px!important;line-height:1.5!important}
+.etiqueta,.bloque-titulo{font-family:'Plus Jakarta Sans',Arial,sans-serif!important;font-size:12px!important;font-weight:700!important;letter-spacing:.2em!important;text-transform:uppercase!important}
+.portada h1:after{font-family:'Caveat',cursive!important;font-size:28px!important;line-height:1.1!important;font-weight:500!important}
+.nav-fila-1:before,.footer-inner:before{font-family:'Cormorant Garamond','Fraunces',serif!important;font-weight:500!important}
+/* Caveat queda limitada a la nota breve de portada. No se usa en párrafos ni preguntas. */
+@media(max-width:700px){.portada h1{font-size:46px!important}h2,.mensaje-exito h2,.exito h2{font-size:32px!important}.recuadro-pitch{font-size:23px!important}.pregunta-texto{font-size:17px!important}}
+</style>
+</head>
+<body>
+
+<nav class="nav-principal">
+  <div class="nav-fila-1">
+    <a href="index.html" class="nav-logo"><img src="logos/simpleno_isotipo_color_transparente.png" alt="Simpleno"></a>
+    <a href="index.html">Concepto</a>
+    <a href="decisiones.html">Decisiones</a>
+    <a href="origen.html">Origen</a>
+  </div>
+  <div class="nav-fila-2">
+    <a href="encuesta.html" class="activo">Queremos saber tu opinión</a>
+  </div>
+</nav>
+
+<div class="contenedor">
+
+  <div class="portada">
+    <div class="etiqueta">Simpleno — Concepto en desarrollo</div>
+    <h1>Quiero tu opinión</h1>
+    <div style="display:inline-block; font-family:'Plus Jakarta Sans',sans-serif; font-size:0.72rem; font-weight:600; letter-spacing:0.06em; color:var(--gris); background:white; border:1px solid var(--gris-claro); border-radius:20px; padding:0.25rem 0.8rem; margin-top:0.8rem;">⏱ 3 min</div>
+  </div>
+
+  <p style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.85rem; color: var(--gris); line-height: 1.75; margin-bottom: 2rem;">Si antes de contestar querés saber más de este proyecto, <a href="http://simpleno.co" style="color:var(--acento); text-decoration:none;">visitá el concepto</a>, sino acá te dejo un breve resumen. Si en tus respuestas querés dejar algún dato tuyo para que te contacte cuando avance, también!</p>
+
+  <div class="recuadro-pitch">
+    <p class="gancho">¿Cuándo fue la última vez que contaste algo que viviste? No un resumen, ni la versión prolija. La verdadera, sin pensar en lo que iban a opinar.</p>
+    <p class="parrafo">🕊️ Para las personas que vivieron experiencias que les gustaría compartir pero se las guardan por vergüenza o por miedo a quedar expuestas, Simpleno es un espacio anónimo donde podés contar lo que te pasó, porque lo que importa es lo que viviste, no quién lo vivió.</p>
+    <p class="parrafo">🚫 A diferencia de otros espacios o redes, en Simpleno no hay autor, ni comentarios, ni likes: solo respuestas como "te entiendo" o "me inspira lo que viviste". 🫂</p>
+    <p class="parrafo">🌱 Porque contarlo es un acto de libertad y de trascendencia, sobre todo cuando lo que te pasó se convierte en un vehículo, en algo que sostiene a otro. 🤍</p>
+    <p class="parrafo">🙏 Lo estoy construyendo y quiero saber si te haría sentido. ¿Me regalás 3 minutos para una encuesta? 👇<br>Es anonima y la puedes reenviar a quien quieras. Tanto alguien adulto con muchos años vividos como un adolescente. Quiero escucharlos a todos ❤️</p>
+  </div>
+
+  <form id="encuesta">
+
+    <!-- PERFIL -->
+    <div class="bloque">
+      <div class="bloque-titulo">Tu perfil</div>
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Desde qué lugar te invito a responder?</div>
+        <select class="select-perfil" id="perfil" onchange="actualizarPerfil()">
+          <option value="">— Elegí una opción —</option>
+          <option value="psicologo">Psicólogo / terapeuta</option>
+          <option value="periodista">Periodista / comunicador</option>
+          <option value="abogado">Abogado</option>
+          <option value="contador">Contador</option>
+          <option value="medico">Médico / profesional de salud</option>
+          <option value="disenador">Diseñador / creativo</option>
+          <option value="marketing">Marketing</option>
+          <option value="educador">Educador / docente</option>
+          <option value="emprendedor">Emprendedor</option>
+          <option value="tecnologia">Tecnología</option>
+          <option value="comercio">Comercio</option>
+          <option value="oficio">Oficio</option>
+          <option value="seguridad">Seguridad</option>
+          <option value="politica">Política</option>
+          <option value="religioso">Religioso / espiritual</option>
+          <option value="ama-de-casa">Ama de casa</option>
+          <option value="empleado-publico">Empleado público</option>
+          <option value="estudiante">Estudiante</option>
+          <option value="sin-ocupacion">Sin ocupación</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+      <div class="pregunta">
+        <div class="pregunta-texto">¿En qué rango de edad estás?</div>
+        <div class="opciones" id="ops-edad">
+          <div class="opcion" onclick="radio(this,'edad')"><div class="opcion-dot"></div>Menos de 14</div>
+          <div class="opcion" onclick="radio(this,'edad')"><div class="opcion-dot"></div>14 a 21</div>
+          <div class="opcion" onclick="radio(this,'edad')"><div class="opcion-dot"></div>21 a 28</div>
+          <div class="opcion" onclick="radio(this,'edad')"><div class="opcion-dot"></div>28 a 35</div>
+          <div class="opcion" onclick="radio(this,'edad')"><div class="opcion-dot"></div>35 a 42</div>
+          <div class="opcion" onclick="radio(this,'edad')"><div class="opcion-dot"></div>42 a 49</div>
+          <div class="opcion" onclick="radio(this,'edad')"><div class="opcion-dot"></div>49 a 56</div>
+          <div class="opcion" onclick="radio(this,'edad')"><div class="opcion-dot"></div>Más de 56</div>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">Todo lo que tengas para decir</div>
+        <textarea class="campo grande" name="qcierre" placeholder="Escribí acá lo que quieras..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Qué te generaría encontrar una plataforma así?</div>
+        <textarea class="campo" name="q9" placeholder="Primera reacción, sin filtro..."></textarea>
+      </div>
+    </div>
+
+
+    <!-- BLOQUE 1: LO QUE NO SE CUENTA -->
+    <div class="bloque">
+      <div class="bloque-titulo">Lo que no se cuenta</div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Tenés cosas que te pasaron y no contaste?</div>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif; font-size:0.8rem; color:var(--gris-claro); line-height:1.65; margin-bottom:1.1rem;">Pueden ser experiencias difíciles, familiares, laborales, accidentes, cuestiones vinculares. También momentos de amor o de plenitud, una decisión que te cambió la vida, un retiro que te transformó la mirada, cosas ridículas o divertidas. Cualquier vivencia que valió la pena y que nunca encontró el lugar para ser contada.</p>
+        <div class="opciones" id="ops-q3">
+          <div class="opcion" onclick="radio(this,'q3'); condicional('cond-q4', false)"><div class="opcion-dot"></div>Siempre cuento todo lo que me pasa y siento</div>
+          <div class="opcion" onclick="radio(this,'q3'); condicional('cond-q4', true)"><div class="opcion-dot"></div>Hay muy poquitas cosas que nunca le conté a nadie</div>
+          <div class="opcion" onclick="radio(this,'q3'); condicional('cond-q4', true)"><div class="opcion-dot"></div>Hay algunas cosas que nunca le conté a nadie</div>
+          <div class="opcion" onclick="radio(this,'q3'); condicional('cond-q4', true)"><div class="opcion-dot"></div>Hay muchas cosas que nunca le conté a nadie</div>
+          <div class="opcion" onclick="radio(this,'q3'); condicional('cond-q4', true)"><div class="opcion-dot"></div>Generalmente no le cuento nada de mi vida a nadie</div>
+        </div>
+      </div>
+
+      <div class="pregunta cond" id="cond-q4">
+        <div class="pregunta-texto">¿Por qué te las guardás? <span class="pregunta-nota">(podés elegir más de una)</span></div>
+        <div class="opciones" id="ops-q4">
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>Miedo a ser juzgado/a</div>
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>Timidez</div>
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>No quiero preocupar a otros</div>
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>Me da vergüenza</div>
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>No encuentro el espacio ni la persona correcta</div>
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>No sé cómo contarlo</div>
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>No sé cómo contar algo bueno que me pasó sin que suene a alarde</div>
+          <div class="opcion" onclick="check(this,'q4')"><div class="opcion-cuadro"></div>Cuando lo cuento, la gente opina o da consejos — no me escucha</div>
+          <div class="opcion" data-q5 onclick="check(this,'q4'); revisarQ5()"><div class="opcion-cuadro"></div>Prefiero guardármelo — creo no necesitar contarlo</div>
+          <div class="opcion" data-q5 onclick="check(this,'q4'); revisarQ5()"><div class="opcion-cuadro"></div>Prefiero guardármelo — creo que hablar me hace más mal que bien</div>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Las contarías al menos de forma anónima?</div>
+        <div class="semaforo semaforo-4">
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q1','nada')">No la contaría</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q1','puedeser')">Puede ser</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q1','aveces')">A veces</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'q1','total')">Sí la contaría</button>
+        </div>
+        <input type="hidden" id="q1" value="">
+      </div>
+
+      <div class="pregunta cond" id="cond-q2">
+        <div class="pregunta-texto">¿Por qué no con tu nombre? <span class="pregunta-nota">(podés elegir más de una)</span></div>
+        <div class="opciones" id="ops-q2">
+          <div class="opcion" onclick="check(this,'q2')"><div class="opcion-cuadro"></div>Miedo al prejuicio</div>
+          <div class="opcion" onclick="check(this,'q2')"><div class="opcion-cuadro"></div>Timidez</div>
+          <div class="opcion" onclick="check(this,'q2')"><div class="opcion-cuadro"></div>No encajan con mi imagen</div>
+          <div class="opcion" onclick="check(this,'q2')"><div class="opcion-cuadro"></div>Son demasiado personales</div>
+          <div class="opcion" onclick="check(this,'q2')"><div class="opcion-cuadro"></div>No sé cómo contarlas</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- BLOQUE 2: EL PESO DE LO NO DICHO -->
+    <div class="bloque">
+      <div class="bloque-titulo">Lo que no se expresa</div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Creés o has experimentado que el simple hecho de escribir algo que te pasó, que te pesa o que te llenó, aunque no sepas quién lo va a leer, te ayuda a procesarlo o a que trascienda?</div>
+        <div class="semaforo">
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'qsoltar','nada')">Para nada</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'qsoltar','aveces')">A veces</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'qsoltar','total')">Totalmente</button>
+        </div>
+        <input type="hidden" id="qsoltar" value="">
+      </div>
+
+      <div class="pregunta cond" id="cond-q5">
+        <div class="pregunta-texto">Si tuvieras evidencia de que sacar algo de tu mente es terapéutico para tu psiquis — ¿lo harías igual?</div>
+        <div class="opciones" id="ops-q5">
+          <div class="opcion" onclick="radio(this,'q5')"><div class="opcion-dot"></div>Sí, si hay evidencia lo intentaría</div>
+          <div class="opcion" onclick="radio(this,'q5')"><div class="opcion-dot"></div>A veces, depende de qué es</div>
+          <div class="opcion" onclick="radio(this,'q5')"><div class="opcion-dot"></div>No — creo que guardarlo no me afecta de todas formas</div>
+          <div class="opcion" onclick="radio(this,'q5')"><div class="opcion-dot"></div>No — creo que hablarlo me haría más mal que bien</div>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">Aunque expresar una historia/testimonio no te agregue valor a vos — si pudieras aportar a alguien que está pasando por algo similar, ¿lo harías?</div>
+        <div class="opciones" id="ops-q6">
+          <div class="opcion" onclick="radio(this,'q6')"><div class="opcion-dot"></div>Totalmente — si aporta o habilita a otros, vale la pena</div>
+          <div class="opcion" onclick="radio(this,'q6')"><div class="opcion-dot"></div>A veces — dependería de qué tan personal es</div>
+          <div class="opcion" onclick="radio(this,'q6')"><div class="opcion-dot"></div>Puede ser — no estoy seguro/a</div>
+          <div class="opcion" onclick="radio(this,'q6')"><div class="opcion-dot"></div>Para nada — prefiero no compartir igual</div>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Qué te frenaría de compartir una historia/testimonio si tuvieras la garantía de que nadie sabría que es tuya y que no queda guardada en una base de datos rescatable? <span class="pregunta-nota">(podés elegir más de una)</span></div>
+        <div class="opciones" id="ops-q10">
+          <div class="opcion" onclick="check(this,'q10')"><div class="opcion-cuadro"></div>Prefiero que sepan que es mía</div>
+          <div class="opcion" onclick="check(this,'q10')"><div class="opcion-cuadro"></div>Miedo de que me identifiquen igual</div>
+          <div class="opcion" onclick="check(this,'q10')"><div class="opcion-cuadro"></div>No me gusta escribir</div>
+          <div class="opcion" onclick="check(this,'q10')"><div class="opcion-cuadro"></div>No me interesa contar mis cosas aunque me garanticen anonimato</div>
+          <div class="opcion" onclick="check(this,'q10')"><div class="opcion-cuadro"></div>Nada me frenaría</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- BLOQUE 3: EL LECTOR -->
+    <div class="bloque">
+      <div class="bloque-titulo">El lector</div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Leerías historias/experiencias de personas que no sabés quiénes son?</div>
+        <div class="semaforo semaforo-4">
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'qlector','nada')">Para nada</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'qlector','puedeser')">Puede ser</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'qlector','aveces')">A veces</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'qlector','total')">Totalmente</button>
+        </div>
+        <input type="hidden" id="qlector" value="">
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Alguna vez leíste o escuchaste algo personal contado de manera muy genuina por alguien que NO conocías, y te movilizó o te gustó escucharlo?</div>
+        <div class="semaforo">
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'qlector2','nada')">Para nada</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'qlector2','aveces')">A veces</button>
+          <button type="button" class="semaforo-btn" onclick="semaforo(this,'qlector2','total')">Totalmente</button>
+        </div>
+        <input type="hidden" id="qlector2" value="">
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Qué te motivaría a empezar a leer algo personal de alguien que no conocés? <span class="pregunta-nota">(podés elegir más de una)</span></div>
+        <div class="opciones" id="ops-motivar">
+          <div class="opcion" onclick="check(this,'motivar')"><div class="opcion-cuadro"></div>El título o primer párrafo me generó curiosidad</div>
+          <div class="opcion" onclick="check(this,'motivar')"><div class="opcion-cuadro"></div>La temática me resuena</div>
+          <div class="opcion" onclick="check(this,'motivar')"><div class="opcion-cuadro"></div>La forma de escribir me enganchó</div>
+          <div class="opcion" onclick="check(this,'motivar')"><div class="opcion-cuadro"></div>Sentí que podría identificarme</div>
+          <div class="opcion" onclick="check(this,'motivar')"><div class="opcion-cuadro"></div>Me llegó el tono emocional</div>
+          <div class="opcion" onclick="check(this,'motivar')"><div class="opcion-cuadro"></div>Busco algo que me inspire o que me cambie la perspectiva</div>
+          <div class="opcion" onclick="check(this,'motivar')"><div class="opcion-cuadro"></div>Es breve y fácil de leer</div>
+        </div>
+        <input type="text" class="campo corto" name="motivar-otro" placeholder="Otro..." style="margin-top:0.6rem; min-height:auto; padding:0.65rem 1rem;">
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Qué te haría abandonar una historia/experiencia a la mitad? <span class="pregunta-nota">(podés elegir más de una)</span></div>
+        <div class="opciones" id="ops-abandonar">
+          <div class="opcion" onclick="check(this,'abandonar')"><div class="opcion-cuadro"></div>La temática no me interesa</div>
+          <div class="opcion" onclick="check(this,'abandonar')"><div class="opcion-cuadro"></div>El tono no me conecta</div>
+          <div class="opcion" onclick="check(this,'abandonar')"><div class="opcion-cuadro"></div>Se siente poco auténtica o forzada</div>
+          <div class="opcion" onclick="check(this,'abandonar')"><div class="opcion-cuadro"></div>Es demasiado larga</div>
+          <div class="opcion" onclick="check(this,'abandonar')"><div class="opcion-cuadro"></div>No me genera ninguna emoción</div>
+        </div>
+        <input type="text" class="campo corto" name="abandonar-otro" placeholder="Otro..." style="margin-top:0.6rem; min-height:auto; padding:0.65rem 1rem;">
+      </div>
+    </div>
+
+
+    <!-- BLOQUE 4: EL ANONIMATO -->
+    <div class="bloque">
+      <div class="bloque-titulo">El anonimato</div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Qué creés que cambia en una historia/testimonio cuando no sabés quién la vivió?</div>
+        <textarea class="campo" name="q7" placeholder="Escribí lo que se te venga..."></textarea>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Cuánto te importa saber quién escribió algo?</div>
+        <div class="opciones" id="ops-q8">
+          <div class="opcion" onclick="radio(this,'q8')"><div class="opcion-dot"></div>No me importa</div>
+          <div class="opcion" onclick="radio(this,'q8')"><div class="opcion-dot"></div>Algo me importa</div>
+          <div class="opcion" onclick="radio(this,'q8')"><div class="opcion-dot"></div>Me es indispensable saber quién es — sino no tiene valor</div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- BLOQUE 5: LA IA COMO OYENTE -->
+    <div class="bloque">
+      <div class="bloque-titulo">La IA como oyente</div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Alguna vez le contaste algo a una IA (ChatGPT, Gemini u otra) — algo que te pesaba, te emocionaba o necesitabas soltar — buscando que te escuche o te diga qué opina?</div>
+        <div class="opciones" id="ops-qia">
+          <div class="opcion" onclick="radio(this,'qia'); condicional('cond-ia-nunca', true); condicional('cond-ia-si', false)"><div class="opcion-dot"></div>No, nunca lo haría</div>
+          <div class="opcion" onclick="radio(this,'qia'); condicional('cond-ia-nunca', false); condicional('cond-ia-si', false)"><div class="opcion-dot"></div>No, pero me lo planteé</div>
+          <div class="opcion" onclick="radio(this,'qia'); condicional('cond-ia-nunca', false); condicional('cond-ia-si', true)"><div class="opcion-dot"></div>Sí, lo hice alguna vez</div>
+          <div class="opcion" onclick="radio(this,'qia'); condicional('cond-ia-nunca', false); condicional('cond-ia-si', true)"><div class="opcion-dot"></div>Sí, lo hago seguido</div>
+        </div>
+      </div>
+
+      <div class="pregunta cond" id="cond-ia-nunca">
+        <div class="pregunta-texto">¿Por qué nunca lo consideraste? <span class="pregunta-nota">(podés elegir más de una)</span></div>
+        <div class="opciones" id="ops-ia-nunca">
+          <div class="opcion" onclick="check(this,'ia-nunca')"><div class="opcion-cuadro"></div>Prefiero contárselo a una persona real</div>
+          <div class="opcion" onclick="check(this,'ia-nunca')"><div class="opcion-cuadro"></div>No le veo sentido si no hay un ser humano del otro lado</div>
+          <div class="opcion" onclick="check(this,'ia-nunca')"><div class="opcion-cuadro"></div>No confío en que la IA entienda lo que siento</div>
+          <div class="opcion" onclick="check(this,'ia-nunca')"><div class="opcion-cuadro"></div>Me parece frío o artificial</div>
+          <div class="opcion" onclick="check(this,'ia-nunca')"><div class="opcion-cuadro"></div>Tengo personas de confianza a quienes contarles</div>
+          <div class="opcion" onclick="check(this,'ia-nunca')"><div class="opcion-cuadro"></div>No me interesa la opinión de una máquina</div>
+        </div>
+      </div>
+
+      <div class="pregunta cond" id="cond-ia-si">
+        <div class="pregunta-texto">¿Por qué lo hiciste? <span class="pregunta-nota">(podés elegir más de una)</span></div>
+        <div class="opciones" id="ops-ia-si">
+          <div class="opcion" onclick="check(this,'ia-si')"><div class="opcion-cuadro"></div>No quería contárselo a alguien que me conoce</div>
+          <div class="opcion" onclick="check(this,'ia-si')"><div class="opcion-cuadro"></div>Quería ser escuchado/a sin recibir un prejuicio</div>
+          <div class="opcion" onclick="check(this,'ia-si')"><div class="opcion-cuadro"></div>Me da menos vergüenza que con una persona real</div>
+          <div class="opcion" onclick="check(this,'ia-si')"><div class="opcion-cuadro"></div>Necesitaba ordenar mis pensamientos</div>
+          <div class="opcion" onclick="check(this,'ia-si')"><div class="opcion-cuadro"></div>No encontré el momento ni la persona correcta</div>
+          <div class="opcion" onclick="check(this,'ia-si')"><div class="opcion-cuadro"></div>Está disponible en cualquier momento</div>
+          <div class="opcion" onclick="check(this,'ia-si')"><div class="opcion-cuadro"></div>Quería una respuesta rápida sin carga emocional</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 6: EL CONCEPTO -->
+    <div class="bloque">
+      <div class="bloque-titulo">El concepto</div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Qué tipo de experiencia te gustaría leer o compartir? <span class="pregunta-nota">(podés elegir más de una)</span></div>
+        <div class="opciones" id="ops-qtipo">
+          <div class="opcion" onclick="check(this,'qtipo')"><div class="opcion-cuadro"></div>Algo que alguien superó o perdió</div>
+          <div class="opcion" onclick="check(this,'qtipo')"><div class="opcion-cuadro"></div>Un momento de amor o de plenitud</div>
+          <div class="opcion" onclick="check(this,'qtipo')"><div class="opcion-cuadro"></div>Una decisión que cambió una vida</div>
+          <div class="opcion" onclick="check(this,'qtipo')"><div class="opcion-cuadro"></div>Una pequeña felicidad cotidiana</div>
+          <div class="opcion" onclick="check(this,'qtipo')"><div class="opcion-cuadro"></div>Una experiencia de transformación o espiritual</div>
+          <div class="opcion" onclick="check(this,'qtipo')"><div class="opcion-cuadro"></div>Cualquier experiencia genuina</div>
+        </div>
+      </div>
+
+      <div class="pregunta">
+        <div class="pregunta-texto">Si contás una historia/testimonio pero nadie te la puede comentar o dar feedback — ¿creés que pierde valor? ¿O con saber que hay alguien real del otro lado te alcanza?</div>
+        <div class="opciones" id="ops-q11">
+          <div class="opcion" onclick="radio(this,'q11')"><div class="opcion-dot"></div>Solo necesito saber que alguien me leyó</div>
+          <div class="opcion" onclick="radio(this,'q11')"><div class="opcion-dot"></div>Necesito saber si resuena en otra persona que haya vivido algo similar</div>
+          <div class="opcion" onclick="radio(this,'q11')"><div class="opcion-dot"></div>Necesito saber si me entienden</div>
+          <div class="opcion" onclick="radio(this,'q11')"><div class="opcion-dot"></div>Necesito que puedan comentarla o darme feedback — sin eso pierde valor</div>
+          <div class="opcion" onclick="radio(this,'q11')"><div class="opcion-dot"></div>No estoy seguro/a</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PERFIL ESPECÍFICO (condicional) -->
+    <div class="bloque cond" id="cond-perfil">
+      <div class="bloque-titulo">Una pregunta más</div>
+      <div class="pregunta">
+        <div class="pregunta-texto" id="texto-perfil"></div>
+        <textarea class="campo" name="qpe" placeholder="Tu perspectiva desde tu campo..."></textarea>
+      </div>
+    </div>
+
+
+    <!-- NOMBRE -->
+    <div class="bloque">
+      <div class="bloque-titulo">El nombre</div>
+      <div class="pregunta">
+        <div class="pregunta-texto">¿Qué te inspira o dice la palabra <em>Simpleno</em>?</div>
+        <textarea class="campo" name="qnombre" placeholder="Lo que sea que te evoque..."></textarea>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-enviar">Enviar mi opinión</button>
+
+  </form>
+
+
+  <div id="gracias">
+    <div class="linea"></div>
+    <h2>Gracias.</h2>
+    <p>Tu opinión es parte de esto. Lo que respondiste va a aportar a construir algo que vale la pena.</p>
+    <p style="margin-top:1.5rem; font-size:0.9rem; color:var(--gris);">Si querés saber más sobre el concepto, escribime a <a href="mailto:info@simpleno.co" style="color:var(--acento); text-decoration:none;">info@simpleno.co</a></p>
+  </div>
+
+
+  <a href="index.html" class="cta-encuesta">Volver al concepto →</a>
+
+  <footer>Simpleno — Octubre 2026 · Si querés saber más de este proyecto contactanos en <a href="mailto:info@simpleno.co" style="color:inherit; text-decoration:none;">info@simpleno.co</a></footer>
+
+</div>
+
+<script>
+  var datos = {};
+
+  // SEMÁFORO
+  function semaforo(btn, campo, val) {
+    var btns = btn.parentElement.querySelectorAll('.semaforo-btn');
+    btns.forEach(function(b) { b.classList.remove('sel-nada','sel-puedeser','sel-aveces','sel-total'); });
+    var clases = { nada: 'sel-nada', puedeser: 'sel-puedeser', aveces: 'sel-aveces', total: 'sel-total' };
+    btn.classList.add(clases[val]);
+    document.getElementById(campo).value = btn.textContent.trim();
+    if (campo === 'q1') condicional('cond-q2', val !== 'nada' && val !== '');
+  }
+
+  // CHECKBOX (multi)
+  function check(el, grupo) {
+    el.classList.toggle('sel');
+    if (grupo === 'q4') revisarQ5();
+  }
+
+  // RADIO (único)
+  function radio(el, grupo) {
+    document.querySelectorAll('#ops-' + grupo + ' .opcion').forEach(function(o) { o.classList.remove('sel'); });
+    el.classList.add('sel');
+  }
+
+  // CONDICIONAL Q5
+  function revisarQ5() {
+    var activos = document.querySelectorAll('#ops-q4 .opcion[data-q5].sel');
+    condicional('cond-q5', activos.length > 0);
+  }
+
+  // MOSTRAR / OCULTAR
+  function condicional(id, mostrar) {
+    var el = document.getElementById(id);
+    if (mostrar) el.classList.add('vis');
+    else el.classList.remove('vis');
+  }
+
+  // PERFIL ESPECÍFICO
+  var preguntasPerfil = {
+    psicologo: '¿Qué ocurre en la psiquis de alguien que narra una experiencia personal sin identificarse?',
+    periodista: '¿Qué cambiaría en una historia/testimonio si no tuviera firma?',
+    abogado:    '¿Qué implicancias ves en historias/testimonios anónimos de carácter permanente?'
+  };
+
+  function actualizarPerfil() {
+    var p = document.getElementById('perfil').value;
+    if (preguntasPerfil[p]) {
+      document.getElementById('texto-perfil').textContent = preguntasPerfil[p];
+      condicional('cond-perfil', true);
+    } else {
+      condicional('cond-perfil', false);
+    }
+  }
+
+  var GAS_URL = 'https://script.google.com/macros/s/AKfycbwNdoby6fD6fl28i-YgTSDolDu17fRKW4jg3BdC8LR4AQkqnEGWDGSJsCp5ei-axx0u/exec';
+
+  function sel(id) { return document.getElementById(id).value; }
+  function radio1(grupo) {
+    var el = document.querySelector('#ops-' + grupo + ' .opcion.sel');
+    return el ? el.textContent.trim() : '';
+  }
+  function checks(grupo) {
+    return Array.from(document.querySelectorAll('#ops-' + grupo + ' .opcion.sel'))
+      .map(function(o) { return o.textContent.trim(); }).join(' | ');
+  }
+
+  // SUBMIT
+  document.getElementById('encuesta').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var params = {
+      perfil:        sel('perfil'),
+      edad:          radio1('edad'),
+      q9:            document.querySelector('[name="q9"]').value,
+      q1:            sel('q1'),
+      q2:            checks('q2'),
+      q3:            radio1('q3'),
+      qsoltar:       sel('qsoltar'),
+      q4:            checks('q4'),
+      q5:            radio1('q5'),
+      q6:            radio1('q6'),
+      q10:           checks('q10'),
+      qlector:       sel('qlector'),
+      qlector2:      sel('qlector2'),
+      motivar:       checks('motivar'),
+      motivarOtro:   document.querySelector('[name="motivar-otro"]').value,
+      abandonar:     checks('abandonar'),
+      abandonarOtro: document.querySelector('[name="abandonar-otro"]').value,
+      q7:            document.querySelector('[name="q7"]').value,
+      q8:            radio1('q8'),
+      qia:           radio1('qia'),
+      iaNunca:       checks('ia-nunca'),
+      iaSi:          checks('ia-si'),
+      qtipo:         checks('qtipo'),
+      q11:           radio1('q11'),
+      qpe:           document.querySelector('[name="qpe"]').value,
+      qnombre:       document.querySelector('[name="qnombre"]').value,
+      qcierre:       document.querySelector('[name="qcierre"]').value
+    };
+
+    fetch(GAS_URL + '?' + new URLSearchParams(params).toString(), {
+      method: 'GET', mode: 'no-cors'
+    }).catch(function() {});
+
+    document.getElementById('encuesta').style.display = 'none';
+    var gracias = document.getElementById('gracias');
+    gracias.style.display = 'block';
+    gracias.scrollIntoView({ behavior: 'smooth' });
+  });
+</script>
+
+</body>
+</html>
